@@ -17,9 +17,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      role: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       email: {
         allowNull: false,
         type: Sequelize.CITEXT,
+      },
+      phone: {
+        type: Sequelize.STRING,
       },
       hashedPassword: {
         type: Sequelize.STRING,
