@@ -86,6 +86,23 @@ export default function (sequelize, DataTypes) {
           },
         },
       },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Role cannot be blank',
+          },
+          notEmpty: {
+            msg: 'Role cannot be blank',
+          },
+          isStrong(value) {
+            if (value.match(/(Admin|Supervisor|CTA)/) == null) {
+              throw new Error('Role must be Admin, Supervisor, or CTA.');
+            }
+          },
+        },
+      },
       email: {
         type: DataTypes.CITEXT,
         allowNull: false,
@@ -109,6 +126,16 @@ export default function (sequelize, DataTypes) {
               if (user) {
                 throw new Error('Email already registered');
               }
+            }
+          },
+        },
+      },
+      phone: {
+        type: DataTypes.STRING,
+        validate: {
+          isStrong(value) {
+            if (value.match(/^\d{3}-\d{3}-\d{4}$/) == null) {
+              throw new Error('Invalid phone number. Use format 123-456-7890.');
             }
           },
         },
