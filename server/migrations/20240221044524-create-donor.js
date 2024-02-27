@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Locations', {
+    await queryInterface.createTable('Donors', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -8,6 +8,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        type: Sequelize.TEXT
+      },
+      phone: {
+        type: Sequelize.TEXT
+      },
+      email: {
         type: Sequelize.TEXT
       },
       address1: {
@@ -22,7 +28,7 @@ module.exports = {
       state: {
         type: Sequelize.TEXT
       },
-      zipCode: {
+      zip: {
         type: Sequelize.TEXT
       },
       createdAt: {
@@ -36,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Locations');
+    await queryInterface.dropTable('Donors');
   }
 };
