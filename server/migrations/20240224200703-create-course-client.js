@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       CourseId: {
-        type: Sequelize.TEXT,
+        type: Sequelize.INTEGER,
         references: {
           model: {
             tableName: 'Courses',
@@ -17,7 +17,7 @@ module.exports = {
         },
       }, 
       ClientId: {
-        type: Sequelize.TEXT,
+        type: Sequelize.INTEGER,
         references: {
           model: {
             tableName: 'Clients',

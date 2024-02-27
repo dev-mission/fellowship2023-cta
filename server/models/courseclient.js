@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   CourseClient.init({
-    CourseId: DataTypes.TEXT,
-    ClientId: DataTypes.TEXT
+    CourseId: DataTypes.INTEGER,
+    ClientId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'CourseClient',
