@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-module.exports = (sequelize, DataTypes) => {
+export default function (sequelize, DataTypes) {
   class Location extends Model {
     /**
      * Helper method for defining associations.
@@ -24,3 +24,5 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Location;
 };
+
+
