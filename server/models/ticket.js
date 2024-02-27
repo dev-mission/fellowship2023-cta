@@ -1,6 +1,6 @@
-'use strict';
 import {Model} from "sequelize";
-module.exports = (sequelize, DataTypes) => {
+
+export default function (sequelize, DataTypes) {
   class Ticket extends Model {
     /**
      * Helper method for defining associations.

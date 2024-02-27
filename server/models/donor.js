@@ -1,7 +1,7 @@
 import { Model } from 'sequelize';
 
-module.exports = (sequelize, DataTypes) => {
-  class Location extends Model {
+export default function (sequelize, DataTypes){
+  class Donor extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,18 +11,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Location.init({
+  Donor.init({
     name: DataTypes.TEXT,
+    phone: DataTypes.TEXT,
+    email: DataTypes.TEXT,
     address1: DataTypes.TEXT,
     address2: DataTypes.TEXT,
     city: DataTypes.TEXT,
     state: DataTypes.TEXT,
-    zipCode: DataTypes.TEXT
+    zip: DataTypes.TEXT
   }, {
     sequelize,
-    modelName: 'Location',
+    modelName: 'Donor',
   });
-  return Location;
+  return Donor;
 };
-
-

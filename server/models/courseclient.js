@@ -1,6 +1,5 @@
-import Model from 'sequelize';
-
-module.exports = (sequelize, DataTypes) => {
+import { Model } from 'sequelize';
+export default function (sequelize, DataTypes) {
   class CourseClient extends Model {
     /**
      * Helper method for defining associations.
