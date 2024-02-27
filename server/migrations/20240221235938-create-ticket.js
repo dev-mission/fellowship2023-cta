@@ -10,19 +10,49 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       AppointmentId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        reference: {
+          model: {
+            tableName: 'Appointments'
+          },
+          key: 'id',
+        },
       },
       ClientId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        reference: {
+          model: {
+            tableName: 'Clients'
+          },
+          key: 'id'
+        },
       },
       LocationId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        reference: {
+          model: {
+            tableName: 'Location'
+          },
+          key: 'id',
+        }
       },
       UserId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        reference: {
+          model: {
+            tableName: 'User'
+          },
+          key: 'id'
+        },
       },
       DeviceId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        reference: {
+          model: {
+            tableName: 'Device'
+          },
+          key: 'id'
+        }
       },
       device: {
         type: Sequelize.TEXT
@@ -50,6 +80,9 @@ module.exports = {
       },
       hasCharger: {
         type: Sequelize.BOOLEAN
+      },
+      notes: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,

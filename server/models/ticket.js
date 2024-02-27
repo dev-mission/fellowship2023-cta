@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     timeInAt: DataTypes.DATE,
     timeOutAt: DataTypes.DATE,
     totalTime: DataTypes.INTEGER,
-    hasCharger: DataTypes.BOOLEAN
+    hasCharger: DataTypes.BOOLEAN,
+    notes: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Ticket',
