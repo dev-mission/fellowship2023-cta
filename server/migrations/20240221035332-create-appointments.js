@@ -8,21 +8,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       ClientId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'Clients';
+            tableName: 'Clients',
           },
-          key: 'id';
+          key: 'id',
         },
       },
       LocationId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'Locations';
+            tableName: 'Locations',
           },
-          key: 'id';
+          key: 'id',
         },
       },
       dateTimeAt: {
