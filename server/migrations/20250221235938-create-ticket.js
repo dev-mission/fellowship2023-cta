@@ -5,13 +5,13 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       AppointmentId: {
         type: Sequelize.INTEGER,
         reference: {
           model: {
-            tableName: 'Appointments'
+            tableName: 'Appointments',
           },
           key: 'id',
         },
@@ -20,79 +20,79 @@ module.exports = {
         type: Sequelize.INTEGER,
         reference: {
           model: {
-            tableName: 'Clients'
+            tableName: 'Clients',
           },
-          key: 'id'
+          key: 'id',
         },
       },
       LocationId: {
         type: Sequelize.INTEGER,
         reference: {
           model: {
-            tableName: 'Locations'
+            tableName: 'Locations',
           },
           key: 'id',
-        }
+        },
       },
       UserId: {
         type: Sequelize.INTEGER,
         reference: {
           model: {
-            tableName: 'Users'
+            tableName: 'Users',
           },
-          key: 'id'
+          key: 'id',
         },
       },
       DeviceId: {
         type: Sequelize.INTEGER,
         reference: {
           model: {
-            tableName: 'Devices'
+            tableName: 'Devices',
           },
-          key: 'id'
-        }
+          key: 'id',
+        },
       },
       device: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       problem: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       troubleshooting: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       resolution: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       dateOn: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       timeInAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       timeOutAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       totalTime: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       hasCharger: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       notes: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Tickets');
-  }
+  },
 };

@@ -5,46 +5,46 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       firstName: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       lastName: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       age: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       phone: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       email: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       ethnicity: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       address: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       gender: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       language: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Clients');
-  }
+  },
 };

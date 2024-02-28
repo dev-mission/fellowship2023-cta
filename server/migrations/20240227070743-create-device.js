@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       DonorId: {
         type: Sequelize.INTEGER,
@@ -46,52 +46,52 @@ module.exports = {
         },
       },
       deviceType: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       model: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       brand: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       serialNum: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       cpu: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       ram: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       os: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       username: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       password: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       condition: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       value: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
       },
       notes: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Devices');
-  }
+  },
 };

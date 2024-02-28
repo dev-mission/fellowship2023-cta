@@ -5,43 +5,43 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       name: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       phone: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       email: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       address1: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       address2: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       city: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       state: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       zip: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Donors');
-  }
+  },
 };

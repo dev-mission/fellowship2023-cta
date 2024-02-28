@@ -11,11 +11,14 @@ export default function (sequelize, DataTypes) {
       // define association here
     }
   }
-  Course.init({
-    name: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Course',
-  });
+  Course.init(
+    {
+      name: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Course',
+    },
+  );
   return Course;
-};
+}

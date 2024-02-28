@@ -1,4 +1,4 @@
-import {Model} from "sequelize";
+import { Model } from 'sequelize';
 
 export default function (sequelize, DataTypes) {
   class Ticket extends Model {
@@ -11,25 +11,28 @@ export default function (sequelize, DataTypes) {
       // define association here
     }
   }
-  Ticket.init({
-    AppointmentId: DataTypes.INTEGER,
-    ClientId: DataTypes.INTEGER,
-    LocationId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER,
-    DeviceId: DataTypes.INTEGER,
-    device: DataTypes.TEXT,
-    problem: DataTypes.TEXT,
-    troubleshooting: DataTypes.TEXT,
-    resolution: DataTypes.TEXT,
-    dateOn: DataTypes.DATE,
-    timeInAt: DataTypes.DATE,
-    timeOutAt: DataTypes.DATE,
-    totalTime: DataTypes.INTEGER,
-    hasCharger: DataTypes.BOOLEAN,
-    notes: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Ticket',
-  });
+  Ticket.init(
+    {
+      AppointmentId: DataTypes.INTEGER,
+      ClientId: DataTypes.INTEGER,
+      LocationId: DataTypes.INTEGER,
+      UserId: DataTypes.INTEGER,
+      DeviceId: DataTypes.INTEGER,
+      device: DataTypes.TEXT,
+      problem: DataTypes.TEXT,
+      troubleshooting: DataTypes.TEXT,
+      resolution: DataTypes.TEXT,
+      dateOn: DataTypes.DATE,
+      timeInAt: DataTypes.DATE,
+      timeOutAt: DataTypes.DATE,
+      totalTime: DataTypes.INTEGER,
+      hasCharger: DataTypes.BOOLEAN,
+      notes: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Ticket',
+    },
+  );
   return Ticket;
-};
+}

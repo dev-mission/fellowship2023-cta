@@ -10,12 +10,15 @@ export default function (sequelize, DataTypes) {
       // define association here
     }
   }
-  CourseClient.init({
-    CourseId: DataTypes.INTEGER,
-    ClientId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'CourseClient',
-  });
+  CourseClient.init(
+    {
+      CourseId: DataTypes.INTEGER,
+      ClientId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'CourseClient',
+    },
+  );
   return CourseClient;
-};
+}

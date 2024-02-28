@@ -11,19 +11,22 @@ export default function (sequelize, DataTypes) {
       // define association here
     }
   }
-  Client.init({
-    firstName: DataTypes.TEXT,
-    lastName: DataTypes.TEXT,
-    age: DataTypes.INTEGER,
-    phone: DataTypes.TEXT,
-    email: DataTypes.TEXT,
-    ethnicity: DataTypes.TEXT,
-    address: DataTypes.TEXT,
-    gender: DataTypes.TEXT,
-    language: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Client',
-  });
+  Client.init(
+    {
+      firstName: DataTypes.TEXT,
+      lastName: DataTypes.TEXT,
+      age: DataTypes.INTEGER,
+      phone: DataTypes.TEXT,
+      email: DataTypes.TEXT,
+      ethnicity: DataTypes.TEXT,
+      address: DataTypes.TEXT,
+      gender: DataTypes.TEXT,
+      language: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Client',
+    },
+  );
   return Client;
-};
+}

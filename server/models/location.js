@@ -11,18 +11,19 @@ export default function (sequelize, DataTypes) {
       // define association here
     }
   }
-  Location.init({
-    name: DataTypes.TEXT,
-    address1: DataTypes.TEXT,
-    address2: DataTypes.TEXT,
-    city: DataTypes.TEXT,
-    state: DataTypes.TEXT,
-    zipCode: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Location',
-  });
+  Location.init(
+    {
+      name: DataTypes.TEXT,
+      address1: DataTypes.TEXT,
+      address2: DataTypes.TEXT,
+      city: DataTypes.TEXT,
+      state: DataTypes.TEXT,
+      zipCode: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Location',
+    },
+  );
   return Location;
-};
-
-
+}
