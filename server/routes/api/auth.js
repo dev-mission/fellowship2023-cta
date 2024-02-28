@@ -35,7 +35,7 @@ router.get('/logout', (req, res) => {
 /// register a new user if enabled
 if (process.env.VITE_FEATURE_REGISTRATION === 'true') {
   router.post('/register', async (req, res, next) => {
-    const user = models.User.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'password']));
+    const user = models.User.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'password', 'role']));
     try {
       await user.save();
       await user.sendWelcomeEmail();

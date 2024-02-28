@@ -28,6 +28,7 @@ describe('/api/auth', () => {
           lastName: 'Person',
           email: 'normal.person@test.com',
           password: 'abcd1234',
+          role: 'Admin',
         })
         .expect(StatusCodes.CREATED);
 
@@ -53,12 +54,13 @@ describe('/api/auth', () => {
           lastName: '',
           email: '',
           password: '',
+          role: '',
         })
         .expect(StatusCodes.UNPROCESSABLE_ENTITY);
 
       const error = response.body;
       assert.deepStrictEqual(error.status, StatusCodes.UNPROCESSABLE_ENTITY);
-      assert.deepStrictEqual(error.errors.length, 4);
+      assert.deepStrictEqual(error.errors.length, 6);
       assert(
         _.find(error.errors, {
           path: 'firstName',
@@ -94,6 +96,7 @@ describe('/api/auth', () => {
           lastName: 'Person',
           email: 'regular.user@test.com',
           password: 'abcd1234',
+          role: 'Admin',
         })
         .expect(StatusCodes.UNPROCESSABLE_ENTITY);
 
