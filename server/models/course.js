@@ -9,13 +9,18 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      Course.hasMany(models.CourseClient);
+      Course.belongsToMany(models.Client, { through: models.CourseClient });
     }
   }
-  Course.init({
-    name: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Course',
-  });
+  Course.init(
+    {
+      name: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Course',
+    },
+  );
   return Course;
-};
+}

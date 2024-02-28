@@ -7,29 +7,31 @@ export default function (sequelize, DataTypes) {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Device.belongsTo(models.Donor);
     }
   }
-  Device.init({
-    DonorId: DataTypes.INTEGER,
-    LocationId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER,
-    ClientId: DataTypes.INTEGER,
-    deviceType: DataTypes.TEXT,
-    model: DataTypes.TEXT,
-    brand: DataTypes.TEXT,
-    serialNum: DataTypes.TEXT,
-    cpu: DataTypes.TEXT,
-    ram: DataTypes.TEXT,
-    os: DataTypes.TEXT,
-    username: DataTypes.TEXT,
-    password: DataTypes.TEXT,
-    condition: DataTypes.TEXT,
-    value: DataTypes.DECIMAL,
-    notes: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Device',
-  });
+  Device.init(
+    {
+      LocationId: DataTypes.INTEGER,
+      UserId: DataTypes.INTEGER,
+      ClientId: DataTypes.INTEGER,
+      deviceType: DataTypes.TEXT,
+      model: DataTypes.TEXT,
+      brand: DataTypes.TEXT,
+      serialNum: DataTypes.TEXT,
+      cpu: DataTypes.TEXT,
+      ram: DataTypes.TEXT,
+      os: DataTypes.TEXT,
+      username: DataTypes.TEXT,
+      password: DataTypes.TEXT,
+      condition: DataTypes.TEXT,
+      value: DataTypes.DECIMAL,
+      notes: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Device',
+    },
+  );
   return Device;
-};
+}

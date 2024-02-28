@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-export default function (sequelize, DataTypes){
+export default function (sequelize, DataTypes) {
   class Donor extends Model {
     /**
      * Helper method for defining associations.
@@ -9,20 +9,24 @@ export default function (sequelize, DataTypes){
      */
     static associate(models) {
       // define association here
+      Donor.hasMany(models.Device);
     }
   }
-  Donor.init({
-    name: DataTypes.TEXT,
-    phone: DataTypes.TEXT,
-    email: DataTypes.TEXT,
-    address1: DataTypes.TEXT,
-    address2: DataTypes.TEXT,
-    city: DataTypes.TEXT,
-    state: DataTypes.TEXT,
-    zip: DataTypes.TEXT
-  }, {
-    sequelize,
-    modelName: 'Donor',
-  });
+  Donor.init(
+    {
+      name: DataTypes.TEXT,
+      phone: DataTypes.TEXT,
+      email: DataTypes.TEXT,
+      address1: DataTypes.TEXT,
+      address2: DataTypes.TEXT,
+      city: DataTypes.TEXT,
+      state: DataTypes.TEXT,
+      zip: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Donor',
+    },
+  );
   return Donor;
-};
+}
