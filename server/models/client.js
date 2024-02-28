@@ -1,9 +1,6 @@
 import { Model } from 'sequelize';
 
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+export default function (sequelize, DataTypes) {
   class Client extends Model {
     /**
      * Helper method for defining associations.
