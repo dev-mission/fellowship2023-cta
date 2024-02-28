@@ -1,5 +1,3 @@
-'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Appointments', {
@@ -11,9 +9,21 @@ module.exports = {
       },
       ClientId: {
         type: Sequelize.INTEGER
+        references: {
+          model: {
+            tableName: 'Clients';
+          },
+          key: 'id';
+        },
       },
       LocationId: {
         type: Sequelize.INTEGER
+        references: {
+          model: {
+            tableName: 'Locations';
+          },
+          key: 'id';
+        },
       },
       dateTimeAt: {
         type: Sequelize.DATE
