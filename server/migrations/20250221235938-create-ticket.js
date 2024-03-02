@@ -91,7 +91,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface('Tickets', ['AppointmentId'], { unique: true });
+    await queryInterface.addIndex('Tickets', ['AppointmentId'], { unique: true });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Tickets');
