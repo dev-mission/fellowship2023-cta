@@ -12,6 +12,8 @@ export default function (sequelize, DataTypes) {
       Client.hasMany(models.Ticket);
       Client.hasMany(models.Device);
       Client.hasMany(models.Appointment);
+      Client.hasMany(models.CourseClient);
+      Client.belongsToMany(models.Course, { through: models.CourseClient });
     }
   }
   Client.init(
