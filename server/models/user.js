@@ -13,7 +13,8 @@ export default function (sequelize, DataTypes) {
      */
     // eslint-disable-next-line no-unused-vars
     static associate(models) {
-      // define association here
+      User.hasMany(models.Ticket);
+      User.hasMany(models.Device);
     }
 
     static isValidPassword(password) {
