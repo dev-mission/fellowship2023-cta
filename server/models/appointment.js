@@ -1,28 +1,27 @@
 import { Model } from 'sequelize';
 
 export default function (sequelize, DataTypes) {
-  class Appointments extends Model {
+  class Appointment extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(/*models*/) {
-      // define association here
+    static associate(models) {
+      Appointment.belongsTo(models.Client);
+      Appointment.belongsTo(models.Location);
     }
   }
-  Appointments.init(
+  Appointment.init(
     {
-      ClientId: DataTypes.INTEGER,
-      LocationId: DataTypes.INTEGER,
       dateTimeAt: DataTypes.DATE,
       notes: DataTypes.TEXT,
       isConfirmed: DataTypes.BOOLEAN,
     },
     {
       sequelize,
-      modelName: 'Appointments',
+      modelName: 'Appointment',
     },
   );
-  return Appointments;
+  return Appointment;
 }
