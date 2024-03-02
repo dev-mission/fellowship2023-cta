@@ -17,6 +17,7 @@ describe('models.User', () => {
       lastName: 'Doe',
       email: 'john.doe@test.com',
       password: 'abcd1234',
+      role: 'Admin',
     });
     assert.deepStrictEqual(user.id, null);
     await user.save();
@@ -36,10 +37,11 @@ describe('models.User', () => {
       lastName: '',
       email: '',
       password: '',
+      role: '',
     });
     await assert.rejects(user.save(), (error) => {
       assert(error instanceof models.Sequelize.ValidationError);
-      assert.deepStrictEqual(error.errors.length, 4);
+      assert.deepStrictEqual(error.errors.length, 6);
       assert(
         _.find(error.errors, {
           path: 'firstName',
@@ -74,6 +76,7 @@ describe('models.User', () => {
       lastName: 'Doe',
       email: 'regular.user@test.com',
       password: 'abcd1234',
+      role: 'Admin',
     });
     await assert.rejects(user.save(), (error) => {
       assert(error instanceof models.Sequelize.ValidationError);
@@ -125,6 +128,7 @@ describe('models.User', () => {
         email: 'test.user@test.com',
         password: 'abcd1234',
         picture,
+        role: 'Admin',
       });
       await user.save();
       await helper.sleep(100);

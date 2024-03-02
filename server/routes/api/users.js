@@ -59,7 +59,7 @@ router.patch('/:id', interceptors.requireLogin, (req, res) => {
         res.status(StatusCodes.NOT_FOUND).end();
         return;
       }
-      const attrs = ['firstName', 'lastName', 'email', 'password', 'picture'];
+      const attrs = ['firstName', 'lastName', 'email', 'password', 'picture', 'role'];
       if (req.user.isAdmin) {
         attrs.push('isAdmin');
       }

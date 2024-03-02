@@ -101,6 +101,7 @@ describe('/api/invites', () => {
           email: 'accepting.user@test.com',
           password: 'abcd1234',
           confirmPassword: 'abcd1234',
+          role: 'Admin',
         })
         .expect(StatusCodes.CREATED);
       const { id } = response.body;

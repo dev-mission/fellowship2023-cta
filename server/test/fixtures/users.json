@@ -7,7 +7,8 @@
       "lastName": "User",
       "email": "admin.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": true
+      "isAdmin": true,
+      "role": "Admin"
     }
   },
   {
@@ -18,7 +19,8 @@
       "lastName": "User",
       "email": "regular.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": false
+      "isAdmin": false,
+      "role": "Supervisor"
     }
   }
 ]

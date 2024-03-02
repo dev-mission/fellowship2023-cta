@@ -5,7 +5,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       ClientId: {
         type: Sequelize.INTEGER,
@@ -26,25 +26,26 @@ module.exports = {
         },
       },
       dateTimeAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       notes: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       isConfirmed: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
+    await queryInterface.addIndex('Appointments', ['ClientId', 'dateTimeAt'], { unique: true });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Appointments');
-  }
+  },
 };
