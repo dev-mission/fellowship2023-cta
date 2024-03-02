@@ -7,17 +7,16 @@ export default function (sequelize, DataTypes) {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(/*models*/) {
-      // define association here
+    static associate(models) {
+      Ticket.belongsTo(models.Appointment);
+      Ticket.belongsTo(models.Client);
+      Ticket.belongsTo(models.Location);
+      Ticket.belongsTo(models.User);
+      Ticket.belongsTo(models.Device);
     }
   }
   Ticket.init(
     {
-      AppointmentId: DataTypes.INTEGER,
-      ClientId: DataTypes.INTEGER,
-      LocationId: DataTypes.INTEGER,
-      UserId: DataTypes.INTEGER,
-      DeviceId: DataTypes.INTEGER,
       device: DataTypes.TEXT,
       problem: DataTypes.TEXT,
       troubleshooting: DataTypes.TEXT,

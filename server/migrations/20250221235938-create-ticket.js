@@ -91,6 +91,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryINterfacet('Tickets', ['AppointmentId'], { unique: true })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Tickets');
