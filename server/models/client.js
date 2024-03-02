@@ -9,6 +9,9 @@ export default function (sequelize, DataTypes) {
      */
     static associate(/*models*/) {
       // define association here
+      Client.hasMany(models.Ticket);
+      Client.hasMany(models.Device);
+      Client.hasMany(models.Appointment);
     }
   }
   Client.init(
