@@ -40,6 +40,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addIndex('Donors', ['name', 'phone', 'email'], { unique: true })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Donors');
