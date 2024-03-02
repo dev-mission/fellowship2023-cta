@@ -90,6 +90,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addIndex('Devices', ['serialNum'], { unique: true });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Devices');
