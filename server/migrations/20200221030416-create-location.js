@@ -34,6 +34,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addIndex('Locations', ['name', 'addressOne', 'addressTwo'], { unique: true })
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Locations');
