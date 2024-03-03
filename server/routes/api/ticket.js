@@ -77,7 +77,10 @@ router.post('/', async (req, res) => {
           "device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
         ]));
 
-        models.Ticket.setUser(req.body.UserId);
+        record.setLocation(req.body.LocationId);
+        record.setUser(req.body.UserId);
+        // record.setDevice(req.body.DeviceId);
+        // record.setClient(req.body.ClientId);
 
         res.status(StatusCodes.CREATED).json(record);
       } catch (err){
