@@ -46,12 +46,39 @@ router.delete('/:id', async (req, res) => {
       }
 });
 
+/*
+  User will send a post request with the following body:
+  
+  {
+      Ticket.belongsTo(models.Client);
+      Ticket.belongsTo(models.Location);
+      UserId: Models.User.id, // This is the user who is creating the ticket.
+      Ticket.belongsTo(models.Device); // If This device exist in the inventory use this.
+      device: DataTypes.TEXT,
+      problem: DataTypes.TEXT,
+      troubleshooting: DataTypes.TEXT,
+      resolution: DataTypes.TEXT,
+      dateOn: DataTypes.DATE,
+      timeInAt: DataTypes.DATE,
+      timeOutAt: DataTypes.DATE,
+      totalTime: DataTypes.INTEGER,
+      hasCharger: DataTypes.BOOLEAN,
+      notes: DataTypes.TEXT,
+
+  }
+
+*/
+
 router.post('/', async (req, res) => {
 
       try{
-        // const record = await models.Ticket.create(_.pick(req.body, [
-        //   "Name", "Location", "Rating", "Comment", "Map", "Photo",
-        // ]));
+
+        const record = await models.Ticket.create(_.pick(req.body, [
+          "device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
+        ]));
+
+        models.Ticket.setUser(req.body.UserId);
+
         res.status(StatusCodes.CREATED).json(record);
       } catch (err){
         console.log(err);
