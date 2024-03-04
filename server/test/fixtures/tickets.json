@@ -1,0 +1,49 @@
+[
+    {
+      "model": "Tickets",
+      "data":{
+        "id": 1,
+        "AppointmentId": 1,
+        "ClientId": 1,
+        "LocationId": 1,
+        "UserId": 1,
+        "DeviceId": 1,
+        "device": "Iphone-12",
+        "problem": "Broken screen",
+        "troubleshooting": "Told him to get it replace by apple",
+        "resolution": "He got it replaced",
+        "dateOn": "2024-03-04",
+        "timeInAt": "2024-03-04",
+        "timeOutAt": "2024-03-04",
+        "totalTime": "2024-03-04",
+        "hasCharger": "yes",
+        "notes": null,
+        "createdAt": "2024-03-04",
+        "updatedAt": "2024-03-04"
+      }
+    },
+    {
+      "model": "Tickets",
+      "data": {
+        "id": null,
+        "AppointmentId": null,
+        "ClientId": null,
+        "LocationId": null,
+        "UserId": null,
+        "DeviceId": null,
+        "device": null,
+        "problem": null,
+        "troubleshooting": null,
+        "resolution": null,
+        "dateOn": null,
+        "timeInAt": null,
+        "timeOutAt": null,
+        "totalTime": null,
+        "hasCharger": null,
+        "notes": null,
+        "createdAt": null,
+        "updatedAt": null
+      }
+    }
+  ]
+  

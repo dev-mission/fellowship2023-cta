@@ -73,6 +73,7 @@ router.post('/', async (req, res) => {
 
       try{
 
+
         const record = await models.Ticket.create(_.pick(req.body, [
           "device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
         ]));
