@@ -77,11 +77,16 @@ router.post('/', async (req, res) => {
         const record = await models.Ticket.create(_.pick(req.body, [
           "device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
         ]));
+        
+        if(req.body.ClientId === undefined){
 
+        }
+        if(req.body.DeviceId === undefined){
+        }
         record.setLocation(req.body.LocationId);
         record.setUser(req.body.UserId);
-        // record.setDevice(req.body.DeviceId);
-        // record.setClient(req.body.ClientId);
+        record.setDevice(req.body.DeviceId);
+        record.setClient(req.body.ClientId);
 
         res.status(StatusCodes.CREATED).json(record);
       } catch (err){
