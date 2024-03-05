@@ -1,0 +1,15 @@
+[
+    {
+      "model": "Appointment",
+      "data":{
+        "id": 1,
+        "ClientId": 1,
+        "LocationId": 1,
+        "dateTimeAt": "2024-03-04",
+        "notes": "TESTING THE APPOINTMENTS",
+        "isConfirmed": true
+      }
+  
+    }
+  ]
+  

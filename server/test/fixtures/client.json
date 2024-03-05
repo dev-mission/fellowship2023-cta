@@ -1,0 +1,18 @@
+[
+    {
+      "model": "Client",
+      "data":{
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Doe",
+        "age": "24",
+        "phone": "123-456-7890",
+        "email": "john.doe@gmail.com",
+        "ethnicity": "Caucasian",
+        "address": "123 Main St, Anytown, USA",
+        "gender": "Male",
+        "language": "English"
+      }
+  
+    }
+  ]

@@ -1,0 +1,14 @@
+[
+    {
+      "model": "User",
+      "data":{
+        "id": 1,
+        "firstName": "Kevin",
+        "lastName": "Li",
+        "role": "CTA",
+        "email": "KevinLi@gmail.com",
+        "phone": "123-456-7890"
+      }
+  
+    }
+  ]
