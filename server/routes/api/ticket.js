@@ -67,27 +67,25 @@ router.delete('/:id', async (req, res) => {
 
   }
 
-*/
+  user first fetch from the client table to see if the client exist, if not create a new client.
 
+*/
 router.post('/', async (req, res) => {
 
       try{
 
 
         const record = await models.Ticket.create(_.pick(req.body, [
-          "device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
+          "firstName","lastName","language","device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
         ]));
-        
-        if(req.body.ClientId === undefined){
-
-        }
-        if(req.body.DeviceId === undefined){
-        }
-        record.setLocation(req.body.LocationId);
-        record.setUser(req.body.UserId);
-        record.setDevice(req.body.DeviceId);
-        record.setClient(req.body.ClientId);
-
+        const client = await models.Client.findByPk(req.body.ClientId);
+        const location = await models.Location.findByPk(req.body.LocationId);
+        const user = await models.User.findByPk(req.body.UserId);
+        const device = await models.Device.findByPk(req.body.DeviceId);
+        record.setLocation(location);
+        record.setUser(user);
+        record.setDevice(device);
+        record.setClient(client);
         res.status(StatusCodes.CREATED).json(record);
       } catch (err){
         console.log(err);
