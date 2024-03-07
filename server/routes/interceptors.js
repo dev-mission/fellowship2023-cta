@@ -126,8 +126,29 @@ function requireAdmin(req, res, next) {
   requireLoginInternal(req, res, next, true);
 }
 
+function requireCTA(req, res, next){
+  if(req.user && req.user.role === "CTA"){
+    next();
+  } else {
+    sendErrorUnauthorized(req, res);
+  }
+}
+
+function requireInventory(req, res, next){
+  if(req.user && req.user.role === "Inventory"){
+    next();
+  } else {
+    sendErrorUnauthorized(req, res);
+  }
+}
+
+
+
 export default {
   passport,
   requireLogin,
   requireAdmin,
+  requireCTA,
+  requireInventory
+
 };
