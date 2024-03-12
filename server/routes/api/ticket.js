@@ -67,25 +67,29 @@ router.delete('/:id', async (req, res) => {
 
   }
 
-  user first fetch from the client table to see if the client exist, if not create a new client.
+  Situations
+
+  No DeviceId: use device name
+  No ClientId:  use a Client Model
+
 
 */
 router.post('/', async (req, res) => {
 
       try{
+        let ticket;
+        let ticketInfo;
+        if(req.body.ClientId === undefined){
+          ticket["client"] = _.pick(req.body, ["firstName", "lastName", "email", "phone", "address", "ethnicity", "language", "gender","age"]);
+        }
+        else {
+          ticket["ClientId"] = req.body.ClientId;
+        }
+        
+        ticketInfo = _.pick(req.body, ["device","problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes"]);
+        ticket = {...ticketInfo, UserId: req.body.UserId, LocationId: req.body.LocationId};
 
-
-        const record = await models.Ticket.create(_.pick(req.body, [
-          "firstName","lastName","language","device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
-        ]));
-        const client = await models.Client.findByPk(req.body.ClientId);
-        const location = await models.Location.findByPk(req.body.LocationId);
-        const user = await models.User.findByPk(req.body.UserId);
-        const device = await models.Device.findByPk(req.body.DeviceId);
-        record.setLocation(location);
-        record.setUser(user);
-        record.setDevice(device);
-        record.setClient(client);
+        const record = await models.Ticket.create(ticket, {include: [models.Client]});
         res.status(StatusCodes.CREATED).json(record);
       } catch (err){
         console.log(err);

@@ -24,7 +24,7 @@
      {
       "model": "Ticket",
       "data":{
-        "id": 1,
+        "id": 2,
         "AppointmentId": 1,
         "ClientId": 1,
         "LocationId": 1,
