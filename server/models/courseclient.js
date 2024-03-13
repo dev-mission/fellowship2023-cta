@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-export default function (sequelize, DataTypes) {
+export default function (sequelize) {
   class CourseClient extends Model {
     /**
      * Helper method for defining associations.
@@ -12,9 +12,7 @@ export default function (sequelize, DataTypes) {
     }
   }
   CourseClient.init(
-    {
-
-    },
+    {},
     {
       sequelize,
       modelName: 'CourseClient',

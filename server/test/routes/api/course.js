@@ -1,11 +1,10 @@
 import assert from 'assert';
 import { StatusCodes } from 'http-status-codes';
-import _ from 'lodash';
 import session from 'supertest-session';
 
 import helper from '../../helper.js';
 import app from '../../../app.js';
-import models from '../../../models/index.js'
+import models from '../../../models/index.js';
 
 describe('/api/courses', () => {
   let testSession;
@@ -16,9 +15,7 @@ describe('/api/courses', () => {
   });
 
   it('creates a new Course', async () => {
-    const response = await testSession.post('/api/courses')
-    .send({name: 'Created Name'})
-    .expect(StatusCodes.CREATED);
+    const response = await testSession.post('/api/courses').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
 
     const record = await models.Course.findByPk(response.body.id);
     assert.deepStrictEqual(record.name, 'Created Name');
@@ -35,15 +32,13 @@ describe('/api/courses', () => {
   });
 
   it('updates an existing Course', async () => {
-    await testSession.patch('/api/courses/1001')
-    .send({name: 'Updated Name'})
-    .expect(StatusCodes.OK)
+    await testSession.patch('/api/courses/1001').send({ name: 'Updated Name' }).expect(StatusCodes.OK);
   });
 
   it('deletes an existing Course', async () => {
-    await testSession.delete('/api/courses/1001').expect (StatusCodes.OK);
+    await testSession.delete('/api/courses/1001').expect(StatusCodes.OK);
 
     const record = await models.Course.findByPk(1001);
     assert.deepStrictEqual(record, null);
-  })
-})
+  });
+});
