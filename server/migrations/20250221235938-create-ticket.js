@@ -43,14 +43,8 @@ module.exports = {
           key: 'id',
         },
       },
-      DeviceId: {
+      serialNumber: {
         type: Sequelize.INTEGER,
-        reference: {
-          model: {
-            tableName: 'Devices',
-          },
-          key: 'id',
-        },
       },
       device: {
         type: Sequelize.TEXT,

@@ -12,11 +12,11 @@ export default function (sequelize, DataTypes) {
       Ticket.belongsTo(models.Client);
       Ticket.belongsTo(models.Location);
       Ticket.belongsTo(models.User);
-      Ticket.belongsTo(models.Device);
     }
   }
   Ticket.init(
     {
+      serialNumber: DataTypes.INTEGER,
       device: DataTypes.TEXT,
       problem: DataTypes.TEXT,
       troubleshooting: DataTypes.TEXT,

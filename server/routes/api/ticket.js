@@ -88,7 +88,7 @@ router.post('/', async (req, res) => {
   try {
     let ticket = {};
     let ticketInfo;
-    if (req.body.ClientId) {
+    if (req.body.ClientId !== undefined) {
       ticket['ClientId'] = req.body.ClientId;
     } else {
       ticket['client'] = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone', 'address', 'ethnicity', 'language', 'gender', 'age']);
