@@ -42,7 +42,7 @@ module.exports = {
     });
     await queryInterface.addIndex('Donors', ['name', 'phone', 'email'], { unique: true });
         // set starting id to larger value so it doesn't conflict with test fixtures
-        await queryInterface.sequelize.query('ALTER SEQUENCE "Users_id_seq" RESTART WITH 100;');
+        await queryInterface.sequelize.query('ALTER SEQUENCE "Donors_id_seq" RESTART WITH 100;');
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Donors');
