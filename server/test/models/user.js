@@ -17,7 +17,6 @@ describe('models.User', () => {
       lastName: 'Doe',
       email: 'john.doe@test.com',
       password: 'abcd1234',
-      role: 'Admin',
     });
     assert.deepStrictEqual(user.id, null);
     await user.save();
@@ -37,11 +36,11 @@ describe('models.User', () => {
       lastName: '',
       email: '',
       password: '',
-      role: '',
+      isAdmin: false,
     });
     await assert.rejects(user.save(), (error) => {
       assert(error instanceof models.Sequelize.ValidationError);
-      assert.deepStrictEqual(error.errors.length, 6);
+      assert.deepStrictEqual(error.errors.length, 4);
       assert(
         _.find(error.errors, {
           path: 'firstName',
@@ -74,9 +73,8 @@ describe('models.User', () => {
     const user = models.User.build({
       firstName: 'John',
       lastName: 'Doe',
-      email: 'regular.user@test.com',
+      email: 'cta.user@test.com',
       password: 'abcd1234',
-      role: 'Admin',
     });
     await assert.rejects(user.save(), (error) => {
       assert(error instanceof models.Sequelize.ValidationError);
@@ -92,9 +90,9 @@ describe('models.User', () => {
   });
 
   it('validates email uniqueness on update', async () => {
-    const user = await models.User.findByPk(2);
+    const user = await models.User.findByPk(222221);
     assert(user);
-    assert.deepStrictEqual(user.email, 'regular.user@test.com');
+    assert.deepStrictEqual(user.email, 'cta.user@test.com');
     user.email = 'admin.user@test.com';
     await assert.rejects(user.save(), (error) => {
       assert(error instanceof models.Sequelize.ValidationError);

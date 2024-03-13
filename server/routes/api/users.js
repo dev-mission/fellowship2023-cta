@@ -16,6 +16,7 @@ router.get('/', interceptors.requireAdmin, async (req, res) => {
       ['lastName', 'ASC'],
       ['firstName', 'ASC'],
       ['email', 'ASC'],
+      ['role', 'ASC'],
     ],
   });
   helpers.setPaginationHeaders(req, res, page, pages, total);
@@ -59,9 +60,11 @@ router.patch('/:id', interceptors.requireLogin, (req, res) => {
         res.status(StatusCodes.NOT_FOUND).end();
         return;
       }
-      const attrs = ['firstName', 'lastName', 'email', 'password', 'picture', 'role'];
+      const attrs = ['firstName', 'lastName', 'email', 'password', 'picture'];
       if (req.user.isAdmin) {
         attrs.push('isAdmin');
+      } else if (req.user.role == 'CTA' || req.user.role == 'Inventory') {
+        attrs.push('role');
       }
       await user.update(_.pick(req.body, attrs), { transaction });
       res.json(user.toJSON());
