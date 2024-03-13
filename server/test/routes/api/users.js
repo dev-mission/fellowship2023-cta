@@ -30,8 +30,9 @@ describe('/api/users', () => {
         assert.deepStrictEqual(response.body?.length, 3);
 
         const users = response.body;
-        assert.deepStrictEqual(users[0].firstName, 'Admin');
-        assert.deepStrictEqual(users[1].firstName, 'Regular');
+        assert.deepStrictEqual(users[0].firstName, 'Kevin');
+        assert.deepStrictEqual(users[1].firstName, 'Admin');
+        assert.deepStrictEqual(users[2].firstName, 'Regular');
       });
     });
 
