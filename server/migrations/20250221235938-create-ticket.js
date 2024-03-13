@@ -9,7 +9,7 @@ module.exports = {
       },
       AppointmentId: {
         type: Sequelize.INTEGER,
-        reference: {
+        references: {
           model: {
             tableName: 'Appointments',
           },
@@ -18,7 +18,7 @@ module.exports = {
       },
       ClientId: {
         type: Sequelize.INTEGER,
-        reference: {
+        references: {
           model: {
             tableName: 'Clients',
           },
@@ -27,7 +27,7 @@ module.exports = {
       },
       LocationId: {
         type: Sequelize.INTEGER,
-        reference: {
+        references: {
           model: {
             tableName: 'Locations',
           },
@@ -36,7 +36,7 @@ module.exports = {
       },
       UserId: {
         type: Sequelize.INTEGER,
-        reference: {
+        references: {
           model: {
             tableName: 'Users',
           },
@@ -86,6 +86,8 @@ module.exports = {
       },
     });
     await queryInterface.addIndex('Tickets', ['AppointmentId'], { unique: true });
+    // set starting id to larger value so it doesn't conflict with test fixtures
+    await queryInterface.sequelize.query('ALTER SEQUENCE "Tickets_id_seq" RESTART WITH 100;');
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Tickets');

@@ -95,6 +95,8 @@ router.post('/', async (req, res) => {
     }
 
     ticketInfo = _.pick(req.body, [
+      'serialNumber',
+      'AppointmentId',
       'device',
       'problem',
       'troubleshooting',
@@ -106,7 +108,7 @@ router.post('/', async (req, res) => {
       'hasCharger',
       'notes',
     ]);
-    ticket = { ...ticketInfo, UserId: req.body.UserId, LocationId: req.body.LocationId };
+    ticket = { ...ticket, ...ticketInfo, UserId: req.body.UserId, LocationId: req.body.LocationId };
     const record = await models.Ticket.create(ticket, { include: [models.Client] });
     res.status(StatusCodes.CREATED).json(record);
   } catch (err) {

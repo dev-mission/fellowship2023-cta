@@ -6,6 +6,7 @@
       "firstName": "Admin",
       "lastName": "User",
       "email": "admin.user@test.com",
+      "phone": "123-456-7890",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": true,
       "role": "Admin"
@@ -18,9 +19,23 @@
       "firstName": "Regular",
       "lastName": "User",
       "email": "regular.user@test.com",
+      "phone": "123-456-7890",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": false,
       "role": "Supervisor"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 3,
+      "firstName": "Kevin",
+      "lastName": "Li",
+      "role": "CTA",
+      "email": "KevinLi@gmail.com",
+      "phone": "123-456-7890",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
     }
   }
 ]

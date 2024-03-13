@@ -10,5 +10,17 @@
       "state": "California",
       "zipCode": "94107"
     }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 2,
+      "name": "Hayes Valley",
+      "address1": "450 Laguna St",
+      "address2": "N/A",
+      "city": "San Francisco",
+      "state": "California",
+      "zipCode": "94107"
+    }
   }
 ]

@@ -13,5 +13,20 @@
       "gender": "Male",
       "language": "English"
     }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 2,
+      "firstName": "Apple",
+      "lastName": "Bees",
+      "age": "24",
+      "phone": "123-456-7890",
+      "email": "john.doe@gmail.com",
+      "ethnicity": "Caucasian",
+      "address": "123 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "English"
+    }
   }
 ]

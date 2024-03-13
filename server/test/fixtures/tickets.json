@@ -7,7 +7,7 @@
       "ClientId": 1,
       "LocationId": 1,
       "UserId": 1,
-      "DeviceId": 1,
+      "serialNumber": 123456789,
       "problem": "Broken screen",
       "troubleshooting": "Told him to get it replace by apple",
       "resolution": "He got it replaced",
