@@ -118,13 +118,13 @@ export default function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         validate: {
           isStrong(value) {
-            if(value != null) {
+            if (value != null) {
               return;
             }
             if (value.match(/(Inventory|CTA)/) == null) {
               throw new Error('Role must be Inventory or CTA.');
             }
-          }, 
+          },
         },
       },
       fullNameAndEmail: {
