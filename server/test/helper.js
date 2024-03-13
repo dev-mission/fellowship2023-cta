@@ -54,6 +54,7 @@ async function resetDatabase() {
   await models.sequelize.query(`
     DELETE FROM "Invites";
     DELETE FROM "Users";
+    DELETE FROM "Courses";
   `);
 }
 

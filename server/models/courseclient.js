@@ -7,11 +7,14 @@ export default function (sequelize, DataTypes) {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      CourseId.belongsTo(models.Course);
-      ClientId.belongsTo(models.Client);
+      CourseClient.belongsTo(models.Course);
+      CourseClient.belongsTo(models.Client);
     }
   }
   CourseClient.init(
+    {
+
+    },
     {
       sequelize,
       modelName: 'CourseClient',
