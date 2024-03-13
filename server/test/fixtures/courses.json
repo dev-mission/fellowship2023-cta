@@ -1,0 +1,23 @@
+[
+  {
+    "model": "Course",
+    "data": {
+      "id": 1000,
+      "name": "Fixture Course 1000"
+    }
+  },
+  {
+    "model": "Course",
+    "data": {
+      "id": 1001,
+      "name": "Fixture Course 1001"
+    }
+  },
+  {
+    "model": "Course",
+    "data": {
+      "id": 1002,
+      "name": "Fixture Course 1002"
+    }
+  }
+]
