@@ -36,6 +36,7 @@ describe('/api/ticket', () => {
     const response = await testSession
       .post('/api/ticket')
       .send({
+        id: 3,
         AppointmentId: 1,
         ClientId: 1,
         LocationId: 1,
