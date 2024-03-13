@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 
 import models from '../../models/index.js';
-import interceptors from '../interceptors.js';
 
 const router = express.Router();
 
@@ -46,9 +45,7 @@ router.delete('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const record = await models.Location.create(
-      _.pick(req.body, ['name', 'address1', 'address2', 'city', 'state', 'zipCode']),
-    );
+    const record = await models.Location.create(_.pick(req.body, ['name', 'address1', 'address2', 'city', 'state', 'zipCode']));
     res.status(StatusCodes.CREATED).json(record);
   } catch (err) {
     console.log(err);

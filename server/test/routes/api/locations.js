@@ -1,11 +1,10 @@
 import assert from 'assert';
 import { StatusCodes } from 'http-status-codes';
-import _ from 'lodash';
 import session from 'supertest-session';
 
 import helper from '../../helper.js';
 import app from '../../../app.js';
-import models from '../../../models/index.js'
+import models from '../../../models/index.js';
 
 describe('/api/locations', () => {
   let testSession;
@@ -16,9 +15,7 @@ describe('/api/locations', () => {
   });
 
   it('creates a new Location', async () => {
-    const response = await testSession.post('/api/locations')
-    .send({name: 'Created Name'})
-    .expect(StatusCodes.CREATED);
+    const response = await testSession.post('/api/locations').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
 
     const record = await models.Location.findByPk(response.body.id);
     assert.deepStrictEqual(record.name, 'Created Name');
@@ -35,15 +32,13 @@ describe('/api/locations', () => {
   });
 
   it('updates an existing Location', async () => {
-    await testSession.patch('/api/locations/111')
-    .send({name: 'Updated Name'})
-    .expect(StatusCodes.OK)
+    await testSession.patch('/api/locations/111').send({ name: 'Updated Name' }).expect(StatusCodes.OK);
   });
 
   it('deletes an existing Locatiion', async () => {
-    await testSession.delete('/api/locations/111').expect (StatusCodes.OK);
+    await testSession.delete('/api/locations/111').expect(StatusCodes.OK);
 
     const record = await models.Location.findByPk(111);
     assert.deepStrictEqual(record, null);
-  })
-})
+  });
+});
