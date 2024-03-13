@@ -4,6 +4,7 @@ import authRoutes from './auth.js';
 import invitesRoutes from './invites.js';
 import passwordsRoutes from './passwords.js';
 import usersRoutes from './users.js';
+import usersCourses from './courses.js';
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use('/auth', authRoutes);
 router.use('/invites', invitesRoutes);
 router.use('/passwords', passwordsRoutes);
 router.use('/users', usersRoutes);
+router.use('/courses', usersCourses);
 
 export default router;
