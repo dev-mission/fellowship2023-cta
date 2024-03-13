@@ -7,43 +7,53 @@ import models from '../../models/index.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    const records = await models.Ticket.findAll();
-    res.json(records);
+  const records = await models.Ticket.findAll();
+  res.json(records);
 });
 
 router.get('/:id', async (req, res) => {
-    try{
-        const record = await models.Ticket.findByPk(req.params.id);
-        res.json(record);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
-    }
+  try {
+    const record = await models.Ticket.findByPk(req.params.id);
+    res.json(record);
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
 });
 
 router.patch('/:id', async (req, res) => {
-    try{
-        const record = await models.Ticket.findByPk(req.params.id);
-        await record.update(_.pick(req.body, [
-          "device", "problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes",
-        ]));
-        res.json(record);
-      } catch (err){
-        console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
-      }
+  try {
+    const record = await models.Ticket.findByPk(req.params.id);
+    await record.update(
+      _.pick(req.body, [
+        'device',
+        'problem',
+        'troubleshooting',
+        'resolution',
+        'dateOn',
+        'timeInAt',
+        'timeOutAt',
+        'totalTime',
+        'hasCharger',
+        'notes',
+      ]),
+    );
+    res.json(record);
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
 });
 
 router.delete('/:id', async (req, res) => {
-    try{
-        const record = await models.Ticket.findByPk(req.params.id);
-        await record.destroy();
-        res.status(StatusCodes.OK).end();
-      } catch (err){
-        console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
-      }
+  try {
+    const record = await models.Ticket.findByPk(req.params.id);
+    await record.destroy();
+    res.status(StatusCodes.OK).end();
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
 });
 
 /*
@@ -75,26 +85,34 @@ router.delete('/:id', async (req, res) => {
 
 */
 router.post('/', async (req, res) => {
+  try {
+    let ticket = {};
+    let ticketInfo;
+    if (req.body.ClientId) {
+      ticket['ClientId'] = req.body.ClientId;
+    } else {
+      ticket['client'] = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone', 'address', 'ethnicity', 'language', 'gender', 'age']);
+    }
 
-      try{
-        let ticket;
-        let ticketInfo;
-        if(req.body.ClientId === undefined){
-          ticket["client"] = _.pick(req.body, ["firstName", "lastName", "email", "phone", "address", "ethnicity", "language", "gender","age"]);
-        }
-        else {
-          ticket["ClientId"] = req.body.ClientId;
-        }
-        
-        ticketInfo = _.pick(req.body, ["device","problem", "troubleshooting", "resolution", "dateOn", "timeInAt", "timeOutAt", "totalTime", "hasCharger", "notes"]);
-        ticket = {...ticketInfo, UserId: req.body.UserId, LocationId: req.body.LocationId};
-
-        const record = await models.Ticket.create(ticket, {include: [models.Client]});
-        res.status(StatusCodes.CREATED).json(record);
-      } catch (err){
-        console.log(err);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
-      }
+    ticketInfo = _.pick(req.body, [
+      'device',
+      'problem',
+      'troubleshooting',
+      'resolution',
+      'dateOn',
+      'timeInAt',
+      'timeOutAt',
+      'totalTime',
+      'hasCharger',
+      'notes',
+    ]);
+    ticket = { ...ticketInfo, UserId: req.body.UserId, LocationId: req.body.LocationId };
+    const record = await models.Ticket.create(ticket, { include: [models.Client] });
+    res.status(StatusCodes.CREATED).json(record);
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
 });
 
 export default router;

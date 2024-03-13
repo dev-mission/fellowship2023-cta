@@ -4,7 +4,7 @@ import authRoutes from './auth.js';
 import invitesRoutes from './invites.js';
 import passwordsRoutes from './passwords.js';
 import usersRoutes from './users.js';
-import ticketRoutes from "./ticket.js";
+import ticketRoutes from './ticket.js';
 
 const router = express.Router();
 

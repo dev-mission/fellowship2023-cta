@@ -1,25 +1,24 @@
 [
-    {
-      "model": "Device",
-      "data":{
-        "id": 1,
-        "DonorId": 1,
-        "LocationId": 1,
-        "UserId": 1,
-        "ClientId": 1,
-        "deviceType": "Laptop",
-        "model": "MacoBook Pro",
-        "brand": "Apple",
-        "serialNum": "1234567890",
-        "cpu": "Intel Core i7",
-        "ram": "16GB",
-        "os": "MacOS",
-        "username": "admin",
-        "password": "admin",
-        "condition": "Good",
-        "value": "1000.00",
-        "notes": "This is a test device."
-      }
-  
+  {
+    "model": "Device",
+    "data": {
+      "id": 1,
+      "DonorId": 1,
+      "LocationId": 1,
+      "UserId": 1,
+      "ClientId": 1,
+      "deviceType": "Laptop",
+      "model": "MacoBook Pro",
+      "brand": "Apple",
+      "serialNum": "1234567890",
+      "cpu": "Intel Core i7",
+      "ram": "16GB",
+      "os": "MacOS",
+      "username": "admin",
+      "password": "admin",
+      "condition": "Good",
+      "value": "1000.00",
+      "notes": "This is a test device."
     }
-  ]
+  }
+]
