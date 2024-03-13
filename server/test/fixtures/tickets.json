@@ -1,0 +1,42 @@
+[
+    {
+      "model": "Ticket",
+      "data": {
+        "id": 1,
+        "AppointmentId": 1,
+        "ClientId": 1,
+        "LocationId": 1,
+        "UserId": 1,
+        "DeviceId": 1,
+        "problem": "Broken screen",
+        "troubleshooting": "Told him to get it replace by apple",
+        "resolution": "He got it replaced",
+        "dateOn": "2024-03-04T17:23:21.675Z",
+        "timeInAt": "2024-03-04T17:23:21.675Z",
+        "timeOutAt": "2024-03-04T17:23:21.675Z",
+        "totalTime": 10,
+        "hasCharger": true,
+        "notes": "TESTING TICKETS"
+      }
+    },
+    {
+      "model": "Ticket",
+      "data": {
+        "id": 2,
+        "AppointmentId": 2,
+        "ClientId": 2,
+        "LocationId": 2,
+        "UserId": 2,
+        "device": "Iphone-12",
+        "problem": "Broken screen",
+        "troubleshooting": "Told him to get it replace by apple",
+        "resolution": "He got it replaced",
+        "dateOn": "2024-03-04T17:23:21.675Z",
+        "timeInAt": "2024-03-04T17:23:21.675Z",
+        "timeOutAt": "2024-03-04T17:23:21.675Z",
+        "totalTime": 10,
+        "hasCharger": true,
+        "notes": "TESTING TICKETS"
+      }
+    }
+  ]

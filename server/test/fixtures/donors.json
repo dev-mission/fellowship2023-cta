@@ -2,7 +2,7 @@
   {
     "model": "Donor",
     "data": {
-      "id": 81273098,
+      "id": 1,
       "name": "fixture name test 1",
       "phone": "fixture phone test 1",
       "email": "fixture email test 1",
@@ -16,7 +16,7 @@
   {
     "model": "Donor",
     "data": {
-      "id": 81273099,
+      "id": 2,
       "name": "fixture name test 2",
       "phone": "fixture phone test 2",
       "email": "fixture email test 2",
@@ -30,7 +30,7 @@
   {
     "model": "Donor",
     "data": {
-      "id": 81273100,
+      "id": 3,
       "name": "fixture name test 3",
       "phone": "fixture phone test 3",
       "email": "fixture email test 3",
@@ -44,7 +44,7 @@
   {
     "model": "Donor",
     "data": {
-      "id": 81273101,
+      "id": 4,
       "name": "fixture name test 4",
       "phone": "fixture phone test 4",
       "email": "fixture email test 4",

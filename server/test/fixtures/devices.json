@@ -1,0 +1,91 @@
+[
+    {
+      "model": "Device",
+      "data": {
+        "id": 1,
+        "DonorId": 1,
+        "LocationId":1,
+        "UserId": 1,
+        "ClientId": 1,
+        "deviceType": "laptop",
+        "model": "fixture model test 1",
+        "brand": "fixture brand test 1",
+        "serialNum": "fixture serial test 1",
+        "cpu": "fixture cpu test 1",
+        "ram": "fixture ram test 1",
+        "os": "fixture os test 1",
+        "username": "fixture username test 1",
+        "password": "fixture password test 1",
+        "condition": "fixture condition test 1",
+        "value": 100.00,
+        "notes": "fixture notes test 1"
+      }
+    },
+    {
+      "model": "Device",
+      "data": {
+        "id": 2,
+        "DonorId": 2,
+        "LocationId":2,
+        "UserId": 2,
+        "ClientId": 2,
+        "deviceType": "fixture device type test 1",
+        "model": "fixture model test 1",
+        "brand": "fixture brand test 1",
+        "serialNum": "fixture serial test 1",
+        "cpu": "fixture cpu test 1",
+        "ram": "fixture ram test 1",
+        "os": "fixture os test 1",
+        "username": "fixture username test 1",
+        "password": "fixture password test 1",
+        "condition": "fixture condition test 1",
+        "value": 300.00,
+        "notes": "fixture notes test 1"
+      }
+    },
+    {
+      "model": "Device",
+      "data": {
+        "id": 3,
+        "DonorId": 3,
+        "LocationId":3,
+        "UserId": 3,
+        "ClientId": 3,
+        "deviceType": "device",
+        "model": "fixture phone test 1",
+        "brand": "fixture email test 1",
+        "serialNum": "fixture address1 test 1",
+        "cpu": "fixture address2 test 1",
+        "ram": "fixture ram test 1",
+        "os": "fixture os test 1",
+        "username": "fixture username test 1",
+        "password": "fixture password test 1",
+        "condition": "fixture condition test 1",
+        "value": 450.00,
+        "notes": "fixture notes test 1"
+      }
+    },
+    {
+      "model": "Device",
+      "data": {
+        "id": 4,
+        "DonorId": 4,
+        "LocationId":4,
+        "UserId": 4,
+        "ClientId": 4,
+        "deviceType": "device",
+        "model": "fixture phone test 1",
+        "brand": "fixture email test 1",
+        "serialNum": "fixture address1 test 1",
+        "cpu": "fixture address2 test 1",
+        "ram": "fixture ram test 1",
+        "os": "fixture os test 1",
+        "username": "fixture username test 1",
+        "password": "fixture password test 1",
+        "condition": "fixture condition test 1",
+        "value": 175.99,
+        "notes": "fixture notes test 1"
+      }
+    }
+  ]
+  

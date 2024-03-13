@@ -1,0 +1,50 @@
+[
+    {
+      "model": "Appointment",
+      "data": {
+        "id": 1,
+        "ClientId": 1,
+        "LocationId": 1,
+        "dateTimeAt": "2024-03-04",
+        "notes": "TESTING THE APPOINTMENTS",
+        "isConfirmed": true
+      }
+    },
+
+    {
+      "model": "Appointment",
+      "data": {
+        "id": 2,
+        "ClientId": 2,
+        "LocationId": 2,
+        "dateTimeAt": "2024-03-04",
+        "notes": "TESTING THE APPOINTMENTS",
+        "isConfirmed": true
+      }
+    },
+
+    {
+      "model": "Appointment",
+      "data": {
+        "id": 3,
+        "ClientId": 3,
+        "LocationId": 3,
+        "dateTimeAt": "2024-03-04",
+        "notes": "TESTING THE APPOINTMENTS",
+        "isConfirmed": true
+      }
+    },
+
+    {
+      "model": "Appointment",
+      "data": {
+        "id": 4,
+        "ClientId": 4,
+        "LocationId": 4,
+        "dateTimeAt": "2024-03-04",
+        "notes": "TESTING THE APPOINTMENTS",
+        "isConfirmed": true
+      }
+    }
+    
+  ]
