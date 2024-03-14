@@ -57,12 +57,11 @@ async function resetDatabase() {
   DELETE FROM "Appointments";
   DELETE FROM "CourseClients";
   DELETE FROM "Clients";
-    DELETE FROM "Invites";
-    DELETE FROM "Donors";
-    DELETE FROM "Users";
-    DELETE FROM "Locations";
-    DELETE FROM "Courses";
-    
+  DELETE FROM "Invites";
+  DELETE FROM "Donors";
+  DELETE FROM "Users";
+  DELETE FROM "Locations";
+  DELETE FROM "Courses";
   `);
 }
 

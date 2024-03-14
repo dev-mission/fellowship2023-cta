@@ -33,7 +33,7 @@ describe('models.Donor', () => {
   });
 
   it('finds an Donor record by ID', async () => {
-    const record = await models.Donor.findByPk(81273098);
+    const record = await models.Donor.findByPk(1);
     assert.deepStrictEqual(record.name, 'fixture name test 1');
     assert.deepStrictEqual(record.phone, 'fixture phone test 1');
   });
@@ -49,7 +49,7 @@ describe('models.Donor', () => {
 
   it('deletes an Donor record', async () => {
     assert.deepStrictEqual(await models.Donor.count(), 4);
-    const record = await models.Donor.findByPk(81273098);
+    const record = await models.Donor.findByPk(4);
     await record.destroy();
     assert.deepStrictEqual(await models.Donor.count(), 3);
   });

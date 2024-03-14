@@ -28,7 +28,6 @@ describe('/api/users', () => {
         /// request user list
         const response = await testSession.get('/api/users').set('Accept', 'application/json').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body?.length, 5);
-
         const users = response.body;
         assert.deepStrictEqual(users[0].firstName, 'Admin');
         assert.deepStrictEqual(users[1].firstName, 'Admin');
@@ -48,6 +47,24 @@ describe('/api/users', () => {
           firstName: 'CTA',
           lastName: 'User',
           email: 'cta.user@test.com',
+          role: 'CTA',
+          isAdmin: false,
+          picture: null,
+          pictureUrl: null,
+          role: 'CTA',
+        });
+      });
+    });
+
+    describe('GET /:id where id=3', () => {
+      it('returns a User by its id and checking its role', async () => {
+        /// request user list
+        const response = await testSession.get('/api/users/3').set('Accept', 'application/json').expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.body, {
+          id: 3,
+          firstName: 'Kevin',
+          lastName: 'Li',
+          email: 'KevinLi@gmail.com',
           role: 'CTA',
           isAdmin: false,
           picture: null,
@@ -77,6 +94,7 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          role: 'CTA',
         });
       });
 
