@@ -6,7 +6,6 @@
       "firstName": "Admin",
       "lastName": "User",
       "email": "admin.user@test.com",
-      "phone": "123-456-7890",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": true
     }
