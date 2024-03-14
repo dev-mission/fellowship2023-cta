@@ -64,7 +64,6 @@
       "lastName": "Li",
       "role": "CTA",
       "email": "KevinLi@gmail.com",
-      "phone": "123-456-7890",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": false
     }
