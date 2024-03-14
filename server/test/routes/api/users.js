@@ -48,10 +48,10 @@ describe('/api/users', () => {
           firstName: 'CTA',
           lastName: 'User',
           email: 'cta.user@test.com',
-          role: "CTA",
+          role: 'CTA',
           isAdmin: false,
           picture: null,
-          pictureUrl: null
+          pictureUrl: null,
         });
       });
     });
@@ -65,7 +65,7 @@ describe('/api/users', () => {
             firstName: 'Normal',
             lastName: 'Person',
             email: 'normal.person@test.com',
-            role: null
+            role: null,
           })
           .expect(StatusCodes.OK);
 
