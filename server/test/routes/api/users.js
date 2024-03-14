@@ -27,13 +27,14 @@ describe('/api/users', () => {
       it('returns a list of Users ordered by last name, first name, email', async () => {
         /// request user list
         const response = await testSession.get('/api/users').set('Accept', 'application/json').expect(StatusCodes.OK);
-        assert.deepStrictEqual(response.body?.length, 5);
+        assert.deepStrictEqual(response.body?.length, 6);
         const users = response.body;
-        assert.deepStrictEqual(users[0].firstName, 'Admin');
+        assert.deepStrictEqual(users[0].firstName, 'Kevin');
         assert.deepStrictEqual(users[1].firstName, 'Admin');
-        assert.deepStrictEqual(users[2].firstName, 'CTA');
-        assert.deepStrictEqual(users[3].firstName, 'Inventory');
-        assert.deepStrictEqual(users[4].firstName, 'Regular');
+        assert.deepStrictEqual(users[2].firstName, 'Admin');
+        assert.deepStrictEqual(users[3].firstName, 'CTA');
+        assert.deepStrictEqual(users[4].firstName, 'Inventory');
+        assert.deepStrictEqual(users[5].firstName, 'Inventory');
       });
     });
 

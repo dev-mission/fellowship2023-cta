@@ -18,6 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       role: {
+        defaultValue: null,
         type: Sequelize.STRING,
       },
       email: {
