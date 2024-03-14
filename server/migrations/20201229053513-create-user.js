@@ -24,9 +24,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.CITEXT,
       },
-      phone: {
-        type: Sequelize.STRING,
-      },
       hashedPassword: {
         type: Sequelize.STRING,
       },
@@ -54,7 +51,7 @@ module.exports = {
       },
     });
     await queryInterface.addIndex('Users', {
-      fields: ['email', 'phone'],
+      fields: ['email'],
       unique: true,
     });
     await queryInterface.addIndex('Users', {
