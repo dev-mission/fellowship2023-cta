@@ -8,8 +8,7 @@
       "email": "admin.user@test.com",
       "phone": "123-456-7890",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": true,
-      "role": "Admin"
+      "isAdmin": true
     }
   },
   {
@@ -21,8 +20,40 @@
       "email": "regular.user@test.com",
       "phone": "123-456-7890",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": false,
-      "role": "Supervisor"
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 222220,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin.user@test.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 222221,
+      "firstName": "CTA",
+      "lastName": "User",
+      "email": "cta.user@test.com",
+      "role": "CTA",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 222222,
+      "firstName": "Inventory",
+      "lastName": "User",
+      "email": "inventory.user@test.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "role": "Inventory"
     }
   },
   {
