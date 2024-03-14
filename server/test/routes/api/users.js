@@ -49,6 +49,24 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          role: 'Supervisor',
+        });
+      });
+    });
+
+    describe('GET /:id where id=3', () => {
+      it('returns a User by its id and checking its role', async () => {
+        /// request user list
+        const response = await testSession.get('/api/users/3').set('Accept', 'application/json').expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.body, {
+          id: 3,
+          firstName: 'Kevin',
+          lastName: 'Li',
+          email: 'KevinLi@gmail.com',
+          role: 'CTA',
+          isAdmin: false,
+          picture: null,
+          pictureUrl: null,
         });
       });
     });
@@ -73,6 +91,7 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          role: 'Supervisor',
         });
       });
 

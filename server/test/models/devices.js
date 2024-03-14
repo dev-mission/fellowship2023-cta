@@ -14,23 +14,23 @@ describe('models.Device', () => {
   it('creates a new Device record', async () => {
     assert.deepStrictEqual(await models.Device.count(), 4);
     const record = await models.Device.create({
-        id: 5,
-        DonorId: 5,
-        LocationId: 5,
-        UserId: 5,
-        ClientId: 5,
-        deviceType: 'laptop',
-        model: 'fixture model test 1',
-        brand: 'fixture brand test 1',
-        serialNum: 'fixture serial test 1',
-        cpu: 'fixture cpu test 1',
-        ram: 'fixture ram test 1',
-        os: 'fixture os test 1',
-        username: 'fixture username test 1',
-        password: 'fixture password test 1',
-        condition: 'fixture condition test 1',
-        value: 99.00,
-        notes: 'fixture notes test 1'
+      id: 5,
+      DonorId: 5,
+      LocationId: 5,
+      UserId: 5,
+      ClientId: 5,
+      deviceType: 'laptop',
+      model: 'fixture model test 1',
+      brand: 'fixture brand test 1',
+      serialNum: 'fixture serial test 1',
+      cpu: 'fixture cpu test 1',
+      ram: 'fixture ram test 1',
+      os: 'fixture os test 1',
+      username: 'fixture username test 1',
+      password: 'fixture password test 1',
+      condition: 'fixture condition test 1',
+      value: 99.0,
+      notes: 'fixture notes test 1',
     });
 
     assert.deepStrictEqual(await models.Device.count(), 5);
@@ -48,17 +48,15 @@ describe('models.Device', () => {
     assert.deepStrictEqual(record.username, 'fixture username test 1');
     assert.deepStrictEqual(record.password, 'fixture password test 1');
     assert.deepStrictEqual(record.condition, 'fixture condition test 1');
-    assert.deepStrictEqual(record.value, 99.00);
+    assert.deepStrictEqual(record.value, 99.0);
     assert.deepStrictEqual(record.notes, 'fixture notes test 1');
-
   });
 
   it('finds an Device record by ID', async () => {
     const record = await models.Device.findByPk(3);
     assert.deepStrictEqual(record.model, 'fixture model test 1');
     assert.deepStrictEqual(record.brand, 'fixture brand test 1');
-    assert.deepStrictEqual(record.value, 450.00);
-
+    assert.deepStrictEqual(record.value, 450.0);
   });
 
   it('finds multiple Device records', async () => {
