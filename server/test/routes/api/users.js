@@ -27,27 +27,31 @@ describe('/api/users', () => {
       it('returns a list of Users ordered by last name, first name, email', async () => {
         /// request user list
         const response = await testSession.get('/api/users').set('Accept', 'application/json').expect(StatusCodes.OK);
-        assert.deepStrictEqual(response.body?.length, 2);
+        assert.deepStrictEqual(response.body?.length, 5);
 
         const users = response.body;
         assert.deepStrictEqual(users[0].firstName, 'Admin');
-        assert.deepStrictEqual(users[1].firstName, 'Regular');
+        assert.deepStrictEqual(users[1].firstName, 'Admin');
+        assert.deepStrictEqual(users[2].firstName, 'CTA');
+        assert.deepStrictEqual(users[3].firstName, 'Inventory');
+        assert.deepStrictEqual(users[4].firstName, 'Regular');
       });
     });
 
     describe('GET /:id', () => {
       it('returns a User by its id', async () => {
         /// request user list
-        const response = await testSession.get('/api/users/2').set('Accept', 'application/json').expect(StatusCodes.OK);
-
+        const response = await testSession.get('/api/users/222221').set('Accept', 'application/json').expect(StatusCodes.OK);
+        console.log(response.body);
         assert.deepStrictEqual(response.body, {
-          id: 2,
-          firstName: 'Regular',
+          id: 222221,
+          firstName: 'CTA',
           lastName: 'User',
-          email: 'regular.user@test.com',
+          email: 'cta.user@test.com',
+          role: "CTA",
           isAdmin: false,
           picture: null,
-          pictureUrl: null,
+          pictureUrl: null
         });
       });
     });
@@ -55,17 +59,18 @@ describe('/api/users', () => {
     describe('PATCH /:id', () => {
       it('updates a User by its id', async () => {
         const response = await testSession
-          .patch('/api/users/2')
+          .patch('/api/users/222221')
           .set('Accept', 'application/json')
           .send({
             firstName: 'Normal',
             lastName: 'Person',
             email: 'normal.person@test.com',
+            role: null
           })
           .expect(StatusCodes.OK);
 
         assert.deepStrictEqual(response.body, {
-          id: 2,
+          id: 222221,
           firstName: 'Normal',
           lastName: 'Person',
           email: 'normal.person@test.com',
@@ -77,7 +82,7 @@ describe('/api/users', () => {
 
       it('validates required fields', async () => {
         const response = await testSession
-          .patch('/api/users/2')
+          .patch('/api/users/222221')
           .set('Accept', 'application/json')
           .send({
             firstName: '',
@@ -118,7 +123,7 @@ describe('/api/users', () => {
 
       it('validates email is not already registered', async () => {
         const response = await testSession
-          .patch('/api/users/2')
+          .patch('/api/users/222221')
           .set('Accept', 'application/json')
           .send({
             email: 'admin.user@test.com',

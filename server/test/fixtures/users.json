@@ -2,13 +2,34 @@
   {
     "model": "User",
     "data": {
+      "id": 1,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin.user@test.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 2,
+      "firstName": "Regular",
+      "lastName": "User",
+      "email": "regular.user@test.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
       "id": 222220,
       "firstName": "Admin",
       "lastName": "User",
       "email": "admin.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": true,
-      "role": "Admin"
+      "isAdmin": true
     }
   },
   {
@@ -18,8 +39,8 @@
       "firstName": "CTA",
       "lastName": "User",
       "email": "cta.user@test.com",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "role": "CTA"
+      "role": "CTA",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS"
     }
   },
   {
