@@ -116,6 +116,7 @@ export default function (sequelize, DataTypes) {
       },
       role: {
         type: DataTypes.STRING,
+        defaultValue: null,
         validate: {
           isStrong(value) {
             if (value != null) {

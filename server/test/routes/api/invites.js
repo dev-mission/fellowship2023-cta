@@ -101,7 +101,7 @@ describe('/api/invites', () => {
           email: 'accepting.user@test.com',
           password: 'abcd1234',
           confirmPassword: 'abcd1234',
-          role: 'Admin',
+          role: "Inventory"
         })
         .expect(StatusCodes.CREATED);
       const { id } = response.body;
@@ -114,6 +114,7 @@ describe('/api/invites', () => {
         isAdmin: false,
         picture: null,
         pictureUrl: null,
+        role: "Inventory"
       });
 
       const invite = await models.Invite.findByPk('14a500b7-f14c-48cd-b815-3685a8b54370');

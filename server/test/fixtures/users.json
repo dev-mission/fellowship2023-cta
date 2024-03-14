@@ -15,12 +15,11 @@
     "model": "User",
     "data": {
       "id": 2,
-      "firstName": "Regular",
+      "firstName": "Inventory",
       "lastName": "User",
-      "email": "regular.user@test.com",
-      "phone": "123-456-7890",
+      "email": "Inventory1.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": false
+      "role": "Inventory"
     }
   },
   {
@@ -29,7 +28,7 @@
       "id": 222220,
       "firstName": "Admin",
       "lastName": "User",
-      "email": "admin.user@test.com",
+      "email": "admin1.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "isAdmin": true
     }
@@ -51,7 +50,7 @@
       "id": 222222,
       "firstName": "Inventory",
       "lastName": "User",
-      "email": "inventory.user@test.com",
+      "email": "inventory2.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
       "role": "Inventory"
     }
@@ -64,8 +63,7 @@
       "lastName": "Li",
       "role": "CTA",
       "email": "KevinLi@gmail.com",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": false
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS"
     }
   }
 ]

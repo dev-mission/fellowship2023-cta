@@ -28,6 +28,7 @@ describe('/api/auth', () => {
           lastName: 'Person',
           email: 'normal.person@test.com',
           password: 'abcd1234',
+          role: "CTA"
         })
         .expect(StatusCodes.CREATED);
 
@@ -41,6 +42,7 @@ describe('/api/auth', () => {
         isAdmin: false,
         picture: null,
         pictureUrl: null,
+        role: "CTA"
       });
     });
 
