@@ -78,20 +78,20 @@ router.delete('/:id', async (req, res) => {
   }
 
   Situations
-
-  No DeviceId: use device name
   No ClientId:  use a Client Model
-
-
 */
 router.post('/', async (req, res) => {
   try {
     let ticket = {};
     let ticketInfo;
+    let clientInfo = {};
+    //
     if (req.body.ClientId !== undefined) {
       ticket['ClientId'] = req.body.ClientId;
     } else {
-      ticket['client'] = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone', 'address', 'ethnicity', 'language', 'gender', 'age']);
+      clientInfo = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone', 'address', 'ethnicity', 'language', 'gender', 'age']);
+      const client = await models.Client.create(clientInfo);
+      ticket['ClientId'] = client.id;
     }
 
     ticketInfo = _.pick(req.body, [
@@ -109,7 +109,7 @@ router.post('/', async (req, res) => {
       'notes',
     ]);
     ticket = { ...ticket, ...ticketInfo, UserId: req.body.UserId, LocationId: req.body.LocationId };
-    const record = await models.Ticket.create(ticket, { include: [models.Client] });
+    const record = await models.Ticket.create(ticket);
     res.status(StatusCodes.CREATED).json(record);
   } catch (err) {
     console.log(err);

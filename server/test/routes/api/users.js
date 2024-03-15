@@ -52,7 +52,6 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
-          role: 'CTA',
         });
       });
     });
