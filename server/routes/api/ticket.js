@@ -7,14 +7,19 @@ import models from '../../models/index.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const records = await models.Ticket.findAll();
-  res.json(records);
+  let tickets = {};
+  if (req.user.isAdmin) {
+    tickets = await models.Ticket.findAll();
+  } else {
+    tickets = await models.Ticket.findAll({ where: { UserId: req.user.id } });
+  }
+  res.json(tickets);
 });
 
 router.get('/:id', async (req, res) => {
   try {
-    const record = await models.Ticket.findByPk(req.params.id);
-    res.json(record);
+    const tickets = await models.Ticket.findByPk(req.params.id);
+    res.json(tickets);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
@@ -23,8 +28,8 @@ router.get('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   try {
-    const record = await models.Ticket.findByPk(req.params.id);
-    await record.update(
+    const tickets = await models.Ticket.findByPk(req.params.id);
+    await tickets.update(
       _.pick(req.body, [
         'device',
         'problem',
@@ -38,18 +43,26 @@ router.patch('/:id', async (req, res) => {
         'notes',
       ]),
     );
-    res.json(record);
+    res.json(tickets);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
 
+/*
+  Users can only delete their own tickets.
+  Admin can delete any ticket.
+*/
 router.delete('/:id', async (req, res) => {
   try {
-    const record = await models.Ticket.findByPk(req.params.id);
-    await record.destroy();
-    res.status(StatusCodes.OK).end();
+    const ticket = await models.Ticket.findByPk(req.params.id);
+    if (req.user.isAdmin || ticket.UserId === req.user.id) {
+      await ticket.destroy();
+      res.status(StatusCodes.OK).end();
+    } else {
+      res.status(StatusCodes.UNAUTHORIZED).end();
+    }
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

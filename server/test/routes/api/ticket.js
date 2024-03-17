@@ -11,6 +11,11 @@ describe('/api/ticket', () => {
   beforeEach(async () => {
     await helper.loadFixtures(['users', 'locations', 'donors', 'clients', 'devices', 'appointments', 'tickets']);
     testSession = session(app);
+    await testSession
+      .post('/api/auth/login')
+      .set('Accept', 'application/json')
+      .send({ email: 'admin.user@test.com', password: 'abcd1234' })
+      .expect(StatusCodes.OK);
   });
 
   it('Delete a ticket', async () => {
