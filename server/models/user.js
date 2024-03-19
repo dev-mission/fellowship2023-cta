@@ -15,6 +15,7 @@ export default function (sequelize, DataTypes) {
     static associate(models) {
       User.hasMany(models.Ticket);
       User.hasMany(models.Device);
+      User.hasMany(models.Location);
     }
 
     static isValidPassword(password) {

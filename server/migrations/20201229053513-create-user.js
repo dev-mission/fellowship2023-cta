@@ -9,6 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      LocationId:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Locations',
+          },
+          key: 'id',
+        },
+      },
       firstName: {
         allowNull: false,
         type: Sequelize.STRING,

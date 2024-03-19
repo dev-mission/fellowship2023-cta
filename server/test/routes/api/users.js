@@ -10,7 +10,7 @@ describe('/api/users', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['users']);
+    await helper.loadFixtures(['locations','users']);
     testSession = session(app);
   });
 
@@ -45,6 +45,7 @@ describe('/api/users', () => {
         console.log(response.body);
         assert.deepStrictEqual(response.body, {
           id: 222221,
+          LocationId: 2,
           firstName: 'CTA',
           lastName: 'User',
           email: 'cta.user@test.com',
@@ -62,6 +63,7 @@ describe('/api/users', () => {
         const response = await testSession.get('/api/users/3').set('Accept', 'application/json').expect(StatusCodes.OK);
         assert.deepStrictEqual(response.body, {
           id: 3,
+          LocationId: 2,
           firstName: 'Kevin',
           lastName: 'Li',
           email: 'KevinLi@gmail.com',
@@ -81,6 +83,7 @@ describe('/api/users', () => {
           .send({
             firstName: 'Normal',
             lastName: 'Person',
+            LocationId: 2,
             email: 'normal.person@test.com',
             role: null,
           })
@@ -88,6 +91,7 @@ describe('/api/users', () => {
 
         assert.deepStrictEqual(response.body, {
           id: 222221,
+          LocationId: 2,
           firstName: 'Normal',
           lastName: 'Person',
           email: 'normal.person@test.com',

@@ -16,6 +16,7 @@ export default function (sequelize, DataTypes) {
   }
   Ticket.init(
     {
+      ticketType: DataTypes.TEXT,
       serialNumber: DataTypes.INTEGER,
       device: DataTypes.TEXT,
       problem: DataTypes.TEXT,

@@ -3,6 +3,7 @@
     "model": "User",
     "data": {
       "id": 1,
+      "LocationId": 1,
       "firstName": "Admin",
       "lastName": "User",
       "email": "admin.user@test.com",
@@ -14,6 +15,7 @@
     "model": "User",
     "data": {
       "id": 2,
+      "LocationId": 1,
       "firstName": "Inventory",
       "lastName": "User",
       "email": "Inventory1.user@test.com",
@@ -25,6 +27,7 @@
     "model": "User",
     "data": {
       "id": 222220,
+      "LocationId": 1,
       "firstName": "Admin",
       "lastName": "User",
       "email": "admin1.user@test.com",
@@ -36,6 +39,7 @@
     "model": "User",
     "data": {
       "id": 222221,
+      "LocationId": 1,
       "firstName": "CTA",
       "lastName": "User",
       "email": "cta.user@test.com",
@@ -47,6 +51,7 @@
     "model": "User",
     "data": {
       "id": 222222,
+      "LocationId": 1,
       "firstName": "Inventory",
       "lastName": "User",
       "email": "inventory2.user@test.com",
@@ -58,6 +63,7 @@
     "model": "User",
     "data": {
       "id": 3,
+      "LocationId": 2,
       "firstName": "Kevin",
       "lastName": "Li",
       "role": "CTA",

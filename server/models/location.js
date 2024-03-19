@@ -12,6 +12,7 @@ export default function (sequelize, DataTypes) {
       Location.hasMany(models.Appointment);
       Location.hasMany(models.Ticket);
       Location.hasMany(models.Device);
+      Location.belongsTo(models.User);
     }
   }
   Location.init(
