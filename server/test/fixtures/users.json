@@ -39,7 +39,7 @@
     "model": "User",
     "data": {
       "id": 222221,
-      "LocationId": 1,
+      "LocationId": 2,
       "firstName": "CTA",
       "lastName": "User",
       "email": "cta.user@test.com",
