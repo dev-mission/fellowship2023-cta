@@ -11,7 +11,7 @@ describe('/api/invites', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['users', 'invites']);
+    await helper.loadFixtures(['locations', 'users', 'invites']);
     testSession = session(app);
     await testSession
       .post('/api/auth/login')
@@ -95,25 +95,28 @@ describe('/api/invites', () => {
         .post('/api/invites/14a500b7-f14c-48cd-b815-3685a8b54370/accept')
         .set('Accept', 'application/json')
         .send({
+          LocationId: 1,
           firstName: 'Accepting',
           lastName: 'User',
           username: 'acceptinguser',
           email: 'accepting.user@test.com',
           password: 'abcd1234',
           confirmPassword: 'abcd1234',
-          role: 'Admin',
+          role: 'Inventory',
         })
         .expect(StatusCodes.CREATED);
       const { id } = response.body;
       assert(id);
       assert.deepStrictEqual(response.body, {
         id,
+        LocationId: 1,
         firstName: 'Accepting',
         lastName: 'User',
         email: 'accepting.user@test.com',
         isAdmin: false,
         picture: null,
         pictureUrl: null,
+        role: 'Inventory',
       });
 
       const invite = await models.Invite.findByPk('14a500b7-f14c-48cd-b815-3685a8b54370');

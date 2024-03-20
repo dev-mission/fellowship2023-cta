@@ -10,7 +10,7 @@ describe('/api/users', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['users']);
+    await helper.loadFixtures(['locations', 'users']);
     testSession = session(app);
   });
 
@@ -27,24 +27,47 @@ describe('/api/users', () => {
       it('returns a list of Users ordered by last name, first name, email', async () => {
         /// request user list
         const response = await testSession.get('/api/users').set('Accept', 'application/json').expect(StatusCodes.OK);
-        assert.deepStrictEqual(response.body?.length, 2);
-
+        assert.deepStrictEqual(response.body?.length, 6);
         const users = response.body;
-        assert.deepStrictEqual(users[0].firstName, 'Admin');
-        assert.deepStrictEqual(users[1].firstName, 'Regular');
+        assert.deepStrictEqual(users[0].firstName, 'Kevin');
+        assert.deepStrictEqual(users[1].firstName, 'Admin');
+        assert.deepStrictEqual(users[2].firstName, 'Admin');
+        assert.deepStrictEqual(users[3].firstName, 'CTA');
+        assert.deepStrictEqual(users[4].firstName, 'Inventory');
+        assert.deepStrictEqual(users[5].firstName, 'Inventory');
       });
     });
 
     describe('GET /:id', () => {
       it('returns a User by its id', async () => {
         /// request user list
-        const response = await testSession.get('/api/users/2').set('Accept', 'application/json').expect(StatusCodes.OK);
-
+        const response = await testSession.get('/api/users/222221').set('Accept', 'application/json').expect(StatusCodes.OK);
+        console.log(response.body);
         assert.deepStrictEqual(response.body, {
-          id: 2,
-          firstName: 'Regular',
+          id: 222221,
+          LocationId: 2,
+          firstName: 'CTA',
           lastName: 'User',
-          email: 'regular.user@test.com',
+          email: 'cta.user@test.com',
+          role: 'CTA',
+          isAdmin: false,
+          picture: null,
+          pictureUrl: null,
+        });
+      });
+    });
+
+    describe('GET /:id where id=3', () => {
+      it('returns a User by its id and checking its role', async () => {
+        /// request user list
+        const response = await testSession.get('/api/users/3').set('Accept', 'application/json').expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.body, {
+          id: 3,
+          LocationId: 2,
+          firstName: 'Kevin',
+          lastName: 'Li',
+          email: 'KevinLi@gmail.com',
+          role: 'CTA',
           isAdmin: false,
           picture: null,
           pictureUrl: null,
@@ -55,29 +78,33 @@ describe('/api/users', () => {
     describe('PATCH /:id', () => {
       it('updates a User by its id', async () => {
         const response = await testSession
-          .patch('/api/users/2')
+          .patch('/api/users/222221')
           .set('Accept', 'application/json')
           .send({
             firstName: 'Normal',
             lastName: 'Person',
+            LocationId: 2,
             email: 'normal.person@test.com',
+            role: null,
           })
           .expect(StatusCodes.OK);
 
         assert.deepStrictEqual(response.body, {
-          id: 2,
+          id: 222221,
+          LocationId: 2,
           firstName: 'Normal',
           lastName: 'Person',
           email: 'normal.person@test.com',
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          role: 'CTA',
         });
       });
 
       it('validates required fields', async () => {
         const response = await testSession
-          .patch('/api/users/2')
+          .patch('/api/users/222221')
           .set('Accept', 'application/json')
           .send({
             firstName: '',
@@ -118,7 +145,7 @@ describe('/api/users', () => {
 
       it('validates email is not already registered', async () => {
         const response = await testSession
-          .patch('/api/users/2')
+          .patch('/api/users/222221')
           .set('Accept', 'application/json')
           .send({
             email: 'admin.user@test.com',

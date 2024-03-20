@@ -14,7 +14,7 @@ describe('/api/auth', () => {
   });
 
   beforeEach(async () => {
-    await helper.loadFixtures(['users']);
+    await helper.loadFixtures(['locations', 'users']);
     testSession = session(app);
   });
 
@@ -26,9 +26,10 @@ describe('/api/auth', () => {
         .send({
           firstName: 'Normal',
           lastName: 'Person',
+          LocationId: 2,
           email: 'normal.person@test.com',
           password: 'abcd1234',
-          role: 'Admin',
+          role: 'CTA',
         })
         .expect(StatusCodes.CREATED);
 
@@ -36,12 +37,14 @@ describe('/api/auth', () => {
       assert(id);
       assert.deepStrictEqual(response.body, {
         id,
+        LocationId: 2,
         firstName: 'Normal',
         lastName: 'Person',
         email: 'normal.person@test.com',
         isAdmin: false,
         picture: null,
         pictureUrl: null,
+        role: 'CTA',
       });
     });
 
@@ -54,13 +57,12 @@ describe('/api/auth', () => {
           lastName: '',
           email: '',
           password: '',
-          role: '',
         })
         .expect(StatusCodes.UNPROCESSABLE_ENTITY);
 
       const error = response.body;
       assert.deepStrictEqual(error.status, StatusCodes.UNPROCESSABLE_ENTITY);
-      assert.deepStrictEqual(error.errors.length, 6);
+      assert.deepStrictEqual(error.errors.length, 4);
       assert(
         _.find(error.errors, {
           path: 'firstName',
@@ -94,9 +96,8 @@ describe('/api/auth', () => {
         .send({
           firstName: 'Normal',
           lastName: 'Person',
-          email: 'regular.user@test.com',
+          email: 'cta.user@test.com',
           password: 'abcd1234',
-          role: 'Admin',
         })
         .expect(StatusCodes.UNPROCESSABLE_ENTITY);
 

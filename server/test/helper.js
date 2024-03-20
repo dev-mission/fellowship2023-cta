@@ -60,6 +60,8 @@ async function resetDatabase() {
   DELETE FROM "Invites";
   DELETE FROM "Donors";
   DELETE FROM "Users";
+  DELETE FROM "Locations";
+  DELETE FROM "Courses";
   DELETE FROM "Courses";
   DELETE FROM "Locations";
   `);

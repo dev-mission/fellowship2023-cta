@@ -2,6 +2,19 @@
   {
     "model": "Location",
     "data": {
+      "id": 1,
+      "name": "Dev/Mission",
+      "address1": "356 Bryant St",
+      "address2": "N/A",
+      "city": "San Francisco",
+      "state": "California",
+      "zipCode": "94107"
+    }
+  }
+  ,
+    {
+      "model": "Location",
+      "data": {
       "id": 111,
       "name": "fixture name test 1",
       "address1": "fixture address1 test 1",
@@ -9,19 +22,32 @@
       "city": "fixture city test 1",
       "state": "fixture state test 1",
       "zipCode": "fixture zip test 1"
-    }
-  },
+      },
+    },
+  
   {
     "model": "Location",
     "data": {
-      "id": 222,
-      "name": "fixture name test 2",
-      "address1": "fixture address1 test 2",
-      "address2": "fixture address2 test 2",
-      "city": "fixture city test 2",
-      "state": "fixture state test 2",
-      "zipCode": "fixture zip test 2"
+      "id": 2,
+      "name": "Hayes Valley",
+      "address1": "450 Laguna St",
+      "address2": "N/A",
+      "city": "San Francisco",
+      "state": "California",
+      "zipCode": "94107"
     }
+  },{
+      "model": "Location",
+      "data" : {
+        "id": 222,
+        "name": "fixture name test 2",
+        "address1": "fixture address1 test 2",
+        "address2": "fixture address2 test 2",
+        "city": "fixture city test 2",
+        "state": "fixture state test 2",
+        "zipCode": "fixture zip test 2"
+      }.
+    
   },
   {
     "model": "Location",

@@ -3,24 +3,72 @@
     "model": "User",
     "data": {
       "id": 1,
+      "LocationId": 1,
       "firstName": "Admin",
       "lastName": "User",
       "email": "admin.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": true,
-      "role": "Admin"
+      "isAdmin": true
     }
   },
   {
     "model": "User",
     "data": {
       "id": 2,
-      "firstName": "Regular",
+      "LocationId": 1,
+      "firstName": "Inventory",
       "lastName": "User",
-      "email": "regular.user@test.com",
+      "email": "Inventory1.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "isAdmin": false,
-      "role": "Supervisor"
+      "role": "Inventory"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 222220,
+      "LocationId": 1,
+      "firstName": "Admin",
+      "lastName": "User",
+      "email": "admin1.user@test.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 222221,
+      "LocationId": 2,
+      "firstName": "CTA",
+      "lastName": "User",
+      "email": "cta.user@test.com",
+      "role": "CTA",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 222222,
+      "LocationId": 1,
+      "firstName": "Inventory",
+      "lastName": "User",
+      "email": "inventory2.user@test.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "role": "Inventory"
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 3,
+      "LocationId": 2,
+      "firstName": "Kevin",
+      "lastName": "Li",
+      "role": "CTA",
+      "email": "KevinLi@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS"
     }
   }
 ]

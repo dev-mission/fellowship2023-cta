@@ -9,6 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      LocationId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Locations',
+          },
+          key: 'id',
+        },
+      },
       firstName: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -18,15 +27,12 @@ module.exports = {
         type: Sequelize.STRING,
       },
       role: {
-        allowNull: false,
+        defaultValue: null,
         type: Sequelize.STRING,
       },
       email: {
         allowNull: false,
         type: Sequelize.CITEXT,
-      },
-      phone: {
-        type: Sequelize.STRING,
       },
       hashedPassword: {
         type: Sequelize.STRING,
@@ -55,7 +61,7 @@ module.exports = {
       },
     });
     await queryInterface.addIndex('Users', {
-      fields: ['email', 'phone'],
+      fields: ['email'],
       unique: true,
     });
     await queryInterface.addIndex('Users', {
