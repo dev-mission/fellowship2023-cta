@@ -19,6 +19,7 @@ export default function (sequelize, DataTypes) {
     toJSON() {
       const json = _.pick(this.get(), [
         'id',
+        'LocationId',
         'firstName',
         'lastName',
         'email',

@@ -43,7 +43,7 @@ module.exports = {
           key: 'id',
         },
       },
-      ticketType:{
+      ticketType: {
         type: Sequelize.TEXT,
       },
       serialNumber: {

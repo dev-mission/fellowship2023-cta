@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      LocationId:{
+      LocationId: {
         type: Sequelize.INTEGER,
         references: {
           model: {

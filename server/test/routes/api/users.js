@@ -10,7 +10,7 @@ describe('/api/users', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['locations','users']);
+    await helper.loadFixtures(['locations', 'users']);
     testSession = session(app);
   });
 

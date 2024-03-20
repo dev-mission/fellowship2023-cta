@@ -14,7 +14,7 @@ describe('/api/auth', () => {
   });
 
   beforeEach(async () => {
-    await helper.loadFixtures(['users']);
+    await helper.loadFixtures(['locations', 'users']);
     testSession = session(app);
   });
 
@@ -26,6 +26,7 @@ describe('/api/auth', () => {
         .send({
           firstName: 'Normal',
           lastName: 'Person',
+          LocationId: 2,
           email: 'normal.person@test.com',
           password: 'abcd1234',
           role: 'CTA',
@@ -36,6 +37,7 @@ describe('/api/auth', () => {
       assert(id);
       assert.deepStrictEqual(response.body, {
         id,
+        LocationId: 2,
         firstName: 'Normal',
         lastName: 'Person',
         email: 'normal.person@test.com',

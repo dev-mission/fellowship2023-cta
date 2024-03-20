@@ -8,7 +8,7 @@ import models from '../../models/index.js';
 
 describe('models.User', () => {
   beforeEach(async () => {
-    await helper.loadFixtures(['users']);
+    await helper.loadFixtures(['locations', 'users']);
   });
 
   it('creates a new User record', async () => {
