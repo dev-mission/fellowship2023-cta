@@ -9,7 +9,7 @@ describe('models.Donor', () => {
   });
 
   it('creates a new Donor record', async () => {
-    assert.deepStrictEqual(await models.Donor.count(), 4);
+    assert.deepStrictEqual(await models.Donor.count(), 3);
     const record = await models.Donor.create({
       name: 'Create table',
       phone: '123456789',
@@ -21,7 +21,7 @@ describe('models.Donor', () => {
       zip: '12345',
     });
 
-    assert.deepStrictEqual(await models.Donor.count(), 5);
+    assert.deepStrictEqual(await models.Donor.count(), 4);
     assert.deepStrictEqual(record.name, 'Create table');
     assert.deepStrictEqual(record.phone, '123456789');
     assert.deepStrictEqual(record.email, 'test@gmail.com');
@@ -34,8 +34,14 @@ describe('models.Donor', () => {
 
   it('finds an Donor record by ID', async () => {
     const record = await models.Donor.findByPk(1);
-    assert.deepStrictEqual(record.name, 'fixture name test 1');
-    assert.deepStrictEqual(record.phone, 'fixture phone test 1');
+    assert.deepStrictEqual(record.name, 'john doe');
+    assert.deepStrictEqual(record.phone, '123456789');
+    assert.deepStrictEqual(record.email, 'johndoe@email.com');
+    assert.deepStrictEqual(record.address1, '1234 main st');
+    assert.deepStrictEqual(record.address2, 'apt 123');
+    assert.deepStrictEqual(record.city, 'anytown');
+    assert.deepStrictEqual(record.state, 'NY');
+    assert.deepStrictEqual(record.zip, '12345');
   });
 
   it('finds multiple Donor records', async () => {
@@ -43,14 +49,14 @@ describe('models.Donor', () => {
       order: [['name', 'DESC']],
     });
 
-    assert.deepStrictEqual(record.length, 4);
-    assert.deepStrictEqual(record[0].name, 'fixture name test 4');
+    assert.deepStrictEqual(record.length, 3);
+    assert.deepStrictEqual(record[0].name, 'john doe');
   });
 
   it('deletes an Donor record', async () => {
-    assert.deepStrictEqual(await models.Donor.count(), 4);
-    const record = await models.Donor.findByPk(4);
-    await record.destroy();
     assert.deepStrictEqual(await models.Donor.count(), 3);
+    const record = await models.Donor.findByPk(3);
+    await record.destroy();
+    assert.deepStrictEqual(await models.Donor.count(), 2);
   });
 });

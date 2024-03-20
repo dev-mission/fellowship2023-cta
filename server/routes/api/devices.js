@@ -84,18 +84,18 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
       ]),
     );
 
-    // if (req.body.donorId) {
-    //   await newDevice.setDonor(req.body.donorId);
-    // }
-    // if (req.body.locationId) {
-    //   await newDevice.setLocation(req.body.locationId);
-    // }
-    // if (req.body.userId) {
-    //   await newDevice.setUser(req.body.userId);
-    // }
-    // if (req.body.clientId) {
-    //   await newDevice.setClient(req.body.clientId);
-    // }
+    if (req.body.donorId) {
+      await record.setDonor(req.body.donorId);
+    }
+    if (req.body.locationId) {
+      await record.setLocation(req.body.locationId);
+    }
+    if (req.body.userId) {
+      await record.setUser(req.body.userId);
+    }
+    if (req.body.clientId) {
+      await record.setClient(req.body.clientId);
+    }
 
     res.status(StatusCodes.CREATED).json(record);
   } catch (err) {

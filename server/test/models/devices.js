@@ -5,20 +5,17 @@ import models from '../../models/index.js';
 
 describe('models.Device', () => {
   beforeEach(async () => {
-    await helper.loadFixtures(['devices']);
-    await helper.loadFixtures(['donors']);
-    await helper.loadFixtures(['users']);
-    await helper.loadFixtures(['clients']);
+    await helper.loadFixtures(['donors', 'locations', 'clients', 'users', 'devices']);
   });
 
   it('creates a new Device record', async () => {
-    assert.deepStrictEqual(await models.Device.count(), 4);
+    assert.deepStrictEqual(await models.Device.count(), 1);
     const record = await models.Device.create({
-      id: 5,
-      DonorId: 5,
-      LocationId: 5,
-      UserId: 5,
-      ClientId: 5,
+      id: 2,
+      DonorId: 2,
+      LocationId: 2,
+      UserId: 2,
+      ClientId: 2,
       deviceType: 'laptop',
       model: 'fixture model test 1',
       brand: 'fixture brand test 1',
@@ -29,15 +26,15 @@ describe('models.Device', () => {
       username: 'fixture username test 1',
       password: 'fixture password test 1',
       condition: 'fixture condition test 1',
-      value: 99.0,
+      value: '99.0',
       notes: 'fixture notes test 1',
     });
 
-    assert.deepStrictEqual(await models.Device.count(), 5);
-    assert.deepStrictEqual(record.DonorId, 5);
-    assert.deepStrictEqual(record.LocationId, 5);
-    assert.deepStrictEqual(record.UserId, 5);
-    assert.deepStrictEqual(record.ClientId, 5);
+    assert.deepStrictEqual(await models.Device.count(), 2);
+    assert.deepStrictEqual(record.DonorId, 2);
+    assert.deepStrictEqual(record.LocationId, 2);
+    assert.deepStrictEqual(record.UserId, 2);
+    assert.deepStrictEqual(record.ClientId, 2);
     assert.deepStrictEqual(record.deviceType, 'laptop');
     assert.deepStrictEqual(record.model, 'fixture model test 1');
     assert.deepStrictEqual(record.brand, 'fixture brand test 1');
@@ -48,15 +45,26 @@ describe('models.Device', () => {
     assert.deepStrictEqual(record.username, 'fixture username test 1');
     assert.deepStrictEqual(record.password, 'fixture password test 1');
     assert.deepStrictEqual(record.condition, 'fixture condition test 1');
+<<<<<<< HEAD
     assert.deepStrictEqual(record.value, 99.0);
+=======
+    assert.deepStrictEqual(record.value, '99.0');
+>>>>>>> origin/DeviceTests
     assert.deepStrictEqual(record.notes, 'fixture notes test 1');
   });
 
   it('finds an Device record by ID', async () => {
+<<<<<<< HEAD
     const record = await models.Device.findByPk(3);
     assert.deepStrictEqual(record.model, 'fixture model test 1');
     assert.deepStrictEqual(record.brand, 'fixture brand test 1');
     assert.deepStrictEqual(record.value, 450.0);
+=======
+    const record = await models.Device.findByPk(1);
+    assert.deepStrictEqual(record.model, 'MacBook Pro');
+    assert.deepStrictEqual(record.brand, 'Apple');
+    assert.deepStrictEqual(record.value, '1000.00');
+>>>>>>> origin/DeviceTests
   });
 
   it('finds multiple Device records', async () => {
@@ -64,14 +72,14 @@ describe('models.Device', () => {
       order: [['serialNum', 'DESC']],
     });
 
-    assert.deepStrictEqual(record.length, 4);
-    assert.deepStrictEqual(record[0].serialNum, 'fixture serial test 1');
+    assert.deepStrictEqual(record.length, 1);
+    assert.deepStrictEqual(record[0].serialNum, '1234567890');
   });
 
   it('deletes an Device record', async () => {
-    assert.deepStrictEqual(await models.Device.count(), 4);
-    const record = await models.Device.findByPk(4);
+    assert.deepStrictEqual(await models.Device.count(), 1);
+    const record = await models.Device.findByPk(1);
     await record.destroy();
-    assert.deepStrictEqual(await models.Device.count(), 3);
+    assert.deepStrictEqual(await models.Device.count(), 0);
   });
 });
