@@ -27,7 +27,7 @@
       "address": "Fixture Address 1",
       "gender": "Fixture Gender 1",
       "language": "Fixture Language 1"
-    },
+    }
   },
   {
     "model": "Client",
@@ -42,11 +42,11 @@
       "address": "123 Main St, Anytown, USA",
       "gender": "Male",
       "language": "English"
-    },
+    }
   },
   {
-     "model": "client",
-     "data": {
+    "model": "Client",
+    "data": {
       "id": 1002,
       "firstName": "Fixture Client First Name 2",
       "lastName": "Fixture Client Last Name 2",

@@ -37,7 +37,7 @@ describe('/api/clients', () => {
 
   it('fetch all clients from the Clients table', async () => {
     const response = await testSession.get('/api/clients').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.length, 3);
+    assert.deepStrictEqual(response.body?.length, 5);
   });
 
   it('fetch one client record from the Client table', async () => {

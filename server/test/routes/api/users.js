@@ -42,7 +42,6 @@ describe('/api/users', () => {
       it('returns a User by its id', async () => {
         /// request user list
         const response = await testSession.get('/api/users/222221').set('Accept', 'application/json').expect(StatusCodes.OK);
-        console.log(response.body);
         assert.deepStrictEqual(response.body, {
           id: 222221,
           LocationId: 2,

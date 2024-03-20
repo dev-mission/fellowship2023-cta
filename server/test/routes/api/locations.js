@@ -23,7 +23,7 @@ describe('/api/locations', () => {
 
   it('fetch all locations from the Locations table', async () => {
     const response = await testSession.get('/api/locations').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.length, 4);
+    assert.deepStrictEqual(response.body?.length, 6);
   });
 
   it('fetch one location record from the Location table', async () => {
