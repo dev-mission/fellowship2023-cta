@@ -8,6 +8,7 @@ import AppRedirects from './AppRedirects';
 import Header from './Header';
 import Home from './Home';
 import Login from './Login';
+import { Appointments, Clients, Donors, Inventory, Locations, Tickets, Users } from './Pages';
 import AdminRoutes from './Admin/AdminRoutes';
 import InvitesRoutes from './Invites/InvitesRoutes';
 import PasswordsRoutes from './Passwords/PasswordsRoutes';
@@ -33,6 +34,13 @@ function App() {
                 {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && <Route path="/register" element={<Register />} />}
                 <Route path="/account/*" element={<UsersRoutes />} />
                 <Route path="/admin/*" element={<AdminRoutes />} />
+                <Route path='/Appointments' element={<Appointments />} />
+                <Route path='/Tickets' element={<Tickets />} />
+                <Route path='/Clients' element={<Clients />} />
+                <Route path='/Inventory' element={<Inventory />} />
+                <Route path='/Locations' element={<Locations />} />
+                <Route path='/Donors' element={<Donors />} />
+                <Route path='/Users' element={<Users />} />
               </Routes>
             </AppRedirects>
           }

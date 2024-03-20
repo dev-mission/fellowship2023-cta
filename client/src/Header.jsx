@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import './Header.scss';
 import Api from './Api';
 import { useAuthContext } from './AuthContext';
+import { logo } from '../public';
 
 function Header() {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ function Header() {
     <nav className="header navbar navbar-expand-md navbar-light bg-light fixed-top">
       <div className="container">
         <Link className="navbar-brand" to="/" onClick={hideNavbar}>
-          Full Stack Starter
+          <img width={200} height={50} src={logo} alt="Logo" />
         </Link>
         <button onClick={toggleNavbar} className="navbar-toggler" type="button" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
