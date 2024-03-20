@@ -57,7 +57,7 @@ function Login() {
                     <h2 className="card-title">Log in</h2>
                   </div>
                   <div className="col">
-                    <img src="../public/logo.png" alt="Dev/Mission logo" class="img-thumbnail" />
+                    <img src="../public/logo.png" alt="Dev/Mission logo" className="img-thumbnail" />
                   </div>
                 </div>
                 {location.state?.flash && <div className="alert alert-success">{location.state?.flash}</div>}
