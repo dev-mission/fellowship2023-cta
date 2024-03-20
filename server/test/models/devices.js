@@ -45,26 +45,15 @@ describe('models.Device', () => {
     assert.deepStrictEqual(record.username, 'fixture username test 1');
     assert.deepStrictEqual(record.password, 'fixture password test 1');
     assert.deepStrictEqual(record.condition, 'fixture condition test 1');
-<<<<<<< HEAD
-    assert.deepStrictEqual(record.value, 99.0);
-=======
     assert.deepStrictEqual(record.value, '99.0');
->>>>>>> origin/DeviceTests
     assert.deepStrictEqual(record.notes, 'fixture notes test 1');
   });
 
   it('finds an Device record by ID', async () => {
-<<<<<<< HEAD
-    const record = await models.Device.findByPk(3);
-    assert.deepStrictEqual(record.model, 'fixture model test 1');
-    assert.deepStrictEqual(record.brand, 'fixture brand test 1');
-    assert.deepStrictEqual(record.value, 450.0);
-=======
     const record = await models.Device.findByPk(1);
     assert.deepStrictEqual(record.model, 'MacBook Pro');
     assert.deepStrictEqual(record.brand, 'Apple');
     assert.deepStrictEqual(record.value, '1000.00');
->>>>>>> origin/DeviceTests
   });
 
   it('finds multiple Device records', async () => {
