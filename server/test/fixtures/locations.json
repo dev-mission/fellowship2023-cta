@@ -10,11 +10,10 @@
       "state": "California",
       "zipCode": "94107"
     }
-  }
-  ,
-    {
-      "model": "Location",
-      "data": {
+  },
+  {
+    "model": "Location",
+    "data": {
       "id": 111,
       "name": "fixture name test 1",
       "address1": "fixture address1 test 1",
@@ -22,9 +21,9 @@
       "city": "fixture city test 1",
       "state": "fixture state test 1",
       "zipCode": "fixture zip test 1"
-      },
-    },
-  
+    }
+  },
+
   {
     "model": "Location",
     "data": {
@@ -36,18 +35,18 @@
       "state": "California",
       "zipCode": "94107"
     }
-  },{
-      "model": "Location",
-      "data" : {
-        "id": 222,
-        "name": "fixture name test 2",
-        "address1": "fixture address1 test 2",
-        "address2": "fixture address2 test 2",
-        "city": "fixture city test 2",
-        "state": "fixture state test 2",
-        "zipCode": "fixture zip test 2"
-      }.
-    
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 222,
+      "name": "fixture name test 2",
+      "address1": "fixture address1 test 2",
+      "address2": "fixture address2 test 2",
+      "city": "fixture city test 2",
+      "state": "fixture state test 2",
+      "zipCode": "fixture zip test 2"
+    }
   },
   {
     "model": "Location",
