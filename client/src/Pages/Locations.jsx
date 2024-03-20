@@ -1,9 +1,7 @@
-import React from 'react'
+//import React from 'react';
 
 const Locations = () => {
-  return (
-    <div>Locations</div>
-  )
-}
+  return <div>Locations</div>;
+};
 
-export default Locations
+export default Locations;

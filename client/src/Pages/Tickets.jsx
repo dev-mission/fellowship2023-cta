@@ -1,9 +1,7 @@
-import React from 'react'
+//import React from 'react';
 
 const Tickets = () => {
-  return (
-    <div>Tickets</div>
-  )
-}
+  return <div>Tickets</div>;
+};
 
-export default Tickets
+export default Tickets;

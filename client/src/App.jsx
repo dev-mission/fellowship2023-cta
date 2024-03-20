@@ -34,13 +34,13 @@ function App() {
                 {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && <Route path="/register" element={<Register />} />}
                 <Route path="/account/*" element={<UsersRoutes />} />
                 <Route path="/admin/*" element={<AdminRoutes />} />
-                <Route path='/Appointments' element={<Appointments />} />
-                <Route path='/Tickets' element={<Tickets />} />
-                <Route path='/Clients' element={<Clients />} />
-                <Route path='/Inventory' element={<Inventory />} />
-                <Route path='/Locations' element={<Locations />} />
-                <Route path='/Donors' element={<Donors />} />
-                <Route path='/Users' element={<Users />} />
+                <Route path="/Appointments" element={<Appointments />} />
+                <Route path="/Tickets" element={<Tickets />} />
+                <Route path="/Clients" element={<Clients />} />
+                <Route path="/Inventory" element={<Inventory />} />
+                <Route path="/Locations" element={<Locations />} />
+                <Route path="/Donors" element={<Donors />} />
+                <Route path="/Users" element={<Users />} />
               </Routes>
             </AppRedirects>
           }
