@@ -1,53 +1,53 @@
 [
-    {
-      "model": "Location",
-      "data": {
-        "id": 1,
-        "name": "Dev/Mission",
-        "address1": "356 Bryant St",
-        "address2": "N/A",
-        "city": "San Francisco",
-        "state": "California",
-        "zipCode": "94107"
-      }
-    },
-
-    {
-      "model": "Location",
-      "data": {
-        "id": 2,
-        "name": "Dev/Mission",
-        "address1": "N/A",
-        "address2": "N/A",
-        "city": "San Francisco",
-        "state": "California",
-        "zipCode": "94107"
-      }
-    },
-
-    {
-      "model": "Location",
-      "data": {
-        "id": 3,
-        "name": "Dev/Mission",
-        "address1": "N/A",
-        "address2": "N/A",
-        "city": "San Francisco",
-        "state": "California",
-        "zipCode": "94107"
-      }
-    },
-
-    {
-      "model": "Location",
-      "data": {
-        "id": 4,
-        "name": "Dev/Mission",
-        "address1": "N/A",
-        "address2": "N/A",
-        "city": "San Francisco",
-        "state": "California",
-        "zipCode": "94107"
-      }
+  {
+    "model": "Location",
+    "data": {
+      "id": 1,
+      "name": "Dev/Mission",
+      "address1": "356 Bryant St",
+      "address2": "N/A",
+      "city": "San Francisco",
+      "state": "California",
+      "zipCode": "94107"
     }
-  ]
+  },
+
+  {
+    "model": "Location",
+    "data": {
+      "id": 2,
+      "name": "Dev/Mission",
+      "address1": "N/A",
+      "address2": "N/A",
+      "city": "San Francisco",
+      "state": "California",
+      "zipCode": "94107"
+    }
+  },
+
+  {
+    "model": "Location",
+    "data": {
+      "id": 3,
+      "name": "Dev/Mission",
+      "address1": "N/A",
+      "address2": "N/A",
+      "city": "San Francisco",
+      "state": "California",
+      "zipCode": "94107"
+    }
+  },
+
+  {
+    "model": "Location",
+    "data": {
+      "id": 4,
+      "name": "Dev/Mission",
+      "address1": "N/A",
+      "address2": "N/A",
+      "city": "San Francisco",
+      "state": "California",
+      "zipCode": "94107"
+    }
+  }
+]

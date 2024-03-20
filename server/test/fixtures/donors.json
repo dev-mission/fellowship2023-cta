@@ -4,7 +4,38 @@
     "data": {
       "id": 1,
       "name": "john doe",
+      "phone": "123456789",
       "email": "johndoe@email.com",
+      "address1": "1234 main st",
+      "address2": "apt 123",
+      "city": "anytown",
+      "state": "NY",
+      "zip": "12345"
+    }
+  },
+
+  {
+    "model": "Donor",
+    "data": {
+      "id": 2,
+      "name": "jane doe",
+      "phone": "987654321",
+      "email": "janedoe@email.com",
+      "address1": "1234 main st",
+      "address2": "apt 123",
+      "city": "anytown",
+      "state": "NY",
+      "zip": "12345"
+    }
+  },
+
+  {
+    "model": "Donor",
+    "data": {
+      "id": 3,
+      "name": "jimmy doe",
+      "phone": "135792468",
+      "email": "jimmydoe@email.com",
       "address1": "1234 main st",
       "address2": "apt 123",
       "city": "anytown",

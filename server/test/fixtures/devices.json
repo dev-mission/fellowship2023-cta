@@ -8,7 +8,7 @@
       "UserId": 1,
       "ClientId": 1,
       "deviceType": "Laptop",
-      "model": "MacoBook Pro",
+      "model": "MacBook Pro",
       "brand": "Apple",
       "serialNum": "1234567890",
       "cpu": "Intel Core i7",
@@ -22,4 +22,3 @@
     }
   }
 ]
-
