@@ -62,6 +62,8 @@ async function resetDatabase() {
   DELETE FROM "Users";
   DELETE FROM "Locations";
   DELETE FROM "Courses";
+  DELETE FROM "Courses";
+  DELETE FROM "Locations";
   `);
 }
 

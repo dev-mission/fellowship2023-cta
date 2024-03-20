@@ -6,6 +6,9 @@ import passwordsRoutes from './passwords.js';
 import usersRoutes from './users.js';
 import ticketRoutes from './ticket.js';
 import interceptors from '../interceptors.js';
+import locationsRoutes from './locations.js';
+import coursesRoutes from './courses.js';
+import clientsRoutes from './clients.js';
 
 const router = express.Router();
 
@@ -15,4 +18,7 @@ router.use('/invites', invitesRoutes);
 router.use('/passwords', passwordsRoutes);
 router.use('/users', usersRoutes);
 router.use('/ticket', interceptors.requireCTA, ticketRoutes);
+router.use('/locations', locationsRoutes);
+router.use('/courses', coursesRoutes);
+router.use('/clients', clientsRoutes);
 export default router;

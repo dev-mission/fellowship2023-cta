@@ -17,6 +17,21 @@
   {
     "model": "Client",
     "data": {
+      "id": 1001,
+      "firstName": "Fixture Client First Name 1",
+      "lastName": "Fixture Client Last Name 1",
+      "age": 111,
+      "phone": "111-111-1111",
+      "email": "fixturetest1@email.com",
+      "ethnicity": "Fixture Ethnicity 1",
+      "address": "Fixture Address 1",
+      "gender": "Fixture Gender 1",
+      "language": "Fixture Language 1"
+    },
+  },
+  {
+    "model": "Client",
+    "data": {
       "id": 2,
       "firstName": "Apple",
       "lastName": "Bees",
@@ -27,6 +42,36 @@
       "address": "123 Main St, Anytown, USA",
       "gender": "Male",
       "language": "English"
+    },
+  },
+  {
+     "model": "client",
+     "data": {
+      "id": 1002,
+      "firstName": "Fixture Client First Name 2",
+      "lastName": "Fixture Client Last Name 2",
+      "age": 222,
+      "phone": "222-222-2222",
+      "email": "fixturetest2@email.com",
+      "ethnicity": "Fixture Ethnicity 2",
+      "address": "Fixture Address 2",
+      "gender": "Fixture Gender 2",
+      "language": "Fixture Language 2"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1003,
+      "firstName": "Fixture Client First Name 3",
+      "lastName": "Fixture Client Last Name 3",
+      "age": 333,
+      "phone": "333-333-3333",
+      "email": "fixturetest3@email.com",
+      "ethnicity": "Fixture Ethnicity 3",
+      "address": "Fixture Address 3",
+      "gender": "Fixture Gender 3",
+      "language": "Fixture Language 3"
     }
   }
 ]

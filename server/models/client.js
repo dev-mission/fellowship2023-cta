@@ -21,7 +21,16 @@ export default function (sequelize, DataTypes) {
       firstName: DataTypes.TEXT,
       lastName: DataTypes.TEXT,
       age: DataTypes.INTEGER,
-      phone: DataTypes.TEXT,
+      phone: {
+        type: DataTypes.STRING,
+        validate: {
+          isStrong(value) {
+            if (value.match(/^\d{3}-\d{3}-\d{4}$/) == null) {
+              throw new Error('Invalid phone number. Use format 123-456-7890.');
+            }
+          },
+        },
+      },
       email: DataTypes.TEXT,
       ethnicity: DataTypes.TEXT,
       address: DataTypes.TEXT,
