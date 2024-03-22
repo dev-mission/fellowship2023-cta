@@ -10,35 +10,45 @@ describe('/api/locations', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['locations']);
+    await helper.loadFixtures(['locations', 'users']);
     testSession = session(app);
   });
 
-  it('creates a new Location', async () => {
-    const response = await testSession.post('/api/locations').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
+  context('admin authenticated', () => {
+    beforeEach(async () => {
+      await testSession
+        .post('/api/auth/login')
+        .set('Accept', 'application/json')
+        .send({ email: 'admin.user@test.com', password: 'abcd1234' })
+        .expect(StatusCodes.OK);
+    });
 
-    const record = await models.Location.findByPk(response.body.id);
-    assert.deepStrictEqual(record.name, 'Created Name');
-  });
+    it('creates a new Location', async () => {
+      const response = await testSession.post('/api/locations').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
 
-  it('fetch all locations from the Locations table', async () => {
-    const response = await testSession.get('/api/locations').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.length, 6);
-  });
+      const record = await models.Location.findByPk(response.body.id);
+      assert.deepStrictEqual(record.name, 'Created Name');
+    });
 
-  it('fetch one location record from the Location table', async () => {
-    const response = await testSession.get('/api/locations/222').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.name, 'fixture name test 2');
-  });
+    it('fetch all locations from the Locations table', async () => {
+      const response = await testSession.get('/api/locations').expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body?.length, 6);
+    });
 
-  it('updates an existing Location', async () => {
-    await testSession.patch('/api/locations/111').send({ name: 'Updated Name' }).expect(StatusCodes.OK);
-  });
+    it('fetch one location record from the Location table', async () => {
+      const response = await testSession.get('/api/locations/222').expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body?.name, 'fixture name test 2');
+    });
 
-  it('deletes an existing Locatiion', async () => {
-    await testSession.delete('/api/locations/111').expect(StatusCodes.OK);
+    it('updates an existing Location', async () => {
+      await testSession.patch('/api/locations/111').send({ name: 'Updated Name' }).expect(StatusCodes.OK);
+    });
 
-    const record = await models.Location.findByPk(111);
-    assert.deepStrictEqual(record, null);
+    it('deletes an existing Locatiion', async () => {
+      await testSession.delete('/api/locations/111').expect(StatusCodes.OK);
+
+      const record = await models.Location.findByPk(111);
+      assert.deepStrictEqual(record, null);
+    });
   });
 });
