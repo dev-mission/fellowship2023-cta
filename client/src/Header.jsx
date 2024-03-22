@@ -57,6 +57,55 @@ function Header() {
                 Home
               </Link>
             </li>
+            {user && (
+              <>
+                {(user.role === 'CTA' || user.isAdmin) && (
+                  <>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Appointments" onClick={hideNavbar}>
+                        Appointments
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Tickets" onClick={hideNavbar}>
+                        Tickets
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Clients" onClick={hideNavbar}>
+                        Clients
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Locations" onClick={hideNavbar}>
+                        Locations
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {(user.role === 'Inventory' || user.isAdmin) && (
+                  <>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Inventory" onClick={hideNavbar}>
+                        Inventory
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Donors" onClick={hideNavbar}>
+                        Donors
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {(user.role === 'Inventory' || user.role === 'CTA' || user.isAdmin) && (
+                  <li className="nav-item active flex">
+                    <Link className="nav-link" aria-current="page" to="/Users" onClick={hideNavbar}>
+                      Users
+                    </Link>
+                  </li>
+                )}
+              </>
+            )}
             <div className="flex-grow-1 d-flex justify-content-end">
               {user && (
                 <>
