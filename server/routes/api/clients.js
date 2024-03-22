@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 
 import models from '../../models/index.js';
+import interceptors from '../interceptors.js';
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Client.findByPk(req.params.id);
     await record.destroy();
