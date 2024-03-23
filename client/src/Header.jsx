@@ -83,7 +83,7 @@ function Header() {
                     </li>
                   </>
                 )}
-                {(user.role === 'Inventory') && (
+                {user.role === 'Inventory' && (
                   <>
                     <li className="nav-item active flex">
                       <Link className="nav-link" aria-current="page" to="/Inventory" onClick={hideNavbar}>
@@ -97,7 +97,7 @@ function Header() {
                     </li>
                   </>
                 )}
-                {(user.isAdmin) && (
+                {user.isAdmin && (
                   <li className="nav-item active flex">
                     <Link className="nav-link" aria-current="page" to="/Users" onClick={hideNavbar}>
                       Users
