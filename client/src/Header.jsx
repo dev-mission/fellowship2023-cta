@@ -54,7 +54,7 @@ function Header() {
           <ul className="navbar-nav flex-grow-1 mb-2 mb-md-0">
             {user && (
               <>
-                {(user.role === 'CTA' || user.isAdmin) && (
+                {user.role === 'CTA' && (
                   <>
                     <li className="nav-item active">
                       <Link className="nav-link" aria-current="page" to="/" onClick={hideNavbar}>
@@ -83,7 +83,7 @@ function Header() {
                     </li>
                   </>
                 )}
-                {(user.role === 'Inventory' || user.isAdmin) && (
+                {user.role === 'Inventory' && (
                   <>
                     <li className="nav-item active flex">
                       <Link className="nav-link" aria-current="page" to="/Inventory" onClick={hideNavbar}>
@@ -97,7 +97,7 @@ function Header() {
                     </li>
                   </>
                 )}
-                {(user.role === 'Inventory' || user.role === 'CTA' || user.isAdmin) && (
+                {user.isAdmin && (
                   <li className="nav-item active flex">
                     <Link className="nav-link" aria-current="page" to="/Users" onClick={hideNavbar}>
                       Users
