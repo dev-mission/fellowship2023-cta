@@ -16,13 +16,13 @@ bcrypt.hash(process.argv[5], 10).then(async (hashedPassword) => {
   if (response === null) {
     models.Location.create({
       id: 1,
-      name: "Dev/Mission",
-      address1: "356 Bryant St",
-      address2: "N/A",
-      city: "San Francisco",
-      state: "California",
-      zipCode: "94107"
-    })
+      name: 'Dev/Mission',
+      address1: '356 Bryant St',
+      address2: 'N/A',
+      city: 'San Francisco',
+      state: 'California',
+      zipCode: '94107',
+    });
   }
 
   models.User.create({
