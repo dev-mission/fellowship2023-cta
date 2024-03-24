@@ -1,4 +1,5 @@
 @import '~bootstrap/scss/bootstrap.scss';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 body {
   padding-top: 5rem;
@@ -7,4 +8,22 @@ body {
 .img-thumbnail {
   border: 0 none;
   box-shadow: none;
+}
+
+.bi-person-fill {
+  font-size: 3em;
+  font-style: normal;
+}
+
+.bi-plus-lg {
+  font-size: 1.5em;
+  margin-left: 1em;
+}
+
+.bi-arrow-down-up {
+  cursor: pointer;
+}
+
+.bi-x-lg {
+  cursor: pointer;
 }
