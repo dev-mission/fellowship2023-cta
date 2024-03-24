@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable, flexRender } from '@tanstack/react-table';
+import {
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  getPaginationRowModel,
+  useReactTable,
+  flexRender,
+} from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 
 const columns = [
@@ -48,8 +55,6 @@ const Filters = ({ columnFilters, setColumnFilters }) => {
           type="search"
           className="form-control me-2"
           placeholder="Search Users"
-          aria-label="Search"
-          aria-describedby="basic-addon1"
           value={userName}
           onChange={(e) => onFilterChange('firstName', e.target.value)}
         />
@@ -74,6 +79,9 @@ const UserTable = ({ table }) => {
               {header.column.getCanSort() && <i className="ms-2 bi bi-arrow-down-up" onClick={header.column.getToggleSortingHandler()} />}
             </th>
           ))}
+          <th scope="col">
+            <i className="bi bi-trash-fill" />
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -82,6 +90,9 @@ const UserTable = ({ table }) => {
             {row.getVisibleCells().map((cell) => (
               <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
             ))}
+            <td>
+              <i className="bi bi-x-lg" />
+            </td>
           </tr>
         ))}
       </tbody>
@@ -115,6 +126,7 @@ const Users = () => {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -127,6 +139,17 @@ const Users = () => {
         <Filters columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
       </div>
       <UserTable table={table} />
+      <p>
+        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+      </p>
+      <div className="btn-group" role="group">
+        <button type="button" className="btn btn-primary" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+          {'<'}
+        </button>
+        <button type="button" className="btn btn-primary" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+          {'>'}
+        </button>
+      </div>
     </main>
   );
 };
