@@ -80,7 +80,7 @@ const UserTable = ({ table }) => {
             </th>
           ))}
           <th scope="col">
-            <i class="bi bi-pencil-square" />
+            <i className="bi bi-pencil-square" />
           </th>
           <th scope="col">
             <i className="bi bi-trash-fill" />
@@ -94,7 +94,7 @@ const UserTable = ({ table }) => {
               <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
             ))}
             <td>
-              <i class="bi bi-pencil" />
+              <i className="bi bi-pencil" />
             </td>
             <td>
               <i className="bi bi-x-lg" />
