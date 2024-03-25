@@ -8,6 +8,7 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 const columns = [
   {
@@ -113,9 +114,49 @@ UserTable.propTypes = {
   }).isRequired,
 };
 
+const UserModal = ({ toggleModal, setToggleModal }) => {
+  const UserAttributes = [];
+
+  return (
+    <Modal show={toggleModal} onHide={() => setToggleModal(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>New User</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="name@example.com"
+              autoFocus
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlTextarea1"
+          >
+            <Form.Label>Example textarea</Form.Label>
+            <Form.Control as="textarea" rows={3} />
+          </Form.Group>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setToggleModal(false)}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={() => setToggleModal(false)}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
 const Users = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
+  const [toggleModal, setToggleModal] = useState(false);
 
   useEffect(() => {
     fetch('/api/users')
@@ -138,9 +179,10 @@ const Users = () => {
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
-        <button type="button" className="btn btn-primary d-flex align-items-center">
+        <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
+        <UserModal toggleModal={toggleModal} setToggleModal={setToggleModal} />
         <i className="bi bi-person-fill">Users</i>
         <Filters columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
       </div>
