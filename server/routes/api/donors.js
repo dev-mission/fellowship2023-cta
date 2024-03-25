@@ -3,11 +3,10 @@ import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 
 import models from '../../models/index.js';
-import interceptors from '../interceptors.js';
 
 const router = express.Router();
 
-router.get('/', interceptors.requireAdmin, async (req, res) => {
+router.get('/', async (req, res) => {
   const records = await models.Donor.findAll();
   res.json(records);
 });
@@ -22,7 +21,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
+router.patch('/:id', async (req, res) => {
   try {
     const record = await models.Donor.findByPk(req.params.id);
     await record.update(_.pick(req.body, ['name', 'phone', 'email', 'addressOne', 'addressTwo', 'city', 'state', 'zip']));
@@ -33,7 +32,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
-router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const record = await models.Donor.findByPk(req.params.id);
     await record.destroy();
@@ -44,7 +43,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
-router.post('/', interceptors.requireAdmin, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const record = await models.Donor.create(
       _.pick(req.body, ['name', 'phone', 'email', 'addressOne', 'addressTwo', 'city', 'state', 'zip']),
