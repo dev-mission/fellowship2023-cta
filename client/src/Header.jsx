@@ -52,11 +52,60 @@ function Header() {
         </button>
         <div className={classNames('collapse navbar-collapse', { show: isNavbarShowing })}>
           <ul className="navbar-nav flex-grow-1 mb-2 mb-md-0">
-            <li className="nav-item active">
-              <Link className="nav-link" aria-current="page" to="/" onClick={hideNavbar}>
-                Home
-              </Link>
-            </li>
+            {user && (
+              <>
+                {user.role === 'CTA' && (
+                  <>
+                    <li className="nav-item active">
+                      <Link className="nav-link" aria-current="page" to="/" onClick={hideNavbar}>
+                        Home
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Appointments" onClick={hideNavbar}>
+                        Appointments
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Tickets" onClick={hideNavbar}>
+                        Tickets
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Clients" onClick={hideNavbar}>
+                        Clients
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Locations" onClick={hideNavbar}>
+                        Locations
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {user.role === 'Inventory' && (
+                  <>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Inventory" onClick={hideNavbar}>
+                        Inventory
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Donors" onClick={hideNavbar}>
+                        Donors
+                      </Link>
+                    </li>
+                  </>
+                )}
+                {user.isAdmin && (
+                  <li className="nav-item active flex">
+                    <Link className="nav-link" aria-current="page" to="/Users" onClick={hideNavbar}>
+                      Users
+                    </Link>
+                  </li>
+                )}
+              </>
+            )}
             <div className="flex-grow-1 d-flex justify-content-end">
               {user && (
                 <>
