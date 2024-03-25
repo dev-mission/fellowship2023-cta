@@ -5,110 +5,71 @@ import helper from '../../helper.js';
 import models from '../../../models/index.js';
 import app from '../../../app.js';
 
-describe('/api/device', () => {
+describe('/api/devices', () => {
   let testSession;
 
   beforeEach(async () => {
     await helper.loadFixtures(['donors', 'locations', 'clients', 'users', 'devices']);
 
     testSession = session(app);
-    await testSession
-      .post('/api/auth/login')
-      .set('Accept', 'application/json')
-      .send({ email: 'admin.user@test.com', password: 'abcd1234' })
-      .expect(StatusCodes.OK);
+    //Need to handle interceptor for inventory role
   });
 
   it('Delete a device', async () => {
-    const response = await testSession.delete('/api/device/1').expect(StatusCodes.OK);
-    const records = await models.Ticket.findByPk(response.body.id);
+    const response = await testSession.delete('/api/devices/1').expect(StatusCodes.OK);
+    const records = await models.Device.findByPk(response.body.id);
     assert.deepStrictEqual(records, null);
   });
 
   it('Update a device information', async () => {
     const response = await testSession
-      .patch('/api/device/1')
+      .patch('/api/devices/1')
       .send({
-        problem: 'Retested Probolem',
-        troubleshooting: 'Retested Troubleshooting',
+        serialNum: '0987654321',
+        ram: '32GB',
       })
       .expect(StatusCodes.OK);
-    const records = await models.Ticket.findByPk(response.body.id);
-    assert.deepStrictEqual(records.problem, 'Retested Probolem');
-    assert.deepStrictEqual(records.troubleshooting, 'Retested Troubleshooting');
+    const records = await models.Device.findByPk(response.body.id);
+    assert.deepStrictEqual(records.serialNum, '0987654321');
+    assert.deepStrictEqual(records.ram, '32GB');
   });
 
-  it('Create a new device with existing client', async () => {
+  it('Create a new device', async () => {
     const response = await testSession
-      .post('/api/device')
+      .post('/api/devices')
       .send({
-        AppointmentId: 3,
-        ClientId: 1,
-        LocationId: 1,
-        UserId: 1,
-        serialNumber: '1234567890',
-        device: 'TestDevice',
-        problem: 'TESTING TICKETS 3',
-        troubleshooting: 'TESTING TICKETS 3',
-        resolution: 'TESTING TICKETS 3',
-        dateOn: '2024-03-04',
-        timeInAt: '2024-03-04',
-        timeOutAt: '2024-03-04',
-        totalTime: 8,
-        hasCharger: true,
-        notes: 'TESTING TICKETS',
+        DonorId: 2,
+        LocationId: 2,
+        UserId: 2,
+        ClientId: 2,
+        deviceType: 'Desktop',
+        model: 'test model',
+        brand: 'test brand',
+        serialNum: 'test serial number',
+        cpu: 'test cpu',
+        ram: 'test ram GB',
+        os: 'test os',
+        username: 'test username',
+        password: 'test password',
+        condition: 'test condition',
+        value: 199.99,
+        notes: 'test notes',
       })
       .expect(StatusCodes.CREATED);
-    const records = await models.Ticket.findByPk(response.body.id);
-    assert.deepStrictEqual(records.troubleshooting, 'TESTING TICKETS 3');
-    assert.deepStrictEqual(records.problem, 'TESTING TICKETS 3');
-    assert.deepStrictEqual(records.ClientId, 1);
-    assert.deepStrictEqual(records.AppointmentId, 3);
-    assert.deepStrictEqual(records.LocationId, 1);
-  });
-
-  it('Create a new device without existing client', async () => {
-    const response = await testSession
-      .post('/api/device')
-      .send({
-        firstName: 'Link',
-        lastName: 'Zelda',
-        email: 'newEmail@email.com',
-        phone: '415-999-9999',
-        address: 'new wales',
-        ethnicity: 'N/A',
-        language: 'English',
-        gender: 'Male',
-        age: '21',
-        AppointmentId: 3,
-        LocationId: 1,
-        UserId: 1,
-        serialNumber: '1234567890',
-        device: 'TestDevice',
-        problem: 'TESTING TICKETS 3',
-        troubleshooting: 'TESTING TICKETS 3',
-        resolution: 'TESTING TICKETS 3',
-        dateOn: '2024-03-04',
-        timeInAt: '2024-03-04',
-        timeOutAt: '2024-03-04',
-        totalTime: 8,
-        hasCharger: true,
-        notes: 'TESTING TICKETS',
-      })
-      .expect(StatusCodes.CREATED);
-    const records = await models.Ticket.findByPk(response.body.id);
-    const client = await models.Client.findByPk(response.body.ClientId);
-    assert.deepStrictEqual(client.firstName, 'Link');
-    assert.deepStrictEqual(client.lastName, 'Zelda');
-    assert.deepStrictEqual(client.id === records.ClientId, true);
+    const records = await models.Device.findByPk(response.body.id);
+    assert.deepStrictEqual(records.model, 'test model');
+    assert.deepStrictEqual(records.serialNum, 'test serial number');
+    assert.deepStrictEqual(records.ClientId, 2);
+    assert.deepStrictEqual(records.DonorId, 2);
+    assert.deepStrictEqual(records.LocationId, 2);
   });
 
   it('fetch all items from the device table', async () => {
-    await testSession.get('/api/device').expect(StatusCodes.OK);
+    await testSession.get('/api/devices').expect(StatusCodes.OK);
   });
 
   it('fetch a single item from the device table', async () => {
-    const response = await testSession.get('/api/device/1').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.problem, 'Broken screen');
+    const response = await testSession.get('/api/devices/1').expect(StatusCodes.OK);
+    assert.deepStrictEqual(response.body?.condition, 'Good');
   });
 });
