@@ -3,16 +3,17 @@ import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 
 import models from '../../models/index.js';
-import interceptors from '../interceptors.js';
 
 const router = express.Router();
 
-router.get('/', interceptors.requireAdmin, async (req, res) => {
+router.get('/', async (req, res) => {
+  //Need to handle interceptor for inventory role
   const records = await models.Device.findAll();
   res.json(records);
 });
 
 router.get('/:id', async (req, res) => {
+  //Need to handle interceptor for inventory role
   try {
     const record = await models.Device.findByPk(req.params.id);
     res.json(record);
@@ -22,12 +23,11 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
+router.patch('/:id', async (req, res) => {
+  //Need to handle interceptor for inventory role
   try {
     const deviceId = req.params.id;
-    const record = await models.Device.findByPk(deviceId, {
-      include: [{ model: models.Donor }, { model: models.Location }, { model: models.User }, { model: models.Client }],
-    });
+    const record = await models.Device.findByPk(deviceId);
     if (!record) {
       return res.status(StatusCodes.NOT_FOUND).json({ error: 'Device not found' });
     }
@@ -54,7 +54,8 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
-router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
+router.delete('/:id', async (req, res) => {
+  //Need to handle interceptor for inventory role
   try {
     const record = await models.Device.findByPk(req.params.id);
     await record.destroy();
@@ -65,38 +66,33 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
-router.post('/', interceptors.requireAdmin, async (req, res) => {
+router.post('/', async (req, res) => {
+  //Need to handle interceptor for inventory role
   try {
-    const record = await models.Device.create(
-      _.pick(req.body, [
-        'deviceType',
-        'model',
-        'brand',
-        'serialNum',
-        'cpu',
-        'ram',
-        'os',
-        'username',
-        'password',
-        'condition',
-        'value',
-        'notes',
-      ]),
-    );
-
-    if (req.body.donorId) {
-      await record.setDonor(req.body.donorId);
-    }
-    if (req.body.locationId) {
-      await record.setLocation(req.body.locationId);
-    }
-    if (req.body.userId) {
-      await record.setUser(req.body.userId);
-    }
-    if (req.body.clientId) {
-      await record.setClient(req.body.clientId);
-    }
-
+    let device = {};
+    let deviceInfo;
+    (deviceInfo = _.pick(req.body, [
+      'deviceType',
+      'model',
+      'brand',
+      'serialNum',
+      'cpu',
+      'ram',
+      'os',
+      'username',
+      'password',
+      'condition',
+      'value',
+      'notes',
+    ])),
+      (device = {
+        ...deviceInfo,
+        DonorId: req.body.DonorId,
+        LocationId: req.body.LocationId,
+        UserId: req.body.UserId,
+        ClientId: req.body.ClientId,
+      });
+    const record = await models.Device.create(device);
     res.status(StatusCodes.CREATED).json(record);
   } catch (err) {
     console.log(err);
