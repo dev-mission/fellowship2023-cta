@@ -20,11 +20,12 @@ router.use('/invites', invitesRoutes);
 router.use('/passwords', passwordsRoutes);
 router.use('/users', usersRoutes);
 router.use('/ticket', interceptors.requireCTA, ticketRoutes);
-router.use('/locations', locationsRoutes);
-router.use('/courses', coursesRoutes);
-router.use('/clients', clientsRoutes);
 //Need to handle interceptor for inventory role
 router.use('/devices', devicesRoutes);
 //Need to handle interceptor for inventory role
 router.use('/donors', donorsRoutes);
+router.use('/locations', interceptors.requireAdmin, locationsRoutes);
+router.use('/courses', interceptors.requireAdmin, coursesRoutes);
+router.use('/clients', interceptors.requireCTA, clientsRoutes);
+
 export default router;

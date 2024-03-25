@@ -52,7 +52,14 @@ function Login() {
           <div className="col col-sm-10 col-md-8 col-lg-6 col-xl-4">
             <div className="card">
               <div className="card-body">
-                <h2 className="card-title">Log in</h2>
+                <div className="row">
+                  <div className="col">
+                    <h2 className="card-title">Log in</h2>
+                  </div>
+                  <div className="col">
+                    <img src="../public/logo.png" alt="Dev/Mission logo" className="img-thumbnail" />
+                  </div>
+                </div>
                 {location.state?.flash && <div className="alert alert-success">{location.state?.flash}</div>}
                 {showInvalidError && <div className="alert alert-danger">Invalid email and/or password.</div>}
                 <form onSubmit={onSubmit}>
@@ -89,12 +96,12 @@ function Login() {
                   </div>
                   <div className="mb-3 text-center">
                     <Link to="/passwords/forgot">Forgot your password?</Link>
-                    {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && (
+                    {/* {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && (
                       <>
                         <br />
                         <Link to="/register">Need an account?</Link>
                       </>
-                    )}
+                    )} */}
                   </div>
                 </form>
               </div>
