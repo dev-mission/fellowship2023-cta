@@ -8,7 +8,7 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 
 const columns = [
   {
@@ -115,7 +115,14 @@ UserTable.propTypes = {
 };
 
 const UserModal = ({ toggleModal, setToggleModal }) => {
-  const UserAttributes = [];
+  const [check, setCheck] = useState(false);
+  // const [data, setData] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   email: '',
+  //   role: '',
+  //   location: '',
+  // });
 
   return (
     <Modal show={toggleModal} onHide={() => setToggleModal(false)}>
@@ -123,34 +130,65 @@ const UserModal = ({ toggleModal, setToggleModal }) => {
         <Modal.Title>New User</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="name@example.com"
-              autoFocus
-            />
-          </Form.Group>
-          <Form.Group
-            className="mb-3"
-            controlId="exampleForm.ControlTextarea1"
-          >
-            <Form.Label>Example textarea</Form.Label>
-            <Form.Control as="textarea" rows={3} />
-          </Form.Group>
-        </Form>
+        <Container>
+          <Form>
+            <Row>
+              <Col xs={9} md={6}>
+                <Form.Group controlId="firstName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control type="name" autoFocus />
+                </Form.Group>
+              </Col>
+              <Col xs={9} md={6}>
+                <Form.Group controlId="lastName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control type="name" autoFocus />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="email">
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control type="email" autoFocus />
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={4}>
+                <Form.Group controlId="role">
+                  <Form.Label>Role</Form.Label>
+                  <Form.Control type="name" autoFocus />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="d-flex align-items-end">
+              <Col xs={12} md={8}>
+                <Form.Group controlId="location">
+                  <Form.Label>Location</Form.Label>
+                  <Form.Control type="name" autoFocus />
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={4}>
+                <Form.Check type="switch" id="custom-switch" label="Admin" checked={check} onChange={() => setCheck(!check)} />
+              </Col>
+            </Row>
+          </Form>
+        </Container>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => setToggleModal(false)}>
           Close
         </Button>
         <Button variant="primary" onClick={() => setToggleModal(false)}>
-          Save Changes
+          Submit
         </Button>
       </Modal.Footer>
     </Modal>
   );
+};
+
+UserModal.propTypes = {
+  toggleModal: PropTypes.bool.isRequired,
+  setToggleModal: PropTypes.func.isRequired,
 };
 
 const Users = () => {
