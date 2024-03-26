@@ -84,7 +84,7 @@ describe('/api/users', () => {
             lastName: 'Person',
             LocationId: 2,
             email: 'normal.person@test.com',
-            role: null,
+            role: 'CTA',
           })
           .expect(StatusCodes.OK);
 

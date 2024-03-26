@@ -4,28 +4,27 @@ import { useEffect, useState } from 'react';
 
 function Home() {
   const staticContext = useStaticContext();
-  const [data, setData] = useState();
+  const [user, setUser] = useState({});
   useEffect(() => {
     fetch('/api/users/me')
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then((data) => {
-        setData(data)
-        console.log(data);
+        setUser(data);
       });
   }, []);
 
-  function updateRole(event){
+  const updateRole = (event) => {
     event.preventDefault();
-    const role = event.target.id;
-    // fetch(`/api/${data.id}`,{
-    //   method: 'PATCH',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ role: role }),
-    // })
-    console.log(role);
-  }
+    const newRole = { ...user, role: event.target.id };
+    fetch(`/api/users/${user.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newRole),
+    });
+    location.reload();
+  };
 
   return (
     <>
@@ -36,9 +35,17 @@ function Home() {
         <h1>Home</h1>
         <div>
           <p>Welcome to Dev/Mission Portal</p>
-          <p>Please choose which website you wish to go to!</p>
-          <button id="CTA" onClick={updateRole}>Tickets</button>
-          <button id="Inventory" onClick={updateRole}>Inventory</button>
+          {user?.isAdmin && user.role == null && (
+            <>
+              <p>Please choose which website you wish to go to!</p>
+              <button id="CTA" onClick={updateRole}>
+                Tickets
+              </button>
+              <button id="Inventory" onClick={updateRole}>
+                Inventory
+              </button>
+            </>
+          )}
         </div>
       </main>
     </>

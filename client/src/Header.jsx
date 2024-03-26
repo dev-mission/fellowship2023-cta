@@ -27,6 +27,16 @@ function Header() {
 
   async function onLogout(event) {
     event.preventDefault();
+    if (user.isAdmin) {
+      const newRole = { ...user, role: null };
+      fetch(`/api/users/${user.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newRole),
+      });
+    }
     await Api.auth.logout();
     setUser(null);
     hideNavbar();
