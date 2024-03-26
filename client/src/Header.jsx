@@ -29,13 +29,7 @@ function Header() {
     event.preventDefault();
     if (user.isAdmin) {
       const newRole = { ...user, role: null };
-      fetch(`/api/users/${user.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newRole),
-      });
+      Api.users.update(user.id, newRole);
     }
     await Api.auth.logout();
     setUser(null);

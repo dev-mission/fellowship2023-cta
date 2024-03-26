@@ -1,29 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import { useStaticContext } from './StaticContext';
-import { useEffect, useState } from 'react';
+import { useAuthContext } from './AuthContext';
+import Api from './Api';
 
 function Home() {
   const staticContext = useStaticContext();
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    fetch('/api/users/me')
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-      });
-  }, []);
+  const { user, setUser } = useAuthContext();
 
   const updateRole = (event) => {
     event.preventDefault();
-    const newRole = { ...user, role: event.target.id };
-    fetch(`/api/users/${user.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newRole),
-    });
-    location.reload();
+    const role = event.target.id;
+    setUser({ ...user, role });
+    Api.users.update(user.id, { role });
   };
 
   return (
