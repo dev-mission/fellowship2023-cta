@@ -81,4 +81,15 @@ router.patch('/:id', interceptors.requireLogin, (req, res) => {
   });
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const record = await models.User.findByPk(req.params.id);
+    await record.destroy();
+    res.status(StatusCodes.OK).end();
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
 export default router;
