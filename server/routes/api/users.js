@@ -63,6 +63,7 @@ router.patch('/:id', interceptors.requireLogin, (req, res) => {
       const attrs = ['firstName', 'lastName', 'email', 'password', 'picture'];
       if (req.user.isAdmin) {
         attrs.push('isAdmin');
+        attrs.push('role');
       } else if (req.user.role == 'CTA' || req.user.role == 'Inventory') {
         attrs.push('role');
       }

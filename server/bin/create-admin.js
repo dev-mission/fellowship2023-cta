@@ -32,7 +32,7 @@ bcrypt.hash(process.argv[5], 10).then(async (hashedPassword) => {
     LocationId: 1,
     hashedPassword: hashedPassword,
     isAdmin: true,
-    role: 'Inventory',
+    role: null,
   }).then(() => {
     console.log('Admin user created!');
     models.sequelize.close();
