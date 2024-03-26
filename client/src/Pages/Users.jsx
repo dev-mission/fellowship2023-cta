@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import React from 'react';
 import {
   getCoreRowModel,
   getFilteredRowModel,
@@ -66,7 +65,7 @@ Filters.propTypes = {
   setColumnFilters: PropTypes.func.isRequired,
 };
 
-const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setData}) => {
+const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setData }) => {
   const onDelete = async () => {
     setToggleDeleteModal(false);
     try {
@@ -98,7 +97,19 @@ const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setDa
       </Modal.Footer>
     </Modal>
   );
-}
+};
+
+DeleteModal.propTypes = {
+  toggleDeleteModal: PropTypes.bool.isRequired,
+  setToggleDeleteModal: PropTypes.func.isRequired,
+  row: PropTypes.shape({
+    original: PropTypes.shape({
+      id: PropTypes.number,
+    }),
+  }).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setData: PropTypes.func.isRequired,
+};
 
 const UserTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -127,14 +138,20 @@ const UserTable = ({ table, data, setData }) => {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-              ))}  
+              ))}
               <td>
                 <i className="bi bi-pencil" />
               </td>
               <td>
-                <i className="bi bi-x-lg" onClick={() => setToggleDeleteModal(true)}/>
+                <i className="bi bi-x-lg" onClick={() => setToggleDeleteModal(true)} />
               </td>
-              <DeleteModal toggleDeleteModal={toggleDeleteModal} setToggleDeleteModal={setToggleDeleteModal} row={row} data={data} setData={setData}/>
+              <DeleteModal
+                toggleDeleteModal={toggleDeleteModal}
+                setToggleDeleteModal={setToggleDeleteModal}
+                row={row}
+                data={data}
+                setData={setData}
+              />
             </tr>
           ))}
         </tbody>
@@ -148,6 +165,8 @@ UserTable.propTypes = {
     getHeaderGroups: PropTypes.func.isRequired,
     getRowModel: PropTypes.func.isRequired,
   }).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setData: PropTypes.func.isRequired,
 };
 
 const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
@@ -162,10 +181,10 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
   });
 
   const onChange = (e) => {
-    const newData = {...data};
+    const newData = { ...data };
     newData[e.target.name] = e.target.value;
     setData(newData);
-  }
+  };
 
   // const onSubmit = async (e) => {
   //   e.preventDefault();
@@ -187,15 +206,15 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
           <Form>
             <Row>
               <Col xs={9} md={6}>
-                <Form.Group controlId="firstName" >
+                <Form.Group controlId="firstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange}/>
+                  <Form.Control type="name" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={9} md={6}>
                 <Form.Group controlId="lastName">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange}/>
+                  <Form.Control type="name" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -203,13 +222,13 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="email">
                   <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" autoFocus onChange={onChange}/>
+                  <Form.Control type="email" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={6} md={4}>
                 <Form.Group controlId="role">
                   <Form.Label>Role</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange}/>
+                  <Form.Control type="name" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -217,7 +236,7 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="location">
                   <Form.Label>Location</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange}/>
+                  <Form.Control type="name" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={6} md={4}>
@@ -278,7 +297,7 @@ const Users = () => {
         <i className="bi bi-person-fill">Users</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <UserTable table={table} data={data} setData={setData}/>
+      <UserTable table={table} data={data} setData={setData} />
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
