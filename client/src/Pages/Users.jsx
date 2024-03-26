@@ -165,7 +165,7 @@ UserTable.propTypes = {
     getHeaderGroups: PropTypes.func.isRequired,
     getRowModel: PropTypes.func.isRequired,
   }).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object),
   setData: PropTypes.func.isRequired,
 };
 
