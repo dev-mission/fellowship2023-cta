@@ -9,7 +9,6 @@ if (process.argv.length != 6) {
 
 import bcrypt from 'bcrypt';
 import models from '../models/index.js';
-import { isNull } from 'lodash';
 
 bcrypt.hash(process.argv[5], 10).then(async (hashedPassword) => {
   const response = await models.Location.findByPk(1);
