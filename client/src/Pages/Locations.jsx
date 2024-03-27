@@ -305,8 +305,6 @@ const Locations = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  console.log(data);
-
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
