@@ -22,12 +22,24 @@ describe('/api/locations', () => {
         .send({ email: 'admin.user@test.com', password: 'abcd1234' })
         .expect(StatusCodes.OK);
     });
-
+    /* 
+'name', 'address1', 'address2', 'city', 'state', 'zipCode'
+*/
     it('creates a new Location', async () => {
-      const response = await testSession.post('/api/locations').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
+      const response = await testSession
+        .post('/api/locations')
+        .send({
+          name: 'Valencia Gardens',
+          address1: '360 Valencia St',
+          address2: null,
+          city: 'San Francisco',
+          state: 'CA',
+          zipCode: '94103',
+        })
+        .expect(StatusCodes.CREATED);
 
       const record = await models.Location.findByPk(response.body.id);
-      assert.deepStrictEqual(record.name, 'Created Name');
+      assert.deepStrictEqual(record.name, 'Valencia Gardens');
     });
 
     it('fetch all locations from the Locations table', async () => {
