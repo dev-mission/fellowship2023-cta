@@ -13,7 +13,7 @@ import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 const columns = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: 'Location Name',
     enableColumnFilter: true,
   },
   {
@@ -171,22 +171,42 @@ LocationTable.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
-  const onChange = () => {
-    // const newData = { ...data };
-    // newData[e.target.name] = e.target.value;
-    // setData(newData);
+const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setData }) => {
+  const [addData, setAddData] = useState({
+    name: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zipCode: '',
+  }); 
+
+  const onChange = (e) => {
+    const newData = { ...addData };
+    newData[e.target.name] = e.target.value;
+    setAddData(newData);
+    console.log(addData);
   };
 
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let method = 'POST';
+  const onSubmit = async (e) => {
+    setToggleLocationModal(false);
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/locations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(addData),
+      });
 
-  //   try {
-  //     let path = '/api/location';
-
-  //   }
-  // };
+      const json = await response.json();
+      setData([...data, addData])
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Modal show={toggleLocationModal} onHide={() => setToggleLocationModal(false)}>
@@ -199,8 +219,8 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
             <Row>
               <Col xs={18} md={12}>
                 <Form.Group controlId="name">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Label>Location Name</Form.Label>
+                  <Form.Control name="name" autoFocus value={addData.name} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -208,7 +228,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
               <Col xs={18} md={12}>
                 <Form.Group controlId="address1">
                   <Form.Label>Address 1</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="address1" autoFocus value={addData.address1} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -216,7 +236,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
               <Col xs={18} md={12}>
                 <Form.Group controlId="address2">
                   <Form.Label>Address 2</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="address2" autoFocus value={addData.address2} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -224,19 +244,19 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
               <Col xs={9} md={6}>
                 <Form.Group controlId="city">
                   <Form.Label>City</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="city" autoFocus value={addData.city} onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={4.5} md={3}>
                 <Form.Group controlId="state">
                   <Form.Label>State</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="state" autoFocus value={addData.state} onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={4.5} md={3}>
                 <Form.Group controlId="zipCode">
                   <Form.Label>Zip Code</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="zipCode" autoFocus value={addData.zipCode} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -247,7 +267,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
         <Button variant="secondary" onClick={() => setToggleLocationModal(false)}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => setToggleLocationModal(false)}>
+        <Button variant="primary" onClick={onSubmit} type='submit'>
           Submit
         </Button>
       </Modal.Footer>
@@ -284,13 +304,15 @@ const Locations = () => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
+  console.log(data);
+
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleLocationModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <LocationModal toggleLocationModal={toggleLocationModal} setToggleLocationModal={setToggleLocationModal} />
+        <LocationModal toggleLocationModal={toggleLocationModal} setToggleLocationModal={setToggleLocationModal} data={data} setData={setData}/>
         <i className="bi bi-person-fill">Locations</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
