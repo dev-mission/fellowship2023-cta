@@ -9,21 +9,26 @@ module.exports = {
       },
       name: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       address1: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       address2: {
         type: Sequelize.TEXT,
       },
       city: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       state: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       zipCode: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
