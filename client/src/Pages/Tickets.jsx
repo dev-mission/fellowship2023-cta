@@ -40,28 +40,12 @@ const columns = [
     enableSorting: true,
   },
   {
-<<<<<<< HEAD
-    accessorKey: "problem",
-    header: "Problem",
-=======
     accessorKey: 'problem',
     header: 'Problem',
->>>>>>> main
     enableColumnFilter: false,
     enableSorting: false,
   },
   {
-<<<<<<< HEAD
-    accessorKey: "created-at",
-    header: "Date Met",
-    enableColumnFilter: true,
-    enableSorting: true,
-  }
-];
-
-
-
-=======
     accessorKey: 'created-at',
     header: 'Date Met',
     enableColumnFilter: true,
@@ -69,7 +53,6 @@ const columns = [
   },
 ];
 
->>>>>>> main
 const Filters = ({ setColumnFilters }) => {
   const onFilterChange = (id, value) => setColumnFilters((prev) => prev.filter((f) => f.id !== id).concat({ id, value }));
 
