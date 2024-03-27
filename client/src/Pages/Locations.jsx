@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {
   getCoreRowModel,
   getFilteredRowModel,
-  getSortedRowModel,
+  // getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
   flexRender,
@@ -172,20 +172,10 @@ LocationTable.propTypes = {
 };
 
 const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
-  const [check, setCheck] = useState(false);
-  const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    role: '',
-    location: '',
-    isAdmin: check,
-  });
-
-  const onChange = (e) => {
-    const newData = { ...data };
-    newData[e.target.name] = e.target.value;
-    setData(newData);
+  const onChange = () => {
+    // const newData = { ...data };
+    // newData[e.target.name] = e.target.value;
+    // setData(newData);
   };
 
   // const onSubmit = async (e) => {
@@ -196,7 +186,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
   //     let path = '/api/location';
 
   //   }
-  // }
+  // };
 
   return (
     <Modal show={toggleLocationModal} onHide={() => setToggleLocationModal(false)}>
@@ -207,42 +197,47 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal }) => {
         <Container>
           <Form>
             <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="firstName">
+              <Col xs={18} md={12}>
+                <Form.Group controlId="name">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="lastName">
-                  <Form.Label>Last Name</Form.Label>
                   <Form.Control type="name" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={8}>
-                <Form.Group controlId="email">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={6} md={4}>
-                <Form.Group controlId="role">
-                  <Form.Label>Role</Form.Label>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="address1">
+                  <Form.Label>Address 1</Form.Label>
                   <Form.Control type="name" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="d-flex align-items-end">
-              <Col xs={12} md={8}>
-                <Form.Group controlId="location">
-                  <Form.Label>Location</Form.Label>
+            <Row>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="address2">
+                  <Form.Label>Address 2</Form.Label>
                   <Form.Control type="name" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
-              <Col xs={6} md={4}>
-                <Form.Check type="switch" id="custom-switch" label="Admin" checked={check} onChange={() => setCheck(!check)} />
+            </Row>
+            <Row>
+              <Col xs={9} md={6}>
+                <Form.Group controlId="city">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control type="name" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={4.5} md={3}>
+                <Form.Group controlId="state">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control type="name" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={4.5} md={3}>
+                <Form.Group controlId="zipCode">
+                  <Form.Label>Zip Code</Form.Label>
+                  <Form.Control type="name" autoFocus onChange={onChange} />
+                </Form.Group>
               </Col>
             </Row>
           </Form>
@@ -288,10 +283,6 @@ const Locations = () => {
     // getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  console.log('data');
-  console.log(data);
-  console.log('rows');
-  console.log(table.getRowModel().rows);
 
   return (
     <main className="container">
