@@ -17,13 +17,13 @@ async function loadFixtures(files) {
 }
 
 const getTickets = async () => {
-    const result = await models.Ticket.findAll();
-    return result;
-}
+  const result = await models.Ticket.findAll();
+  return result;
+};
 
 const tickets = await getTickets();
-if(tickets.length == 0){
-    await loadFixtures(['locations', 'users', 'donors', 'clients', 'devices', 'appointments', 'tickets']);
+if (tickets.length == 0) {
+  await loadFixtures(['locations', 'users', 'donors', 'clients', 'devices', 'appointments', 'tickets']);
 } else {
-    console.log("Test Tickets have been made!");
+  console.log('Test Tickets have been made!');
 }

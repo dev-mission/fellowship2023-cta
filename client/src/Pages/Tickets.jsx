@@ -40,20 +40,18 @@ const columns = [
     enableSorting: true,
   },
   {
-    accessorKey: "problem",
-    header: "Problem",
+    accessorKey: 'problem',
+    header: 'Problem',
     enableColumnFilter: false,
     enableSorting: false,
   },
   {
-    accessorKey: "created-at",
-    header: "Date Met",
+    accessorKey: 'created-at',
+    header: 'Date Met',
     enableColumnFilter: true,
     enableSorting: true,
-  }
+  },
 ];
-
-
 
 const Filters = ({ setColumnFilters }) => {
   const onFilterChange = (id, value) => setColumnFilters((prev) => prev.filter((f) => f.id !== id).concat({ id, value }));
@@ -276,10 +274,8 @@ UserModal.propTypes = {
   setToggleUserModal: PropTypes.func.isRequired,
 };
 
-
-
 const Tickets = () => {
-  const [data , setData] = useState([]);
+  const [data, setData] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [toggleUserModal, setToggleUserModal] = useState(false);
 
