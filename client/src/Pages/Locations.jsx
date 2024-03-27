@@ -179,7 +179,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
     city: '',
     state: '',
     zipCode: '',
-  }); 
+  });
 
   const onChange = (e) => {
     const newData = { ...addData };
@@ -192,16 +192,15 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
     setToggleLocationModal(false);
     e.preventDefault();
     try {
-      const response = await fetch('/api/locations', {
+      await fetch('/api/locations', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(addData),
       });
 
-      const json = await response.json();
-      setData([...data, addData])
+      setData([...data, addData]);
       console.log(data);
     } catch (err) {
       console.log(err);
@@ -267,7 +266,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
         <Button variant="secondary" onClick={() => setToggleLocationModal(false)}>
           Close
         </Button>
-        <Button variant="primary" onClick={onSubmit} type='submit'>
+        <Button variant="primary" onClick={onSubmit} type="submit">
           Submit
         </Button>
       </Modal.Footer>
@@ -278,6 +277,8 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
 LocationModal.propTypes = {
   toggleLocationModal: PropTypes.bool.isRequired,
   setToggleLocationModal: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setData: PropTypes.func.isRequired,
 };
 
 const Locations = () => {
@@ -312,7 +313,12 @@ const Locations = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleLocationModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <LocationModal toggleLocationModal={toggleLocationModal} setToggleLocationModal={setToggleLocationModal} data={data} setData={setData}/>
+        <LocationModal
+          toggleLocationModal={toggleLocationModal}
+          setToggleLocationModal={setToggleLocationModal}
+          data={data}
+          setData={setData}
+        />
         <i className="bi bi-person-fill">Locations</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
