@@ -12,30 +12,48 @@ import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 
 const columns = [
   {
-    accessorKey: 'firstName',
-    header: 'First',
+    accessorKey: 'name',
+    header: 'Name',
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'lastName',
-    header: 'Last',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'LocationId',
-    header: 'Location',
-    enableColumnFilter: true,
-    enableSorting: false,
-  },
-  {
-    accessorKey: 'role',
-    header: 'Role',
-    enableColumnFilter: true,
-    enableSorting: false,
+    accessorKey: 'phone',
+    header: 'Phone Number',
+    enableColumnFilter: false,
   },
   {
     accessorKey: 'email',
     header: 'Email',
+    enableColumnFilter: true,
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'address1',
+    header: 'Address 1',
+    enableColumnFilter: true,
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'address2',
+    header: 'Address 2',
+    enableColumnFilter: true,
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'city',
+    header: 'City',
+    enableColumnFilter: true,
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'state',
+    header: 'State',
+    enableColumnFilter: true,
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'zip',
+    header: 'Zip Code',
     enableColumnFilter: true,
     enableSorting: false,
   },
@@ -69,7 +87,7 @@ const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setDa
   const onDelete = async () => {
     setToggleDeleteModal(false);
     try {
-      await fetch(`/api/users/${row.original.id}`, {
+      await fetch(`/api/donors/${row.original.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -269,7 +287,7 @@ const Donors = () => {
   const [toggleDonorModal, setToggleDonorModal] = useState(false);
 
   useEffect(() => {
-    fetch('/api/users')
+    fetch('/api/donors')
       .then((res) => res.json())
       .then((data) => setData(data));
   }, []);
