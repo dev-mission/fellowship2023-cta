@@ -13,7 +13,7 @@ import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 const columns = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: 'Donor Name',
     enableColumnFilter: true,
   },
   {
@@ -72,7 +72,7 @@ const Filters = ({ setColumnFilters }) => {
           type="search"
           className="form-control me-2"
           placeholder="Search Donors"
-          onChange={(e) => onFilterChange('firstName', e.target.value)}
+          onChange={(e) => onFilterChange('name', e.target.value)}
         />
       </div>
     </form>
@@ -187,32 +187,43 @@ DonorTable.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-const DonorModal = ({ toggleDonorModal, setToggleDonorModal }) => {
-  const [check, setCheck] = useState(false);
-  const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
+const DonorModal = ({ toggleDonorModal, setToggleDonorModal, data, setData }) => {
+  const [addData, setAddData] = useState({
+    name: '',
+    phone: '',
     email: '',
-    role: '',
-    location: '',
-    isAdmin: check,
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
   });
 
   const onChange = (e) => {
-    const newData = { ...data };
+    const newData = { ...addData };
     newData[e.target.name] = e.target.value;
-    setData(newData);
+    setAddData(newData);
+    console.log(addData);
   };
 
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let method = 'POST';
+  const onSubmit = async (e) => {
+    setToggleDonorModal(false);
+    e.preventDefault();
+    try {
+      await fetch('/api/donors', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(addData),
+      });
 
-  //   try {
-  //     let path = '/api/users';
-
-  //   }
-  // }
+      setData([...data, addData]);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Modal show={toggleDonorModal} onHide={() => setToggleDonorModal(false)}>
@@ -223,42 +234,62 @@ const DonorModal = ({ toggleDonorModal, setToggleDonorModal }) => {
         <Container>
           <Form>
             <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="firstName">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+              <Col xs={18} md={8}>
+                <Form.Group controlId="name">
+                  <Form.Label>Donor Name</Form.Label>
+                  <Form.Control name="name" autoFocus value={addData.name} onChange={onChange} />
                 </Form.Group>
               </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="lastName">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+              <Col xs={18} md={4}>
+                <Form.Group controlId="phone">
+                  <Form.Label>Donor Phone</Form.Label>
+                  <Form.Control name="phone" autoFocus value={addData.phone} onChange={onChange} />
+                </Form.Group>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="email">
+                  <Form.Label>Donor Email</Form.Label>
+                  <Form.Control name="email" autoFocus value={addData.email} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={8}>
-                <Form.Group controlId="email">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={6} md={4}>
-                <Form.Group controlId="role">
-                  <Form.Label>Role</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+              <Col xs={18} md={12}>
+                <Form.Group controlId="address1">
+                  <Form.Label>Address 1</Form.Label>
+                  <Form.Control name="address1" autoFocus value={addData.address1} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="d-flex align-items-end">
-              <Col xs={12} md={8}>
-                <Form.Group controlId="location">
-                  <Form.Label>Location</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+            <Row>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="address2">
+                  <Form.Label>Address 2</Form.Label>
+                  <Form.Control name="address2" autoFocus value={addData.address2} onChange={onChange} />
                 </Form.Group>
               </Col>
-              <Col xs={6} md={4}>
-                <Form.Check type="switch" id="custom-switch" label="Admin" checked={check} onChange={() => setCheck(!check)} />
+            </Row>
+            <Row>
+              <Col xs={9} md={6}>
+                <Form.Group controlId="city">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control name="city" autoFocus value={addData.city} onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={4.5} md={3}>
+                <Form.Group controlId="state">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control name="state" autoFocus value={addData.state} onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={4.5} md={3}>
+                <Form.Group controlId="zip">
+                  <Form.Label>Zip Code</Form.Label>
+                  <Form.Control name="zipCode" autoFocus value={addData.zipCode} onChange={onChange} />
+                </Form.Group>
               </Col>
             </Row>
           </Form>
@@ -268,7 +299,7 @@ const DonorModal = ({ toggleDonorModal, setToggleDonorModal }) => {
         <Button variant="secondary" onClick={() => setToggleDonorModal(false)}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => setToggleDonorModal(false)}>
+        <Button variant="primary" onClick={onSubmit} type="submit">
           Submit
         </Button>
       </Modal.Footer>
@@ -279,6 +310,8 @@ const DonorModal = ({ toggleDonorModal, setToggleDonorModal }) => {
 DonorModal.propTypes = {
   toggleDonorModal: PropTypes.bool.isRequired,
   setToggleDonorModal: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setData: PropTypes.func.isRequired,
 };
 
 const Donors = () => {
@@ -301,7 +334,7 @@ const Donors = () => {
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
+    // getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
 
@@ -311,7 +344,12 @@ const Donors = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleDonorModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <DonorModal toggleDonorModal={toggleDonorModal} setToggleDonorModal={setToggleDonorModal} />
+        <DonorModal
+          toggleDonorModal={toggleDonorModal}
+          setToggleDonorModal={setToggleDonorModal}
+          data={data}
+          setData={setData}
+        />
         <i className="bi title-icon bi-box2-heart">Donors</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
