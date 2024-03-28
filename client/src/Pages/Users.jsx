@@ -294,7 +294,7 @@ const Users = () => {
           New <i className="bi bi-plus-lg" />
         </button>
         <UserModal toggleUserModal={toggleUserModal} setToggleUserModal={setToggleUserModal} />
-        <i className="bi bi-person-fill">Users</i>
+        <i className="bi title-icon">Users</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
       <UserTable table={table} data={data} setData={setData} />

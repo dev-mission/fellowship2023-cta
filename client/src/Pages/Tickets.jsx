@@ -305,7 +305,7 @@ const Tickets = () => {
           New <i className="bi bi-plus-lg" />
         </button>
         <UserModal toggleUserModal={toggleUserModal} setToggleUserModal={setToggleUserModal} />
-        <i className="bi bi-person-fill">Tickets</i>
+        <i className="bi title-icon">Tickets</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
       <UserTable table={table} data={data} setData={setData} />

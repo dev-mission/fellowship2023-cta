@@ -312,7 +312,7 @@ const Donors = () => {
           New <i className="bi bi-plus-lg" />
         </button>
         <DonorModal toggleDonorModal={toggleDonorModal} setToggleDonorModal={setToggleDonorModal} />
-        <i className="bi bi-person-fill">Donors</i>
+        <i className="bi title-icon bi-box2-heart">Donors</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
       <DonorTable table={table} data={data} setData={setData} />
