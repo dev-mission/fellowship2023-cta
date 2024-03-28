@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  getPaginationRowModel,
-  useReactTable,
-  flexRender,
-} from '@tanstack/react-table';
+import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable, flexRender } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 
@@ -25,37 +18,31 @@ const columns = [
     accessorKey: 'email',
     header: 'Email',
     enableColumnFilter: true,
-    enableSorting: true,
   },
   {
     accessorKey: 'address1',
     header: 'Address 1',
     enableColumnFilter: true,
-    enableSorting: false,
   },
   {
     accessorKey: 'address2',
     header: 'Address 2',
     enableColumnFilter: true,
-    enableSorting: false,
   },
   {
     accessorKey: 'city',
     header: 'City',
     enableColumnFilter: true,
-    enableSorting: false,
   },
   {
     accessorKey: 'state',
     header: 'State',
     enableColumnFilter: true,
-    enableSorting: false,
   },
   {
     accessorKey: 'zip',
     header: 'Zip Code',
     enableColumnFilter: true,
-    enableSorting: false,
   },
 ];
 
@@ -140,7 +127,6 @@ const DonorTable = ({ table, data, setData }) => {
             {table.getHeaderGroups()[0].headers.map((header) => (
               <th scope="col" key={header.id}>
                 {header.column.columnDef.header}
-                {header.column.getCanSort() && <i className="ms-2 bi bi-arrow-down-up" onClick={header.column.getToggleSortingHandler()} />}
               </th>
             ))}
             <th scope="col">
@@ -247,7 +233,7 @@ const DonorModal = ({ toggleDonorModal, setToggleDonorModal, data, setData }) =>
                 </Form.Group>
               </Col>
             </Row>
-            
+
             <Row>
               <Col xs={18} md={12}>
                 <Form.Group controlId="email">
@@ -257,21 +243,20 @@ const DonorModal = ({ toggleDonorModal, setToggleDonorModal, data, setData }) =>
               </Col>
             </Row>
             <Row>
-              <Col xs={18} md={12}>
+              <Col xs={18} md={8}>
                 <Form.Group controlId="address1">
                   <Form.Label>Address 1</Form.Label>
                   <Form.Control name="address1" autoFocus value={addData.address1} onChange={onChange} />
                 </Form.Group>
               </Col>
-            </Row>
-            <Row>
-              <Col xs={18} md={12}>
+              <Col xs={18} md={4}>
                 <Form.Group controlId="address2">
                   <Form.Label>Address 2</Form.Label>
-                  <Form.Control name="address2" autoFocus value={addData.address2} onChange={onChange} />
+                  <Form.Control name="address2" autoFocus value={addData.address2} placeholder="Ex: Apt 1" onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
+
             <Row>
               <Col xs={9} md={6}>
                 <Form.Group controlId="city">
@@ -288,7 +273,7 @@ const DonorModal = ({ toggleDonorModal, setToggleDonorModal, data, setData }) =>
               <Col xs={4.5} md={3}>
                 <Form.Group controlId="zip">
                   <Form.Label>Zip Code</Form.Label>
-                  <Form.Control name="zipCode" autoFocus value={addData.zipCode} onChange={onChange} />
+                  <Form.Control name="zip" autoFocus value={addData.zip} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -344,12 +329,7 @@ const Donors = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleDonorModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <DonorModal
-          toggleDonorModal={toggleDonorModal}
-          setToggleDonorModal={setToggleDonorModal}
-          data={data}
-          setData={setData}
-        />
+        <DonorModal toggleDonorModal={toggleDonorModal} setToggleDonorModal={setToggleDonorModal} data={data} setData={setData} />
         <i className="bi title-icon bi-box2-heart">Donors</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>

@@ -24,7 +24,7 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   try {
     const record = await models.Donor.findByPk(req.params.id);
-    await record.update(_.pick(req.body, ['name', 'phone', 'email', 'addressOne', 'addressTwo', 'city', 'state', 'zip']));
+    await record.update(_.pick(req.body, ['name', 'phone', 'email', 'address1', 'address2', 'city', 'state', 'zip']));
     res.json(record);
   } catch (err) {
     console.log(err);
@@ -45,9 +45,7 @@ router.delete('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const record = await models.Donor.create(
-      _.pick(req.body, ['name', 'phone', 'email', 'addressOne', 'addressTwo', 'city', 'state', 'zip']),
-    );
+    const record = await models.Donor.create(_.pick(req.body, ['name', 'phone', 'email', 'address1', 'address2', 'city', 'state', 'zip']));
     res.status(StatusCodes.CREATED).json(record);
   } catch (err) {
     console.log(err);
