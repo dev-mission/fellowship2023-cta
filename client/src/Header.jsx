@@ -103,7 +103,7 @@ function Header() {
                 )}
                 {user.isAdmin && (
                   <li className="nav-item active flex">
-                    <Link className="nav-link" aria-current="page" to="/Users" onClick={hideNavbar}>
+                    <Link className="nav-link" aria-current="page" to="/admin/users" onClick={hideNavbar}>
                       Users
                     </Link>
                   </li>
