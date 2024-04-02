@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import models from '../../models/index.js';
 import interceptors from '../interceptors.js';
+import { Op } from 'sequelize';
 
 const router = express.Router();
 
@@ -16,6 +17,31 @@ router.get('/:id', async (req, res) => {
   try {
     const record = await models.Client.findByPk(req.params.id);
     res.json(record.toJSON());
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
+router.get('/search/:name', async (req, res) => {
+  try {
+    const record = await models.Client.findAll({
+      where: {
+        [Op.or]: [
+          {
+            firstName: {
+              [Op.like]: `%${req.params.name}%`,
+            },
+          },
+          {
+            lastName: {
+              [Op.like]: `%${req.params.name}%`,
+            },
+          },
+        ],
+      },
+    });
+    res.json(record);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
