@@ -109,12 +109,33 @@ DeleteModal.propTypes = {
       id: PropTypes.number,
     }),
   }).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object),
   setData: PropTypes.func.isRequired,
 };
 
-const LocationTable = ({ table, data, setData }) => {
+const LocationTable = ({ table, data, setData, setToggleLocationModal }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
+  const [propRow, setPropRow] = useState({});
+
+  const onDelete = (row) => (e) => {
+    try {
+      setToggleDeleteModal(true);
+      setPropRow(row);
+    } catch (err) {
+      console.log(err);
+      console.log(e);
+    }
+  };
+
+  const onEdit = (row) => (e) => {
+    try {
+      setToggleLocationModal(true);
+      setPropRow(row);
+    } catch (err) {
+      console.log(err);
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -142,21 +163,23 @@ const LocationTable = ({ table, data, setData }) => {
                 <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
               ))}
               <td>
-                <i className="bi bi-pencil" />
+                <i className="bi bi-pencil" onClick={onEdit(row)} />
               </td>
               <td>
-                <i className="bi bi-x-lg" onClick={() => setToggleDeleteModal(true)} />
+                <i className="bi bi-x-lg" onClick={onDelete(row)} />
               </td>
-              <DeleteModal
-                toggleDeleteModal={toggleDeleteModal}
-                setToggleDeleteModal={setToggleDeleteModal}
-                row={row}
-                data={data}
-                setData={setData}
-              />
             </tr>
           ))}
         </tbody>
+        <DeleteModal
+          toggleDeleteModal={toggleDeleteModal}
+          setToggleDeleteModal={setToggleDeleteModal}
+          row={propRow}
+          isRequired
+          data={data}
+          setData={setData}
+        />
+        <LocationModal row={propRow} />
       </table>
     </>
   );
@@ -169,6 +192,7 @@ LocationTable.propTypes = {
   }).isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   setData: PropTypes.func.isRequired,
+  setToggleLocationModal: PropTypes.func.isRequired,
 };
 
 const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setData }) => {
@@ -275,10 +299,11 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
 };
 
 LocationModal.propTypes = {
-  toggleLocationModal: PropTypes.bool.isRequired,
-  setToggleLocationModal: PropTypes.func.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setData: PropTypes.func.isRequired,
+  toggleLocationModal: PropTypes.bool,
+  setToggleLocationModal: PropTypes.func,
+  data: PropTypes.arrayOf(PropTypes.object),
+  setData: PropTypes.func,
+  row: PropTypes.object,
 };
 
 const Locations = () => {
@@ -320,7 +345,7 @@ const Locations = () => {
         <i className="bi bi-person-fill">Locations</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <LocationTable table={table} data={data} setData={setData} />
+      <LocationTable table={table} data={data} setData={setData} setToggleLocationModal={setToggleLocationModal} />
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
