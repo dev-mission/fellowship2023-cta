@@ -97,6 +97,17 @@ const Api = {
       return instance.patch(`/api/users/${id}`, data);
     },
   },
+  locations: {
+    index(page = 1) {
+      return instance.get('/api/locations', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/locations/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/locations/${id}`, data);
+    },
+  }
 };
 
 export default Api;
