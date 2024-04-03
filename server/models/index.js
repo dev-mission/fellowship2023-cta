@@ -115,7 +115,7 @@ Sequelize.Model.paginate = async function paginate(options) {
   const newOptions = { ...options };
   const page = parseInt(newOptions.page || '1', 10);
   delete newOptions.page;
-  const perPage = newOptions.paginate || 25;
+  const perPage = newOptions.paginate || 10;
   delete newOptions.paginate;
   newOptions.offset = (page - 1) * perPage;
   newOptions.limit = perPage;
