@@ -63,6 +63,10 @@ const Filters = ({ setColumnFilters }) => {
   );
 };
 
+Filters.propTypes = {
+  setColumnFilters: PropTypes.func,
+};
+
 const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setData }) => {
   const onDelete = async () => {
     setToggleDeleteModal(false);
@@ -97,6 +101,14 @@ const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setDa
   );
 };
 
+DeleteModal.propTypes = {
+  toggleDeleteModal: PropTypes.bool,
+  setToggleDeleteModal: PropTypes.func,
+  row: PropTypes.object,
+  data: PropTypes.array,
+  setData: PropTypes.func,
+};
+
 const EditModal = ({ toggleEditModal, setToggleEditModal, data, setData, editData, setEditData }) => {
   const onChange = (e) => {
     const newData = { ...editData };
@@ -116,7 +128,7 @@ const EditModal = ({ toggleEditModal, setToggleEditModal, data, setData, editDat
         body: JSON.stringify(editData),
       });
 
-      setData(data.map(location => location.id == editData.id ? {...editData} : location));
+      setData(data.map((location) => (location.id == editData.id ? { ...editData } : location)));
     } catch (err) {
       console.log(err);
     }
@@ -187,7 +199,16 @@ const EditModal = ({ toggleEditModal, setToggleEditModal, data, setData, editDat
       </Modal.Footer>
     </Modal>
   );
-}
+};
+
+EditModal.propTypes = {
+  toggleEditModal: PropTypes.bool,
+  setToggleEditModal: PropTypes.func,
+  data: PropTypes.array,
+  setData: PropTypes.func,
+  editData: PropTypes.object,
+  setEditData: PropTypes.func,
+};
 
 const LocationTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -217,7 +238,7 @@ const LocationTable = ({ table, data, setData }) => {
         city: row.original.city,
         state: row.original.state,
         zipCode: row.original.zipCode,
-      })
+      });
     } catch (err) {
       console.log(err);
       console.log(e);
@@ -265,7 +286,7 @@ const LocationTable = ({ table, data, setData }) => {
           data={data}
           setData={setData}
         />
-        <EditModal 
+        <EditModal
           toggleEditModal={toggleEditModal}
           setToggleEditModal={setToggleEditModal}
           row={propRow}
@@ -277,6 +298,12 @@ const LocationTable = ({ table, data, setData }) => {
       </table>
     </>
   );
+};
+
+LocationTable.propTypes = {
+  table: PropTypes.object,
+  data: PropTypes.array,
+  setData: PropTypes.func,
 };
 
 const AddModal = ({ toggleAddModal, setToggleAddModal, data, setData }) => {
@@ -382,6 +409,13 @@ const AddModal = ({ toggleAddModal, setToggleAddModal, data, setData }) => {
   );
 };
 
+AddModal.propTypes = {
+  toggleAddModal: PropTypes.bool,
+  setToggleAddModal: PropTypes.func,
+  data: PropTypes.array,
+  setData: PropTypes.func,
+};
+
 const Locations = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
@@ -412,12 +446,7 @@ const Locations = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <AddModal
-          toggleAddModal={toggleAddModal}
-          setToggleAddModal={setToggleAddModal}
-          data={data}
-          setData={setData}
-        />
+        <AddModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
         <i className="bi bi-person-fill">Locations</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
