@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable, flexRender } from '@tanstack/react-table';
+import {
+  getCoreRowModel,
+  getFilteredRowModel,
+  // getSortedRowModel,
+  getPaginationRowModel,
+  useReactTable,
+  flexRender,
+} from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 
@@ -112,12 +119,33 @@ DeleteModal.propTypes = {
       id: PropTypes.number,
     }),
   }).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object),
   setData: PropTypes.func.isRequired,
 };
 
-const DonorTable = ({ table, data, setData }) => {
+const DonorTable = ({ table, data, setData, setToggleDonorModal }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
+  const [propRow, setPropRow] = useState({});
+
+  const onDelete = (row) => (e) => {
+    try {
+      setToggleDeleteModal(true);
+      setPropRow(row);
+    } catch (err) {
+      console.log(err);
+      console.log(e);
+    }
+  };
+
+  const onEdit = (row) => (e) => {
+    try {
+      setToggleDonorModal(true);
+      setPropRow(row);
+    } catch (err) {
+      console.log(err);
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -144,21 +172,23 @@ const DonorTable = ({ table, data, setData }) => {
                 <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
               ))}
               <td>
-                <i className="bi bi-pencil" />
+                <i className="bi bi-pencil" onClick={onEdit(row)}/>
               </td>
               <td>
-                <i className="bi bi-x-lg" onClick={() => setToggleDeleteModal(true)} />
+                <i className="bi bi-x-lg" onClick={onDelete(row)}  />
               </td>
-              <DeleteModal
-                toggleDeleteModal={toggleDeleteModal}
-                setToggleDeleteModal={setToggleDeleteModal}
-                row={row}
-                data={data}
-                setData={setData}
-              />
             </tr>
           ))}
         </tbody>
+        <DeleteModal
+          toggleDeleteModal={toggleDeleteModal}
+          setToggleDeleteModal={setToggleDeleteModal}
+          row={propRow}
+          isRequired
+          data={data}
+          setData={setData}
+        />
+        <DonorModal row={propRow} />
       </table>
     </>
   );
@@ -171,6 +201,7 @@ DonorTable.propTypes = {
   }).isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   setData: PropTypes.func.isRequired,
+  setToggleDonorModal: PropTypes.func.isRequired,
 };
 
 const DonorModal = ({ toggleDonorModal, setToggleDonorModal, data, setData }) => {
@@ -297,6 +328,7 @@ DonorModal.propTypes = {
   setToggleDonorModal: PropTypes.func.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   setData: PropTypes.func.isRequired,
+  row: PropTypes.object,
 };
 
 const Donors = () => {
@@ -329,11 +361,16 @@ const Donors = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleDonorModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <DonorModal toggleDonorModal={toggleDonorModal} setToggleDonorModal={setToggleDonorModal} data={data} setData={setData} />
+        <DonorModal
+          toggleDonorModal={toggleDonorModal}
+          setToggleDonorModal={setToggleDonorModal}
+          data={data}
+          setData={setData}
+        />
         <i className="bi title-icon bi-box2-heart">Donors</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <DonorTable table={table} data={data} setData={setData} />
+      <DonorTable table={table} data={data} setData={setData} setToggleDonorModal={setToggleDonorModal}/>
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
