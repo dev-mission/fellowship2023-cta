@@ -9,6 +9,8 @@ import {
 } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
+import { DateTime } from 'luxon';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 const columns = [
   {
@@ -17,18 +19,18 @@ const columns = [
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'fullName',
+    accessorKey: 'Client.fullName',
     header: 'Client',
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'LocationId',
+    accessorKey: 'Location.name',
     header: 'Location',
     enableColumnFilter: true,
     enableSorting: false,
   },
   {
-    accessorKey: 'UserId',
+    accessorKey: 'User.fullName',
     header: 'CTA Assigned',
     enableColumnFilter: true,
     enableSorting: false,
@@ -46,7 +48,7 @@ const columns = [
     enableSorting: false,
   },
   {
-    accessorKey: 'created-at',
+    accessorKey: 'createdAt',
     header: 'Date Met',
     enableColumnFilter: true,
     enableSorting: true,
@@ -81,7 +83,7 @@ const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setDa
   const onDelete = async () => {
     setToggleDeleteModal(false);
     try {
-      await fetch(`/api/users/${row.original.id}`, {
+      await fetch(`/api/ticket/${row.original.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +124,7 @@ DeleteModal.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-const UserTable = ({ table, data, setData }) => {
+const TicketTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
 
   return (
@@ -171,7 +173,7 @@ const UserTable = ({ table, data, setData }) => {
   );
 };
 
-UserTable.propTypes = {
+TicketTable.propTypes = {
   table: PropTypes.shape({
     getHeaderGroups: PropTypes.func.isRequired,
     getRowModel: PropTypes.func.isRequired,
@@ -180,16 +182,63 @@ UserTable.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
-  const [check, setCheck] = useState(false);
+function DropDownMenu({ data, onChange }) {
+  return (
+    <div className="container">
+      {data?.map((item) => {
+        return (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              const ticket = { ...data[0], ClientId: item.id };
+              console.log(ticket);
+              onChange(ticket);
+            }}
+            key={item.id}>
+            {' '}
+            {item.fullName}{' '}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+DropDownMenu.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      fullName: PropTypes.string,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      email: PropTypes.string,
+      location: PropTypes.string,
+      device: PropTypes.string,
+    }),
+  ),
+  onChange: PropTypes.func.isRequired,
+};
+
+const TicketModel = ({ toggleUserModal, setToggleUserModal }) => {
+  const [search, setSearch] = useState('');
+  const [usersList, setUsersList] = useState([]);
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    role: '',
     location: '',
-    isAdmin: check,
+    device: ' ',
   });
+
+  const setClient = (event) => {
+    setSearch(event.target.value);
+  };
+
+  const searchClient = async (event) => {
+    event.preventDefault();
+    const listOfUser = await fetch(`/api/clients/search/${search}`).then((res) => res.json());
+    setUsersList(listOfUser);
+  };
 
   const onChange = (e) => {
     const newData = { ...data };
@@ -197,35 +246,49 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
     setData(newData);
   };
 
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let method = 'POST';
-
-  //   try {
-  //     let path = '/api/users';
-
-  //   }
-  // }
+  const submitTicket = async (e) => {
+    e.preventDefault();
+    // let method = 'POST';
+    // try {
+    //   let path = '/api/users';
+    // }
+    console.log(data);
+    setToggleUserModal(false);
+  };
 
   return (
     <Modal show={toggleUserModal} onHide={() => setToggleUserModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>New User</Modal.Title>
+        <Modal.Title>New Ticket</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
           <Form>
             <Row>
               <Col xs={9} md={6}>
+                <Form.Group controlId="clientName">
+                  <Form.Label>Client Look Up</Form.Label>
+                  <Form.Control type="name" autoFocus onChange={setClient} />
+                  <DropDownMenu data={usersList} onChange={(newData) => setData(newData)} />
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={3}>
+                <Button variant="primary" onClick={searchClient}>
+                  Search
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={9} md={6}>
                 <Form.Group controlId="firstName">
                   <Form.Label>First Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="firstName" value={data.firstName} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={9} md={6}>
                 <Form.Group controlId="lastName">
                   <Form.Label>Last Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="lastName" value={data.lastName} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -233,13 +296,7 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="email">
                   <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={6} md={4}>
-                <Form.Group controlId="role">
-                  <Form.Label>Role</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="email" value={data.email} type="email" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -247,11 +304,14 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="location">
                   <Form.Label>Location</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                  <Form.Control name="location" value={data.location} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
-              <Col xs={6} md={4}>
-                <Form.Check type="switch" id="custom-switch" label="Admin" checked={check} onChange={() => setCheck(!check)} />
+              <Col xs={12} md={8}>
+                <Form.Group controlId="device">
+                  <Form.Label>Device</Form.Label>
+                  <Form.Control name="device" value={data.device} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
               </Col>
             </Row>
           </Form>
@@ -261,7 +321,7 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
         <Button variant="secondary" onClick={() => setToggleUserModal(false)}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => setToggleUserModal(false)}>
+        <Button variant="primary" onClick={submitTicket}>
           Submit
         </Button>
       </Modal.Footer>
@@ -269,7 +329,7 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
   );
 };
 
-UserModal.propTypes = {
+TicketModel.propTypes = {
   toggleUserModal: PropTypes.bool.isRequired,
   setToggleUserModal: PropTypes.func.isRequired,
 };
@@ -282,7 +342,12 @@ const Tickets = () => {
   useEffect(() => {
     fetch('/api/ticket')
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        data.map((ticket) => {
+          ticket['createdAt'] = DateTime.fromISO(ticket['createdAt']).toLocaleString();
+        });
+        setData(data);
+      });
   }, []);
 
   const table = useReactTable({
@@ -304,11 +369,11 @@ const Tickets = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleUserModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <UserModal toggleUserModal={toggleUserModal} setToggleUserModal={setToggleUserModal} />
+        <TicketModel toggleUserModal={toggleUserModal} setToggleUserModal={setToggleUserModal} />
         <i className="bi bi-person-fill">Tickets</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <UserTable table={table} data={data} setData={setData} />
+      <TicketTable table={table} data={data} setData={setData} />
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
