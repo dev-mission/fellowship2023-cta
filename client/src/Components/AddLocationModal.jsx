@@ -16,7 +16,6 @@ const AddLocationModal = ({ toggleAddModal, setToggleAddModal, data, setData }) 
     const newData = { ...addData };
     newData[e.target.name] = e.target.value;
     setAddData(newData);
-    console.log(addData);
   };
 
   const onSubmit = async (e) => {

@@ -3,12 +3,14 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   // getSortedRowModel,
-  getPaginationRowModel,
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { AddLocationModal, EditLocationModal, DeleteModal } from '../Components';
+import Api from '../Api';
+import Pagination from '../Components/Pagination';
+import { useLocation } from 'react-router-dom';
 
 const columns = [
   {
@@ -167,13 +169,26 @@ const Locations = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
   const [toggleAddModal, setToggleAddModal] = useState(false);
-  // const page = parseInt(params.get('page') ?? '1', 10);
-  // const [lastPage, setLastPage] = useState(1);
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const page = parseInt(params.get('page') ?? '1', 10);
+  const [lastPage, setLastPage] = useState(1);
+
   useEffect(() => {
-    fetch('/api/locations')
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  }, []);
+    console.log('page', page);
+    Api.locations.index(page).then((response) => {
+      setData(response.data);
+      const linkHeader = Api.parseLinkHeader(response);
+      let newLastPage = page;
+      if (linkHeader?.last) {
+        const match = linkHeader.last.match(/page=(\d+)/);
+        newLastPage = parseInt(match[1], 10);
+      } else if (linkHeader?.next) {
+        newLastPage = page + 1;
+      }
+      setLastPage(newLastPage);
+    });
+  }, [page]);
 
   const table = useReactTable({
     data: data || [],
@@ -185,7 +200,6 @@ const Locations = () => {
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     // getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -199,17 +213,7 @@ const Locations = () => {
         <Filters setColumnFilters={setColumnFilters} />
       </div>
       <LocationTable table={table} data={data} setData={setData} />
-      <p>
-        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-      </p>
-      <div className="btn-group" role="group">
-        <button type="button" className="btn btn-primary" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          {'<'}
-        </button>
-        <button type="button" className="btn btn-primary" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          {'>'}
-        </button>
-      </div>
+      <Pagination page={page} lastPage={lastPage} />
     </main>
   );
 };
