@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { AddLocationModal, EditLocationModal, DeleteModal } from '../Components';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
 const columns = [
   {
@@ -169,7 +169,7 @@ const Locations = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
   const [toggleAddModal, setToggleAddModal] = useState(false);
-  const {search} = useLocation();
+  const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
@@ -178,7 +178,7 @@ const Locations = () => {
 
   useEffect(() => {
     console.log('page', page);
-    Api.locations.index(page).then(response => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;

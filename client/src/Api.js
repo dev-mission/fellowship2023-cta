@@ -107,7 +107,7 @@ const Api = {
     update(id, data) {
       return instance.patch(`/api/locations/${id}`, data);
     },
-  }
+  },
 };
 
 export default Api;
