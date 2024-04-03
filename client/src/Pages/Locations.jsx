@@ -63,10 +63,6 @@ const Filters = ({ setColumnFilters }) => {
   );
 };
 
-Filters.propTypes = {
-  setColumnFilters: PropTypes.func.isRequired,
-};
-
 const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setData }) => {
   const onDelete = async () => {
     setToggleDeleteModal(false);
@@ -101,20 +97,102 @@ const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setDa
   );
 };
 
-DeleteModal.propTypes = {
-  toggleDeleteModal: PropTypes.bool.isRequired,
-  setToggleDeleteModal: PropTypes.func.isRequired,
-  row: PropTypes.shape({
-    original: PropTypes.shape({
-      id: PropTypes.number,
-    }),
-  }).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object),
-  setData: PropTypes.func.isRequired,
-};
+const EditModal = ({ toggleEditModal, setToggleEditModal, data, setData, editData, setEditData }) => {
+  const onChange = (e) => {
+    const newData = { ...editData };
+    newData[e.target.name] = e.target.value;
+    setEditData(newData);
+  };
 
-const LocationTable = ({ table, data, setData, setToggleLocationModal }) => {
+  const onSubmit = async (e) => {
+    setToggleEditModal(false);
+    e.preventDefault();
+    try {
+      await fetch(`/api/locations/${editData.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editData),
+      });
+
+      setData(data.map(location => location.id == editData.id ? {...editData} : location));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <Modal show={toggleEditModal} onHide={() => setToggleEditModal(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>New Location</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Container>
+          <Form>
+            <Row>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="name">
+                  <Form.Label>Location Name</Form.Label>
+                  <Form.Control name="name" autoFocus value={editData.name} onChange={onChange} />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="address1">
+                  <Form.Label>Address 1</Form.Label>
+                  <Form.Control name="address1" autoFocus value={editData.address1} onChange={onChange} />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="address2">
+                  <Form.Label>Address 2</Form.Label>
+                  <Form.Control name="address2" autoFocus value={editData.address2} onChange={onChange} />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={9} md={6}>
+                <Form.Group controlId="city">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control name="city" autoFocus value={editData.city} onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={4.5} md={3}>
+                <Form.Group controlId="state">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control name="state" autoFocus value={editData.state} onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={4.5} md={3}>
+                <Form.Group controlId="zipCode">
+                  <Form.Label>Zip Code</Form.Label>
+                  <Form.Control name="zipCode" autoFocus value={editData.zipCode} onChange={onChange} />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        </Container>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setToggleEditModal(false)}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={onSubmit} type="submit">
+          Submit
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+const LocationTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
+  const [toggleEditModal, setToggleEditModal] = useState(false);
+  const [editData, setEditData] = useState({});
   const [propRow, setPropRow] = useState({});
 
   const onDelete = (row) => (e) => {
@@ -129,8 +207,17 @@ const LocationTable = ({ table, data, setData, setToggleLocationModal }) => {
 
   const onEdit = (row) => (e) => {
     try {
-      setToggleLocationModal(true);
+      setToggleEditModal(true);
       setPropRow(row);
+      setEditData({
+        id: row.original.id,
+        name: row.original.name,
+        address1: row.original.address1,
+        address2: row.original.address2,
+        city: row.original.city,
+        state: row.original.state,
+        zipCode: row.original.zipCode,
+      })
     } catch (err) {
       console.log(err);
       console.log(e);
@@ -175,27 +262,24 @@ const LocationTable = ({ table, data, setData, setToggleLocationModal }) => {
           toggleDeleteModal={toggleDeleteModal}
           setToggleDeleteModal={setToggleDeleteModal}
           row={propRow}
-          isRequired
           data={data}
           setData={setData}
         />
-        <LocationModal row={propRow} />
+        <EditModal 
+          toggleEditModal={toggleEditModal}
+          setToggleEditModal={setToggleEditModal}
+          row={propRow}
+          data={data}
+          setData={setData}
+          editData={editData}
+          setEditData={setEditData}
+        />
       </table>
     </>
   );
 };
 
-LocationTable.propTypes = {
-  table: PropTypes.shape({
-    getHeaderGroups: PropTypes.func.isRequired,
-    getRowModel: PropTypes.func.isRequired,
-  }).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object),
-  setData: PropTypes.func.isRequired,
-  setToggleLocationModal: PropTypes.func.isRequired,
-};
-
-const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setData }) => {
+const AddModal = ({ toggleAddModal, setToggleAddModal, data, setData }) => {
   const [addData, setAddData] = useState({
     name: '',
     address1: '',
@@ -213,7 +297,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
   };
 
   const onSubmit = async (e) => {
-    setToggleLocationModal(false);
+    setToggleAddModal(false);
     e.preventDefault();
     try {
       await fetch('/api/locations', {
@@ -232,7 +316,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
   };
 
   return (
-    <Modal show={toggleLocationModal} onHide={() => setToggleLocationModal(false)}>
+    <Modal show={toggleAddModal} onHide={() => setToggleAddModal(false)}>
       <Modal.Header closeButton>
         <Modal.Title>New Location</Modal.Title>
       </Modal.Header>
@@ -287,7 +371,7 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setToggleLocationModal(false)}>
+        <Button variant="secondary" onClick={() => setToggleAddModal(false)}>
           Close
         </Button>
         <Button variant="primary" onClick={onSubmit} type="submit">
@@ -298,18 +382,10 @@ const LocationModal = ({ toggleLocationModal, setToggleLocationModal, data, setD
   );
 };
 
-LocationModal.propTypes = {
-  toggleLocationModal: PropTypes.bool,
-  setToggleLocationModal: PropTypes.func,
-  data: PropTypes.arrayOf(PropTypes.object),
-  setData: PropTypes.func,
-  row: PropTypes.object,
-};
-
 const Locations = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
-  const [toggleLocationModal, setToggleLocationModal] = useState(false);
+  const [toggleAddModal, setToggleAddModal] = useState(false);
 
   useEffect(() => {
     fetch('/api/locations')
@@ -333,19 +409,19 @@ const Locations = () => {
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
-        <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleLocationModal(true)}>
+        <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <LocationModal
-          toggleLocationModal={toggleLocationModal}
-          setToggleLocationModal={setToggleLocationModal}
+        <AddModal
+          toggleAddModal={toggleAddModal}
+          setToggleAddModal={setToggleAddModal}
           data={data}
           setData={setData}
         />
         <i className="bi bi-person-fill">Locations</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <LocationTable table={table} data={data} setData={setData} setToggleLocationModal={setToggleLocationModal} />
+      <LocationTable table={table} data={data} setData={setData} />
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
