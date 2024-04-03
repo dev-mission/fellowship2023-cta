@@ -169,7 +169,6 @@ const Locations = () => {
   const [toggleAddModal, setToggleAddModal] = useState(false);
   // const page = parseInt(params.get('page') ?? '1', 10);
   // const [lastPage, setLastPage] = useState(1);
-
   useEffect(() => {
     fetch('/api/locations')
       .then((res) => res.json())
