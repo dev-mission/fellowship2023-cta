@@ -174,8 +174,6 @@ const Locations = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  console.log(data);
-
   useEffect(() => {
     console.log('page', page);
     Api.locations.index(page).then((response) => {
