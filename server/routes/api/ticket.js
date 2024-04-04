@@ -109,8 +109,8 @@ router.post('/', async (req, res) => {
       const client = await models.Client.create(clientInfo);
       ticket['ClientId'] = client.id;
     }
-
     ticketInfo = _.pick(req.body, [
+      'ticketType',
       'serialNumber',
       'AppointmentId',
       'device',

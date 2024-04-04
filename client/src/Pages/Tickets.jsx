@@ -10,7 +10,8 @@ import {
 import PropTypes from 'prop-types';
 import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import { DateTime } from 'luxon';
-import { Typeahead } from 'react-bootstrap-typeahead';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import { useAuthContext } from '../AuthContext';
 
 const columns = [
   {
@@ -182,63 +183,70 @@ TicketTable.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-function DropDownMenu({ data, onChange }) {
-  return (
-    <div className="container">
-      {data?.map((item) => {
-        return (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              const ticket = { ...data[0], ClientId: item.id };
-              console.log(ticket);
-              onChange(ticket);
-            }}
-            key={item.id}>
-            {' '}
-            {item.fullName}{' '}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
 DropDownMenu.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      fullName: PropTypes.string,
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-      email: PropTypes.string,
-      location: PropTypes.string,
-      device: PropTypes.string,
-    }),
-  ),
   onChange: PropTypes.func.isRequired,
 };
 
+function DropDownMenu({ onChange }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState();
+
+  const handleSearch = (query) => {
+    setIsLoading(true);
+
+    fetch(`/api/clients/search/${query}`)
+      .then((resp) => resp.json())
+      .then((items) => {
+        setOptions(items);
+        setIsLoading(false);
+      });
+  };
+  // Bypass client-side filtering by returning `true`. Results are already
+  // filtered by the search endpoint, so no need to do it again.
+  const filterBy = () => true;
+
+  return (
+    <AsyncTypeahead
+      filterBy={filterBy}
+      id="search-clients"
+      isLoading={isLoading}
+      labelKey="fullName"
+      minLength={3}
+      onSearch={handleSearch}
+      options={options}
+      placeholder="Search for a clients..."
+      renderMenuItemChildren={(option) => (
+        <>
+          <span
+            onClick={() => {
+              const newTicket = { ...option, ClientId: option.id };
+              onChange(newTicket);
+            }}>
+            {option.fullName}
+          </span>
+        </>
+      )}
+    />
+  );
+}
+
 const TicketModel = ({ toggleUserModal, setToggleUserModal }) => {
-  const [search, setSearch] = useState('');
-  const [usersList, setUsersList] = useState([]);
+  const { user } = useAuthContext();
   const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
+    UserId: user?.id,
+    ticketType: '',
+    serialNumber: '',
     email: '',
-    location: '',
-    device: ' ',
+    device: '',
+    problem: '',
+    troubleshooting: '',
+    resolution: '',
+    dateOn: '',
+    timeInAt: '',
+    timeOutAt: '',
+    hasCharger: '',
+    notes: '',
   });
-
-  const setClient = (event) => {
-    setSearch(event.target.value);
-  };
-
-  const searchClient = async (event) => {
-    event.preventDefault();
-    const listOfUser = await fetch(`/api/clients/search/${search}`).then((res) => res.json());
-    setUsersList(listOfUser);
-  };
 
   const onChange = (e) => {
     const newData = { ...data };
@@ -268,35 +276,11 @@ const TicketModel = ({ toggleUserModal, setToggleUserModal }) => {
               <Col xs={9} md={6}>
                 <Form.Group controlId="clientName">
                   <Form.Label>Client Look Up</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={setClient} />
-                  <DropDownMenu data={usersList} onChange={(newData) => setData(newData)} />
-                </Form.Group>
-              </Col>
-              <Col xs={6} md={3}>
-                <Button variant="primary" onClick={searchClient}>
-                  Search
-                </Button>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="firstName">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control name="firstName" value={data.firstName} type="text" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="lastName">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control name="lastName" value={data.lastName} type="text" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={8}>
-                <Form.Group controlId="email">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control name="email" value={data.email} type="email" autoFocus onChange={onChange} />
+                  <DropDownMenu
+                    onChange={(newData) => {
+                      setData(newData);
+                    }}
+                  />
                 </Form.Group>
               </Col>
             </Row>
