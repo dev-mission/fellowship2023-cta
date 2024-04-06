@@ -43,6 +43,7 @@ DeleteModal.propTypes = {
   row: PropTypes.object,
   data: PropTypes.array,
   setData: PropTypes.func,
+  model: PropTypes.string,
 };
 
 export default DeleteModal;

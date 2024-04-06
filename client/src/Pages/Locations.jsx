@@ -144,7 +144,7 @@ const LocationTable = ({ table, data, setData }) => {
           row={propRow}
           data={data}
           setData={setData}
-          model='locations'
+          model="locations"
         />
         <EditLocationModal
           toggleEditModal={toggleEditModal}
