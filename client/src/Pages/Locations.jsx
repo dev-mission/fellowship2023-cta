@@ -144,6 +144,7 @@ const LocationTable = ({ table, data, setData }) => {
           row={propRow}
           data={data}
           setData={setData}
+          model='locations'
         />
         <EditLocationModal
           toggleEditModal={toggleEditModal}
@@ -174,8 +175,9 @@ const Locations = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
+  console.log(data);
+
   useEffect(() => {
-    console.log('page', page);
     Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
