@@ -26,7 +26,6 @@ router.get('/:id', async (req, res) => {
 router.get('/search/:name', async (req, res) => {
   try {
     const record = await models.Client.findAll({
-      attributes: { include: ['firstName', 'lastName', 'email', 'phone', 'address', 'ethnicity', 'language', 'gender', 'age'] },
       where: {
         [Op.or]: [
           {
@@ -42,7 +41,7 @@ router.get('/search/:name', async (req, res) => {
         ],
       },
     });
-    res.json(record.map((record) => record.toJSON()));
+    res.json(record);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

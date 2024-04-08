@@ -14,7 +14,6 @@ function AdminUsersList() {
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
-
   const [invites, setInvites] = useState([]);
 
   useEffect(() => {
