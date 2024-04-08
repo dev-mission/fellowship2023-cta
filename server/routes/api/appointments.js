@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   const page = req.query.page || '1';
   const { records, pages, total } = await models.Appointment.paginate({
+    // include: [models.Client],
     page,
     order: [
       ['ClientId', 'ASC'],
@@ -55,3 +56,5 @@ router.patch('/:id', async (req, res) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
+
+export default router;

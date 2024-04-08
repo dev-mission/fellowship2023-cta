@@ -44,8 +44,30 @@ const Appointments = () => {
   const [radioValue, setRadioValue] = useState('Upcoming');
 
   useEffect(() => {
-    
-  })
+    Api.appointments.index(page).then((response) => {
+      setData(response.data);
+      const linkHeader = Api.parseLinkHeader(response);
+      let newLastPage = page;
+      if (linkHeader?.last) {
+        const match = linkHeader.last.match(/page=(\d+)/);
+        newLastPage = parseInt(match[1], 10);
+      } else if (linkHeader?.next) {
+        newLastPage = page + 1;
+      }
+      setLastPage(newLastPage);
+    });
+  }, [page])
+
+  console.log(data);
+
+  const table = useReactTable({
+    data: data || [],
+    columns,
+    state: {
+      data,
+    },
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
     <main className='container'>
@@ -63,7 +85,6 @@ const Appointments = () => {
               type="search"
               className="form-control me-2"
               placeholder="Search Locations"
-              onChange={''}
             />
           </div>
         </form>

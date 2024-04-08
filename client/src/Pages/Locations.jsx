@@ -175,7 +175,6 @@ const Locations = () => {
   const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
-    console.log('page', page);
     Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
@@ -199,7 +198,6 @@ const Locations = () => {
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    // getSortedRowModel: getSortedRowModel(),
   });
 
   return (

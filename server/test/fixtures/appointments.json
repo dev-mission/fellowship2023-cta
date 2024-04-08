@@ -4,10 +4,12 @@
     "data": {
       "id": 1,
       "ClientId": 1,
+      "UserId": 1,
       "LocationId": 1,
       "dateTimeAt": "2024-03-04T17:23:21.675Z",
-      "notes": "TESTING THE APPOINTMENTS",
-      "isConfirmed": true
+      "DeviceId": 1,
+      "problem": "TESTING THE APPOINTMENTS",
+      "status": "Confirmed"
     }
   },
   {
@@ -15,10 +17,12 @@
     "data": {
       "id": 2,
       "ClientId": 1,
+      "UserId": 2,
       "LocationId": 1,
       "dateTimeAt": "2024-03-05T17:23:21.675Z",
-      "notes": "TESTING THE APPOINTMENTS",
-      "isConfirmed": true
+      "DeviceId": 1,
+      "problem": "TESTING THE APPOINTMENTS",
+      "status": "Cancelled"
     }
   },
   {
@@ -26,10 +30,12 @@
     "data": {
       "id": 3,
       "ClientId": 2,
+      "UserId": 222220,
       "LocationId": 2,
       "dateTimeAt": "2024-03-09T17:23:21.675Z",
-      "notes": "TESTING THE APPOINTMENTS",
-      "isConfirmed": true
+      "DeviceId": 1,
+      "problem": "TESTING THE APPOINTMENTS",
+      "status": "Confirmed"
     }
   }
 ]
