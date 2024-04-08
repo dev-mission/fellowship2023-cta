@@ -12,7 +12,8 @@ import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
 import { DateTime } from 'luxon';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { useAuthContext } from '../AuthContext';
-
+import Dropdown from '../Components/DropDown';
+import TimeRange from '../Components/TimeRange';
 const columns = [
   {
     accessorKey: 'id',
@@ -183,12 +184,14 @@ TicketTable.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-DropDownMenu.propTypes = {
-  onChange: PropTypes.func.isRequired,
+ClientDropMenu.propTypes = {
+  setData: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
-function DropDownMenu({ onChange }) {
+function ClientDropMenu({ setData, data }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [singleSelections, setSingleSelections] = useState([]);
   const [options, setOptions] = useState();
 
   const handleSearch = (query) => {
@@ -214,14 +217,15 @@ function DropDownMenu({ onChange }) {
       minLength={3}
       onSearch={handleSearch}
       options={options}
+      onChange={(value) => {
+        setSingleSelections(value);
+        setData({ ...data, ClientId: value[0]?.id });
+      }}
+      selected={singleSelections}
       placeholder="Search for a clients..."
       renderMenuItemChildren={(option) => (
         <>
-          <span
-            onClick={() => {
-              const newTicket = { ...option, ClientId: option.id };
-              onChange(newTicket);
-            }}>
+          <span name="ClientId" value={option.id}>
             {option.fullName}
           </span>
         </>
@@ -233,20 +237,24 @@ function DropDownMenu({ onChange }) {
 const TicketModel = ({ toggleUserModal, setToggleUserModal }) => {
   const { user } = useAuthContext();
   const [data, setData] = useState({
-    UserId: user?.id,
     ticketType: '',
     serialNumber: '',
-    email: '',
     device: '',
     problem: '',
     troubleshooting: '',
     resolution: '',
-    dateOn: '',
+    dateOn: Date.now(),
     timeInAt: '',
     timeOutAt: '',
-    hasCharger: '',
+    hasCharger: false,
     notes: '',
   });
+
+  useEffect(() => {
+    if (data === null) {
+      setData((prev) => ({ ...prev, UserId: user?.id }));
+    }
+  }, [user, data]);
 
   const onChange = (e) => {
     const newData = { ...data };
@@ -276,25 +284,83 @@ const TicketModel = ({ toggleUserModal, setToggleUserModal }) => {
               <Col xs={9} md={6}>
                 <Form.Group controlId="clientName">
                   <Form.Label>Client Look Up</Form.Label>
-                  <DropDownMenu
-                    onChange={(newData) => {
-                      setData(newData);
-                    }}
-                  />
+                  <ClientDropMenu data={data} setData={setData} />
                 </Form.Group>
               </Col>
             </Row>
             <Row className="d-flex align-items-end">
               <Col xs={12} md={8}>
-                <Form.Group controlId="location">
-                  <Form.Label>Location</Form.Label>
-                  <Form.Control name="location" value={data.location} type="text" autoFocus onChange={onChange} />
+                <Dropdown
+                  data={data}
+                  setData={setData}
+                  settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
+                  path="/api/locations"
+                />
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="serialNumber">
+                  <Form.Label>Serial Number</Form.Label>
+                  <Form.Control name="serialNumber" value={data.serialNumber} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="device">
                   <Form.Label>Device</Form.Label>
                   <Form.Control name="device" value={data.device} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="problem">
+                  <Form.Label>Problem</Form.Label>
+                  <Form.Control name="problem" value={data.problem} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="troubleshooting">
+                  <Form.Label>Troubleshooting</Form.Label>
+                  <Form.Control name="troubleshooting" value={data.troubleshooting} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="resolution">
+                  <Form.Label>Resolution</Form.Label>
+                  <Form.Control name="resolution" value={data.resolution} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="timeInAt">
+                  <Form.Label>Time Started</Form.Label>
+                  <TimeRange name="timeInAt" data={data} setData={setData}></TimeRange>
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="timeOutAt">
+                  <Form.Label>Time Finished</Form.Label>
+                  <TimeRange name="timeOutAt" data={data} setData={setData}></TimeRange>
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="hasCharger">
+                  <Form.Label>Charger: </Form.Label>
+                  <Form.Label>{data?.hasCharger ? 'Yes' : 'No'}</Form.Label>
+                </Form.Group>
+                <Button
+                  onClick={() => {
+                    setData({ ...data, hasCharger: true });
+                  }}>
+                  Yes
+                </Button>
+                <Button
+                  onClick={() => {
+                    setData({ ...data, hasCharger: false });
+                  }}>
+                  No
+                </Button>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="notes">
+                  <Form.Label>Notes</Form.Label>
+                  <Form.Control name="notes" value={data.notes} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
