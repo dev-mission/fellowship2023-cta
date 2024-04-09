@@ -7,7 +7,6 @@
       "UserId": 1,
       "LocationId": 1,
       "dateTimeAt": "2024-03-04T17:23:21.675Z",
-      "DeviceId": 1,
       "problem": "TESTING THE APPOINTMENTS",
       "status": "Confirmed"
     }
@@ -20,7 +19,6 @@
       "UserId": 2,
       "LocationId": 1,
       "dateTimeAt": "2024-03-05T17:23:21.675Z",
-      "DeviceId": 1,
       "problem": "TESTING THE APPOINTMENTS",
       "status": "Cancelled"
     }
@@ -33,7 +31,6 @@
       "UserId": 222220,
       "LocationId": 2,
       "dateTimeAt": "2024-03-09T17:23:21.675Z",
-      "DeviceId": 1,
       "problem": "TESTING THE APPOINTMENTS",
       "status": "Confirmed"
     }

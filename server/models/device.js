@@ -11,7 +11,6 @@ export default function (sequelize, DataTypes) {
       Device.belongsTo(models.Location);
       Device.belongsTo(models.User);
       Device.belongsTo(models.Client);
-      Device.belongsTo(models.Appointment);
     }
   }
   Device.init(

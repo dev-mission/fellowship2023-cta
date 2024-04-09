@@ -10,9 +10,18 @@ describe('/api/donors', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['donors']);
+    await helper.loadFixtures(['locations','users','donors']);
     testSession = session(app);
   });
+
+  context('admin authenticated', () => {
+    beforeEach(async () => {
+      await testSession
+        .post('/api/auth/login')
+        .set('Accept', 'application/json')
+        .send({ email: 'Inventory1.user@test.com', password: 'abcd1234' })
+        .expect(StatusCodes.OK);
+    });
 
   it('creates a new Donor', async () => {
     const response = await testSession.post('/api/donors').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
@@ -42,5 +51,6 @@ describe('/api/donors', () => {
     const record = await models.Donor.findByPk(3);
     assert.deepStrictEqual(record, null);
     assert.deepStrictEqual(response.body?.length, 2);
+  });
   });
 });

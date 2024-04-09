@@ -11,7 +11,6 @@ export default function (sequelize, DataTypes) {
       Appointment.belongsTo(models.Client);
       Appointment.belongsTo(models.Location);
       Appointment.belongsTo(models.User);
-      Appointment.hasMany(models.Device);
     }
   }
   Appointment.init(

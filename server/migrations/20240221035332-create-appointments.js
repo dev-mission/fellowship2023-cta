@@ -37,15 +37,6 @@ module.exports = {
       dateTimeAt: {
         type: Sequelize.DATE,
       },
-      DeviceId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'Devices',
-          },
-          key: 'id',
-        },
-      },
       problem: {
         type: Sequelize.TEXT,
       },
