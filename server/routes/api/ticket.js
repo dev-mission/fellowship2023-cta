@@ -9,9 +9,12 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   let tickets = {};
   if (req.user.isAdmin) {
-    tickets = await models.Ticket.findAll();
+    tickets = await models.Ticket.findAll({ include: [models.Client, models.User, models.Location] });
   } else {
-    tickets = await models.Ticket.findAll({ where: { UserId: req.user.id } });
+    tickets = await models.Ticket.findAll({
+      include: [models.Client, models.User, models.Location],
+      where: { UserId: req.user.id },
+    });
   }
   res.json(tickets);
 });
@@ -106,8 +109,8 @@ router.post('/', async (req, res) => {
       const client = await models.Client.create(clientInfo);
       ticket['ClientId'] = client.id;
     }
-
     ticketInfo = _.pick(req.body, [
+      'ticketType',
       'serialNumber',
       'AppointmentId',
       'device',

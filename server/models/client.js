@@ -36,6 +36,12 @@ export default function (sequelize, DataTypes) {
       address: DataTypes.TEXT,
       gender: DataTypes.TEXT,
       language: DataTypes.TEXT,
+      fullName: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+      },
     },
     {
       sequelize,

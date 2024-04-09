@@ -175,6 +175,12 @@ export default function (sequelize, DataTypes) {
       passwordResetTokenExpiresAt: {
         type: DataTypes.DATE,
       },
+      fullName: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+      },
     },
     {
       sequelize,
