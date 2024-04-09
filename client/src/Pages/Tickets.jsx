@@ -214,7 +214,6 @@ function ClientDropMenu({ setData, data }) {
       id="search-clients"
       isLoading={isLoading}
       labelKey="fullName"
-      minLength={3}
       onSearch={handleSearch}
       options={options}
       onChange={(value) => {
@@ -237,7 +236,6 @@ function ClientDropMenu({ setData, data }) {
 const TicketModel = ({ toggleUserModal, setToggleUserModal }) => {
   const { user } = useAuthContext();
   const [data, setData] = useState({
-    ticketType: '',
     serialNumber: '',
     device: '',
     problem: '',
