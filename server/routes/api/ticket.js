@@ -72,44 +72,13 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-/*
-  User will send a post request with the following body:
-  
-  {
-      Ticket.belongsTo(models.Client);
-      Ticket.belongsTo(models.Location);
-      UserId: Models.User.id, // This is the user who is creating the ticket.
-      Ticket.belongsTo(models.Device); // If This device exist in the inventory use this.
-      device: DataTypes.TEXT,
-      problem: DataTypes.TEXT,
-      troubleshooting: DataTypes.TEXT,
-      resolution: DataTypes.TEXT,
-      dateOn: DataTypes.DATE,
-      timeInAt: DataTypes.DATE,
-      timeOutAt: DataTypes.DATE,
-      totalTime: DataTypes.INTEGER,
-      hasCharger: DataTypes.BOOLEAN,
-      notes: DataTypes.TEXT,
-
-  }
-
-  Situations
-  No ClientId:  use a Client Model
-*/
 router.post('/', async (req, res) => {
   try {
-    let ticket = {};
-    let ticketInfo;
-    let clientInfo = {};
-    //
-    if (req.body.ClientId !== undefined) {
-      ticket['ClientId'] = req.body.ClientId;
-    } else {
-      clientInfo = _.pick(req.body, ['firstName', 'lastName', 'email', 'phone', 'address', 'ethnicity', 'language', 'gender', 'age']);
-      const client = await models.Client.create(clientInfo);
-      ticket['ClientId'] = client.id;
-    }
-    ticketInfo = _.pick(req.body, [
+    const ticketInfo = _.pick(req.body, [
+      'AppointmentId',
+      'UserId',
+      'LocationId',
+      'ClientId',
       'ticketType',
       'serialNumber',
       'AppointmentId',
@@ -124,8 +93,7 @@ router.post('/', async (req, res) => {
       'hasCharger',
       'notes',
     ]);
-    ticket = { ...ticket, ...ticketInfo, UserId: req.body.UserId, LocationId: req.body.LocationId };
-    const record = await models.Ticket.create(ticket);
+    const record = await models.Ticket.create(ticketInfo);
     res.status(StatusCodes.CREATED).json(record);
   } catch (err) {
     console.log(err);
