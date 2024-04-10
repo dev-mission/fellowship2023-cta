@@ -8,7 +8,7 @@ import AppRedirects from './AppRedirects';
 import Header from './Header';
 import Home from './Home';
 import Login from './Login';
-import { Appointments, Clients, Donors, Inventory, Locations, Tickets } from './Pages';
+import { Appointments, Clients, Donors, Inventory, Locations, Tickets, Courses } from './Pages';
 import AdminRoutes from './Admin/AdminRoutes';
 import InvitesRoutes from './Invites/InvitesRoutes';
 import PasswordsRoutes from './Passwords/PasswordsRoutes';
@@ -40,6 +40,7 @@ function App() {
                 <Route path="/Inventory" element={<Inventory />} />
                 <Route path="/Locations" element={<Locations />} />
                 <Route path="/Donors" element={<Donors />} />
+                <Route path="/Courses" element={<Courses />} />
               </Routes>
             </AppRedirects>
           }
