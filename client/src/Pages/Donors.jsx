@@ -108,7 +108,7 @@ const DonorTable = ({ table, data, setData }) => {
         address2: row.original.address2,
         city: row.original.city,
         state: row.original.state,
-        zipCode: row.original.zip,
+        zip: row.original.zip,
       });
     } catch (err) {
       console.log(err);
