@@ -8,12 +8,18 @@ import AppRedirects from './AppRedirects';
 import Header from './Header';
 import Home from './Home';
 import Login from './Login';
-import { Appointments, Clients, Donors, Inventory, Locations, Tickets, Courses } from './Pages';
 import AdminRoutes from './Admin/AdminRoutes';
 import InvitesRoutes from './Invites/InvitesRoutes';
 import PasswordsRoutes from './Passwords/PasswordsRoutes';
 import Register from './Register';
 import UsersRoutes from './Users/UsersRoutes';
+import Locations from './Locations/Locations';
+import Donors from './Donors/Donors';
+import Courses from './Courses/Courses';
+import Appointments from './Appointments/Appointments';
+import Tickets from './Tickets/Tickets';
+import Clients from './Clients/Clients';
+import Devices from './Devices/Devices';
 
 function App() {
   const staticContext = useStaticContext();
@@ -37,7 +43,7 @@ function App() {
                 <Route path="/Appointments" element={<Appointments />} />
                 <Route path="/Tickets" element={<Tickets />} />
                 <Route path="/Clients" element={<Clients />} />
-                <Route path="/Inventory" element={<Inventory />} />
+                <Route path="/Devices" element={<Devices />} />
                 <Route path="/Locations" element={<Locations />} />
                 <Route path="/Donors" element={<Donors />} />
                 <Route path="/Courses" element={<Courses />} />

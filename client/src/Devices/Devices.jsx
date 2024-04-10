@@ -4,8 +4,8 @@
 // import Api from '../Api';
 // import Pagination from '../Components/Pagination';
 
-const Inventory = () => {
-  return <div>Inventory</div>;
+const Devices = () => {
+  return <div>Devices</div>;
 };
 
-export default Inventory;
+export default Devices;
