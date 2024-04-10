@@ -12,24 +12,44 @@ import Api from '../Api';
 import { useLocation } from 'react-router-dom';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
-// const columns = [
-//   {
-//     accessorKey: 'ClientId',
-//     header: 'Client',
-//     enableColumnFilter: true,
-//   },
-//   {
-//     accessorKey: 'dateTimeAt',
-//     header: 'Date Time',
-//     enableColumnFilter: true,
-//   },
-//   {
-//     accessorKey: 'UserId',
-//     header: 'User',
-//     enableColumnFilter: true,
-//   },
-//   {},
-// ];
+const columns = [
+  {
+    accessorKey: `Client['fullName']`,
+    header: 'Client',
+  },
+  {
+    accessorKey: 'dateTimeAt',
+    header: 'Date Time',
+  },
+  {
+    accessorKey: `User['firstName']` + ' ' + `User['lastName']`,
+    header: 'User',
+  },
+  {
+    accessorKey: `Client['phone']`,
+    header: 'Phone',
+  },
+  {
+    accessorKey: `Client['email']`,
+    header: 'Email',
+  },
+  {
+    accessorKey: `Location['name']`,
+    header: 'Location',
+  },
+  {
+    accessorKey: `Device['model']`,
+    header: 'Device',
+  },
+  {
+    accessorKey: 'problem',
+    header: 'Problem',
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+  }
+];
 
 const Appointments = () => {
   const [data, setData] = useState();
