@@ -110,7 +110,7 @@ const Api = {
   },
   appointments: {
     index(page = 1) {
-      return instance.get('/api/appointments', { params: {page } });
+      return instance.get('/api/appointments', { params: { page } });
     },
     get(id) {
       return instance.get(`/api/appointments/${id}`);
