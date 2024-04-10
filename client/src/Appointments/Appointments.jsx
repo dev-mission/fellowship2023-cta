@@ -6,7 +6,7 @@ import // getCoreRowModel,
 // flexRender,
 '@tanstack/react-table';
 // import PropTypes from 'prop-types';
-// import { AddLocationModal, EditLocationModal, DeleteModal } from '../Components';
+// import { DeleteModal } from '../Components';
 import Api from '../Api';
 // import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
@@ -40,8 +40,8 @@ const Appointments = () => {
   const [lastPage, setLastPage] = useState(1);
   const [radioValue, setRadioValue] = useState('Upcoming');
 
-  console.log(lastPage);
   console.log(toggleAddModal);
+  console.log(lastPage);
 
   useEffect(() => {
     Api.appointments.index(page).then((response) => {

@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
-import {
-  getCoreRowModel,
-  getFilteredRowModel,
-  // getSortedRowModel,
-  useReactTable,
-  flexRender,
-} from '@tanstack/react-table';
+import { getCoreRowModel, getFilteredRowModel, useReactTable, flexRender } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
-import { AddLocationModal, EditLocationModal, DeleteModal } from '../Components';
+import { DeleteModal } from '../Components';
+import AddLocationModal from './AddLocationModal';
+import EditLocationModal from './EditLocationModal';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
