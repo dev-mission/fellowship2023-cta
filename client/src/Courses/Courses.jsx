@@ -7,7 +7,9 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
-import { AddDonorModal, EditDonorModal, DeleteModal } from '../Components';
+import { DeleteModal } from '../Components';
+import AddCourseModal from './AddCourseModal';
+import EditCourseModal from './EditCourseModal';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
@@ -15,42 +17,7 @@ import { useLocation } from 'react-router-dom';
 const columns = [
   {
     accessorKey: 'name',
-    header: 'Donor Name',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'phone',
-    header: 'Phone Number',
-    enableColumnFilter: false,
-  },
-  {
-    accessorKey: 'email',
-    header: 'Email',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'address1',
-    header: 'Address 1',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'address2',
-    header: 'Address 2',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'city',
-    header: 'City',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'state',
-    header: 'State',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'zip',
-    header: 'Zip Code',
+    header: 'Course Name',
     enableColumnFilter: true,
   },
 ];
@@ -67,7 +34,7 @@ const Filters = ({ setColumnFilters }) => {
         <input
           type="search"
           className="form-control me-2"
-          placeholder="Search Donors"
+          placeholder="Search Courses"
           onChange={(e) => onFilterChange('name', e.target.value)}
         />
       </div>
@@ -79,7 +46,7 @@ Filters.propTypes = {
   setColumnFilters: PropTypes.func,
 };
 
-const DonorTable = ({ table, data, setData }) => {
+const CourseTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
   const [toggleEditModal, setToggleEditModal] = useState(false);
   const [editData, setEditData] = useState({});
@@ -102,13 +69,6 @@ const DonorTable = ({ table, data, setData }) => {
       setEditData({
         id: row.original.id,
         name: row.original.name,
-        phone: row.original.phone,
-        email: row.original.email,
-        address1: row.original.address1,
-        address2: row.original.address2,
-        city: row.original.city,
-        state: row.original.state,
-        zip: row.original.zip,
       });
     } catch (err) {
       console.log(err);
@@ -124,6 +84,7 @@ const DonorTable = ({ table, data, setData }) => {
             {table.getHeaderGroups()[0].headers.map((header) => (
               <th scope="col" key={header.id}>
                 {header.column.columnDef.header}
+                {/* {header.column.getCanSort() && <i className="ms-2 bi bi-arrow-down-up" onClick={header.column.getToggleSortingHandler()} />} */}
               </th>
             ))}
             <th scope="col">
@@ -155,9 +116,9 @@ const DonorTable = ({ table, data, setData }) => {
           row={propRow}
           data={data}
           setData={setData}
-          model="donors"
+          model="courses"
         />
-        <EditDonorModal
+        <EditCourseModal
           toggleEditModal={toggleEditModal}
           setToggleEditModal={setToggleEditModal}
           row={propRow}
@@ -171,13 +132,13 @@ const DonorTable = ({ table, data, setData }) => {
   );
 };
 
-DonorTable.propTypes = {
+CourseTable.propTypes = {
   table: PropTypes.object,
   data: PropTypes.array,
   setData: PropTypes.func,
 };
 
-const Donors = () => {
+const Courses = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
   const [toggleAddModal, setToggleAddModal] = useState(false);
@@ -187,7 +148,7 @@ const Donors = () => {
   const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
-    Api.donors.index(page).then((response) => {
+    Api.courses.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -210,6 +171,7 @@ const Donors = () => {
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    // getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -218,22 +180,14 @@ const Donors = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <AddDonorModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
-        <i className="bi title-icon bi-box2-heart">Donors</i>
+        <AddCourseModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
+        <i className="bi bi-person-fill">Courses</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <DonorTable table={table} data={data} setData={setData} />
+      <CourseTable table={table} data={data} setData={setData} />
       <Pagination page={page} lastPage={lastPage} />
     </main>
   );
 };
 
-export default Donors;
-
-// import React from 'react';
-
-// const Donors = () => {
-//   return <div>Donors</div>;
-// };
-
-// export default Donors;
+export default Courses;
