@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import {
-  // getCoreRowModel,
-  // getFilteredRowModel,
-  // getSortedRowModel,
-  // useReactTable,
-  // flexRender,
-} from '@tanstack/react-table';
+import // getCoreRowModel,
+// getFilteredRowModel,
+// getSortedRowModel,
+// useReactTable,
+// flexRender,
+'@tanstack/react-table';
 // import PropTypes from 'prop-types';
 // import { AddLocationModal, EditLocationModal, DeleteModal } from '../Components';
 import Api from '../Api';
