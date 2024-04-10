@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const AddCourseModal = ({ toggleAddModal, setToggleAddModal, data, setData }) => {
   const [addData, setAddData] = useState({
-    name: ''
+    name: '',
   });
 
   const onChange = (e) => {

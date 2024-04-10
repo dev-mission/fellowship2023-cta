@@ -17,7 +17,7 @@ const columns = [
     accessorKey: 'name',
     header: 'Course Name',
     enableColumnFilter: true,
-  }
+  },
 ];
 
 const Filters = ({ setColumnFilters }) => {
@@ -66,7 +66,7 @@ const CourseTable = ({ table, data, setData }) => {
       setPropRow(row);
       setEditData({
         id: row.original.id,
-        name: row.original.name
+        name: row.original.name,
       });
     } catch (err) {
       console.log(err);
