@@ -108,6 +108,17 @@ const Api = {
       return instance.patch(`/api/locations/${id}`, data);
     },
   },
+  courses: {
+    index(page = 1) {
+      return instance.get('/api/courses', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/courses/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/courses/${id}`, data);
+    },
+  },
   appointments: {
     index(page = 1) {
       return instance.get('/api/appointments', { params: { page } });
