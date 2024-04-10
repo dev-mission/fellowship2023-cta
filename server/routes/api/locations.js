@@ -34,6 +34,16 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/:location', async (req, res) => {
+  try {
+    const record = await models.Location.findOne(req.params.location);
+    res.json(record);
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
 router.patch('/:id', async (req, res) => {
   try {
     const record = await models.Location.findByPk(req.params.id);

@@ -16,6 +16,15 @@ module.exports = {
           key: 'id',
         },
       },
+      UserId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Users',
+          },
+          key: 'id',
+        },
+      },
       LocationId: {
         type: Sequelize.INTEGER,
         references: {
@@ -28,11 +37,11 @@ module.exports = {
       dateTimeAt: {
         type: Sequelize.DATE,
       },
-      notes: {
+      problem: {
         type: Sequelize.TEXT,
       },
-      isConfirmed: {
-        type: Sequelize.BOOLEAN,
+      status: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -43,7 +52,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addIndex('Appointments', ['ClientId', 'dateTimeAt'], { unique: true });
+    await queryInterface.addIndex('Appointments', ['dateTimeAt'], { unique: true });
     // set starting id to larger value so it doesn't conflict with test fixtures
     await queryInterface.sequelize.query('ALTER SEQUENCE "Appointments_id_seq" RESTART WITH 100;');
   },

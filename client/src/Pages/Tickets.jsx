@@ -9,7 +9,11 @@ import {
 } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { Modal, Button, Form, Container, Row, Col } from 'react-bootstrap';
-
+import { DateTime } from 'luxon';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import { useAuthContext } from '../AuthContext';
+import Dropdown from '../Components/DropDown';
+import TimeRange from '../Components/TimeRange';
 const columns = [
   {
     accessorKey: 'id',
@@ -17,18 +21,18 @@ const columns = [
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'fullName',
+    accessorKey: 'Client.fullName',
     header: 'Client',
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'LocationId',
+    accessorKey: 'Location.name',
     header: 'Location',
     enableColumnFilter: true,
     enableSorting: false,
   },
   {
-    accessorKey: 'UserId',
+    accessorKey: 'User.fullName',
     header: 'CTA Assigned',
     enableColumnFilter: true,
     enableSorting: false,
@@ -46,7 +50,7 @@ const columns = [
     enableSorting: false,
   },
   {
-    accessorKey: 'created-at',
+    accessorKey: 'createdAt',
     header: 'Date Met',
     enableColumnFilter: true,
     enableSorting: true,
@@ -81,7 +85,7 @@ const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setDa
   const onDelete = async () => {
     setToggleDeleteModal(false);
     try {
-      await fetch(`/api/users/${row.original.id}`, {
+      await fetch(`/api/ticket/${row.original.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +126,7 @@ DeleteModal.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-const UserTable = ({ table, data, setData }) => {
+const TicketTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
 
   return (
@@ -171,7 +175,7 @@ const UserTable = ({ table, data, setData }) => {
   );
 };
 
-UserTable.propTypes = {
+TicketTable.propTypes = {
   table: PropTypes.shape({
     getHeaderGroups: PropTypes.func.isRequired,
     getRowModel: PropTypes.func.isRequired,
@@ -180,16 +184,75 @@ UserTable.propTypes = {
   setData: PropTypes.func.isRequired,
 };
 
-const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
-  const [check, setCheck] = useState(false);
+ClientDropMenu.propTypes = {
+  setData: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+};
+
+function ClientDropMenu({ setData, data }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [singleSelections, setSingleSelections] = useState([]);
+  const [options, setOptions] = useState();
+
+  const handleSearch = (query) => {
+    setIsLoading(true);
+
+    fetch(`/api/clients/search/${query}`)
+      .then((resp) => resp.json())
+      .then((items) => {
+        setOptions(items);
+        setIsLoading(false);
+      });
+  };
+  // Bypass client-side filtering by returning `true`. Results are already
+  // filtered by the search endpoint, so no need to do it again.
+  const filterBy = () => true;
+
+  return (
+    <AsyncTypeahead
+      filterBy={filterBy}
+      id="search-clients"
+      isLoading={isLoading}
+      labelKey="fullName"
+      onSearch={handleSearch}
+      options={options}
+      onChange={(value) => {
+        setSingleSelections(value);
+        setData({ ...data, ClientId: value[0]?.id });
+      }}
+      selected={singleSelections}
+      placeholder="Search for a clients..."
+      renderMenuItemChildren={(option) => (
+        <>
+          <span name="ClientId" value={option.id}>
+            {option.fullName}
+          </span>
+        </>
+      )}
+    />
+  );
+}
+
+const TicketModel = ({ toggleUserModal, setToggleUserModal }) => {
+  const { user } = useAuthContext();
   const [data, setData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    role: '',
-    location: '',
-    isAdmin: check,
+    serialNumber: '',
+    device: '',
+    problem: '',
+    troubleshooting: '',
+    resolution: '',
+    dateOn: Date.now(),
+    timeInAt: '',
+    timeOutAt: '',
+    hasCharger: false,
+    notes: '',
   });
+
+  useEffect(() => {
+    if (data === null) {
+      setData((prev) => ({ ...prev, UserId: user?.id }));
+    }
+  }, [user, data]);
 
   const onChange = (e) => {
     const newData = { ...data };
@@ -197,61 +260,106 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
     setData(newData);
   };
 
-  // const onSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let method = 'POST';
-
-  //   try {
-  //     let path = '/api/users';
-
-  //   }
-  // }
+  const submitTicket = async (e) => {
+    e.preventDefault();
+    // let method = 'POST';
+    // try {
+    //   let path = '/api/users';
+    // }
+    console.log(data);
+    setToggleUserModal(false);
+  };
 
   return (
     <Modal show={toggleUserModal} onHide={() => setToggleUserModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>New User</Modal.Title>
+        <Modal.Title>New Ticket</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
           <Form>
             <Row>
               <Col xs={9} md={6}>
-                <Form.Group controlId="firstName">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="lastName">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={8}>
-                <Form.Group controlId="email">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={6} md={4}>
-                <Form.Group controlId="role">
-                  <Form.Label>Role</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                <Form.Group controlId="clientName">
+                  <Form.Label>Client Look Up</Form.Label>
+                  <ClientDropMenu data={data} setData={setData} />
                 </Form.Group>
               </Col>
             </Row>
             <Row className="d-flex align-items-end">
               <Col xs={12} md={8}>
-                <Form.Group controlId="location">
-                  <Form.Label>Location</Form.Label>
-                  <Form.Control type="name" autoFocus onChange={onChange} />
+                <Dropdown
+                  data={data}
+                  setData={setData}
+                  settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
+                  path="/api/locations"
+                />
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="serialNumber">
+                  <Form.Label>Serial Number</Form.Label>
+                  <Form.Control name="serialNumber" value={data.serialNumber} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
-              <Col xs={6} md={4}>
-                <Form.Check type="switch" id="custom-switch" label="Admin" checked={check} onChange={() => setCheck(!check)} />
+              <Col xs={12} md={8}>
+                <Form.Group controlId="device">
+                  <Form.Label>Device</Form.Label>
+                  <Form.Control name="device" value={data.device} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="problem">
+                  <Form.Label>Problem</Form.Label>
+                  <Form.Control name="problem" value={data.problem} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="troubleshooting">
+                  <Form.Label>Troubleshooting</Form.Label>
+                  <Form.Control name="troubleshooting" value={data.troubleshooting} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="resolution">
+                  <Form.Label>Resolution</Form.Label>
+                  <Form.Control name="resolution" value={data.resolution} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="timeInAt">
+                  <Form.Label>Time Started</Form.Label>
+                  <TimeRange name="timeInAt" data={data} setData={setData}></TimeRange>
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="timeOutAt">
+                  <Form.Label>Time Finished</Form.Label>
+                  <TimeRange name="timeOutAt" data={data} setData={setData}></TimeRange>
+                </Form.Group>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="hasCharger">
+                  <Form.Label>Charger: </Form.Label>
+                  <Form.Label>{data?.hasCharger ? 'Yes' : 'No'}</Form.Label>
+                </Form.Group>
+                <Button
+                  onClick={() => {
+                    setData({ ...data, hasCharger: true });
+                  }}>
+                  Yes
+                </Button>
+                <Button
+                  onClick={() => {
+                    setData({ ...data, hasCharger: false });
+                  }}>
+                  No
+                </Button>
+              </Col>
+              <Col xs={12} md={8}>
+                <Form.Group controlId="notes">
+                  <Form.Label>Notes</Form.Label>
+                  <Form.Control name="notes" value={data.notes} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
               </Col>
             </Row>
           </Form>
@@ -261,7 +369,7 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
         <Button variant="secondary" onClick={() => setToggleUserModal(false)}>
           Close
         </Button>
-        <Button variant="primary" onClick={() => setToggleUserModal(false)}>
+        <Button variant="primary" onClick={submitTicket}>
           Submit
         </Button>
       </Modal.Footer>
@@ -269,7 +377,7 @@ const UserModal = ({ toggleUserModal, setToggleUserModal }) => {
   );
 };
 
-UserModal.propTypes = {
+TicketModel.propTypes = {
   toggleUserModal: PropTypes.bool.isRequired,
   setToggleUserModal: PropTypes.func.isRequired,
 };
@@ -282,7 +390,12 @@ const Tickets = () => {
   useEffect(() => {
     fetch('/api/ticket')
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        data.map((ticket) => {
+          ticket['createdAt'] = DateTime.fromISO(ticket['createdAt']).toLocaleString();
+        });
+        setData(data);
+      });
   }, []);
 
   const table = useReactTable({
@@ -304,11 +417,11 @@ const Tickets = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleUserModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <UserModal toggleUserModal={toggleUserModal} setToggleUserModal={setToggleUserModal} />
-        <i className="bi title-icon">Tickets</i>
+        <TicketModel toggleUserModal={toggleUserModal} setToggleUserModal={setToggleUserModal} />
+        <i className="bi bi-person-fill">Tickets</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <UserTable table={table} data={data} setData={setData} />
+      <TicketTable table={table} data={data} setData={setData} />
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
