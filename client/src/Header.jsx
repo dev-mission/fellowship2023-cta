@@ -85,6 +85,11 @@ function Header() {
                         Locations
                       </Link>
                     </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/Courses" onClick={hideNavbar}>
+                        Courses
+                      </Link>
+                    </li>
                   </>
                 )}
                 {user.role === 'Inventory' && (
