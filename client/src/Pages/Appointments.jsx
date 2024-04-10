@@ -34,12 +34,15 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const Appointments = () => {
   const [data, setData] = useState();
-  // const [toggleAddModal, setToggleAddModal] = useState(false);
+  const [toggleAddModal, setToggleAddModal] = useState(false);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
-  // const [lastPage, setLastPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [radioValue, setRadioValue] = useState('Upcoming');
+
+  console.log(lastPage);
+  console.log(toggleAddModal);
 
   useEffect(() => {
     Api.appointments.index(page).then((response) => {
