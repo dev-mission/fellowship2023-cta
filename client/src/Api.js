@@ -117,6 +117,15 @@ const Api = {
     },
     update(id, data) {
       return instance.patch(`/api/courses/${id}`, data);
+  appointments: {
+    index(page = 1) {
+      return instance.get('/api/appointments', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/appointments/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/appointments/${id}`, data);
     },
   },
 };

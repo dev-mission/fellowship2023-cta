@@ -11,6 +11,7 @@ import coursesRoutes from './courses.js';
 import clientsRoutes from './clients.js';
 import devicesRoutes from './devices.js';
 import donorsRoutes from './donors.js';
+import appointmentsRoutes from './appointments.js';
 
 const router = express.Router();
 
@@ -23,9 +24,10 @@ router.use('/ticket', interceptors.requireCTA, ticketRoutes);
 //Need to handle interceptor for inventory role
 router.use('/devices', devicesRoutes);
 //Need to handle interceptor for inventory role
-router.use('/donors', donorsRoutes);
+router.use('/donors', interceptors.requireInventory, donorsRoutes);
 router.use('/locations', interceptors.requireAdmin, locationsRoutes);
 router.use('/courses', interceptors.requireAdmin, coursesRoutes);
 router.use('/clients', interceptors.requireCTA, clientsRoutes);
+router.use('/appointments', interceptors.requireCTA, appointmentsRoutes);
 
 export default router;
