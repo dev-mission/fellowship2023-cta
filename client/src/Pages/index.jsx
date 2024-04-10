@@ -4,5 +4,6 @@ import Clients from './Clients';
 import Inventory from './Inventory';
 import Locations from './Locations';
 import Donors from './Donors';
+import Courses from './Courses';
 
-export { Appointments, Tickets, Clients, Inventory, Locations, Donors };
+export { Appointments, Tickets, Clients, Inventory, Locations, Donors, Courses };
