@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { AddDonorModal, EditDonorModal, DeleteModal } from '../Components';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useDonor } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const columns = [
   {
@@ -181,7 +181,7 @@ const Donors = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
   const [toggleAddModal, setToggleAddModal] = useState(false);
-  const { search } = useDonor();
+  const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
