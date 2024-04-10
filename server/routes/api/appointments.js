@@ -11,7 +11,21 @@ router.get('/', async (req, res) => {
   const page = req.query.page || '1';
   const { records, pages, total } = await models.Appointment.paginate({
     page,
-    include: models.Client,
+    include: [
+      {
+        model: models.Client,
+        attributes: ['phone', 'email', 'language', 'fullName'],
+        include: {
+          model: models.Device,
+          attributes: ['model'],
+        },
+      },
+      {
+        model: models.User,
+        attributes: ['firstName', 'lastName'],
+      },
+      { model: models.Location, attributes: ['name'] },
+    ],
   });
   helpers.setPaginationHeaders(req, res, page, pages, total);
   res.json(records.map((r) => r.toJSON()));
