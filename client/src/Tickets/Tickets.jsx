@@ -222,7 +222,6 @@ function Charger({ stateChange }) {
 const TicketModel = ({ update, data, stateChange, toggleUserModal, setToggleUserModal }) => {
   const submitTicket = async (e) => {
     e.preventDefault();
-
     const result = await fetch('/api/tickets', {
       method: 'POST',
       headers: {
@@ -233,6 +232,7 @@ const TicketModel = ({ update, data, stateChange, toggleUserModal, setToggleUser
     result.json().then((ticket) => {
       update(ticket);
     });
+
     setToggleUserModal(false);
   };
 
@@ -349,6 +349,7 @@ const Tickets = () => {
   const [ticket, setTicket] = useState({
     ClientId: null,
     LocationId: null,
+    UserId: null,
     serialNumber: '',
     device: '',
     problem: '',
@@ -370,9 +371,13 @@ const Tickets = () => {
         });
         setData(data);
       });
+    if (user) {
+      setTicket((prevTicket) => ({ ...prevTicket, UserId: user.id }));
+    }
   }, [setData, user]);
 
-  function updateTicket(ticket) {
+  function updateTable(ticket) {
+    ticket['createdAt'] = DateTime.fromISO(ticket['createdAt']).toLocaleString();
     setData([...data, ticket]);
   }
 
@@ -390,9 +395,6 @@ const Tickets = () => {
   });
 
   const handleChange = (e) => {
-    if (ticket.UserId === null && user?.id) {
-      setTicket({ ...ticket, UserId: user?.id });
-    }
     const newData = { ...ticket };
     newData[e.target.name] = e.target.value;
     setTicket(newData);
@@ -405,7 +407,7 @@ const Tickets = () => {
           New <i className="bi bi-plus-lg" />
         </button>
         <TicketModel
-          update={updateTicket}
+          update={updateTable}
           data={ticket}
           stateChange={handleChange}
           toggleUserModal={toggleUserModal}

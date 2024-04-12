@@ -27,8 +27,8 @@ router.get('/', async (req, res) => {
     });
   }
   tickets = tickets.map((ticket) => {
-    ticket.dataValues.Client = ticket.Client.fullName;
-    ticket.dataValues.User = ticket.User.fullName;
+    ticket.dataValues.Client = ticket.Client?.fullName;
+    ticket.dataValues.User = ticket.User?.fullName;
     ticket.dataValues.Location = ticket.Location.name;
     return ticket;
   });
@@ -117,8 +117,8 @@ router.post('/', async (req, res) => {
         { model: models.Location, attributes: ['name'] },
       ],
     });
-    ticket.dataValues.Client = ticket.Client.fullName;
-    ticket.dataValues.User = ticket.User.fullName;
+    ticket.dataValues.Client = ticket.Client?.fullName;
+    ticket.dataValues.User = ticket.User?.fullName;
     ticket.dataValues.Location = ticket.Location.name;
     res.status(StatusCodes.CREATED).json(ticket);
   } catch (err) {
