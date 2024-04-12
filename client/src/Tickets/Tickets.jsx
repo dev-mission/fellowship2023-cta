@@ -22,18 +22,18 @@ const columns = [
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'Client.fullName',
+    accessorKey: 'Client',
     header: 'Client',
     enableColumnFilter: true,
   },
   {
-    accessorKey: 'Location.name',
+    accessorKey: 'Location',
     header: 'Location',
     enableColumnFilter: true,
     enableSorting: false,
   },
   {
-    accessorKey: 'User.fullName',
+    accessorKey: 'User',
     header: 'CTA Assigned',
     enableColumnFilter: true,
     enableSorting: false,
@@ -82,8 +82,6 @@ Filters.propTypes = {
   setColumnFilters: PropTypes.func.isRequired,
 };
 
-
-
 const TicketTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
 
@@ -124,7 +122,7 @@ const TicketTable = ({ table, data, setData }) => {
                 row={row}
                 data={data}
                 setData={setData}
-                model='tickets'
+                model="tickets"
               />
             </tr>
           ))}
@@ -149,7 +147,6 @@ ClientDropMenu.propTypes = {
 
 function ClientDropMenu({ lookUp }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [singleSelections, setSingleSelections] = useState([]);
   const [options, setOptions] = useState();
 
   const handleSearch = (query) => {
@@ -169,18 +166,14 @@ function ClientDropMenu({ lookUp }) {
   return (
     <AsyncTypeahead
       filterBy={filterBy}
-      name="ClientId"
-      value={singleSelections[0].id}
       id="search-clients"
       isLoading={isLoading}
       labelKey="fullName"
       onSearch={handleSearch}
       options={options}
-      onChange={(event, value) => {
-        setSingleSelections(value);
-        lookUp(event);
+      onChange={(value) => {
+        lookUp({ target: { name: 'ClientId', value: value[0]?.id } });
       }}
-      selected={singleSelections}
       placeholder="Search for a clients..."
       renderMenuItemChildren={(option) => (
         <>
@@ -193,21 +186,52 @@ function ClientDropMenu({ lookUp }) {
   );
 }
 
-const TicketModel = ({ data, stateChange, toggleUserModal, setToggleUserModal }) => {
+Charger.propTypes = {
+  stateChange: PropTypes.func.isRequired,
+};
 
+function Charger({ stateChange }) {
+  const [message, setMessage] = useState('No');
+  const handleChange = (e) => {
+    e.preventDefault();
+    if (e.target.value === 'true') {
+      setMessage('Yes');
+      stateChange({ target: { name: 'hasCharger', value: true } });
+    } else {
+      setMessage('No');
+      stateChange({ target: { name: 'hasCharger', value: false } });
+    }
+  };
 
+  return (
+    <>
+      <Form.Group>
+        <Form.Label>Charger: </Form.Label>
+        <Form.Label>{message}</Form.Label>
+      </Form.Group>
+      <Button name="hasCharger" value={true} onSubmit={(e) => e.preventDefault()} onClick={handleChange}>
+        Yes
+      </Button>
+      <Button name="hasCharger" value={false} onClick={handleChange}>
+        No
+      </Button>
+    </>
+  );
+}
+
+const TicketModel = ({ update, data, stateChange, toggleUserModal, setToggleUserModal }) => {
   const submitTicket = async (e) => {
     e.preventDefault();
 
-    const result = await fetch("/api/tickets", {
-      method: "POST",
+    const result = await fetch('/api/tickets', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
     result.json().then((ticket) => {
-      setData([...data, ticket]);
+      update(ticket);
     });
     setToggleUserModal(false);
   };
@@ -221,21 +245,21 @@ const TicketModel = ({ data, stateChange, toggleUserModal, setToggleUserModal })
         <Container>
           <Form>
             <Row>
-              {/* <Col xs={9} md={6}>
+              <Col xs={9} md={6}>
                 <Form.Group controlId="clientName">
                   <Form.Label>Client Look Up</Form.Label>
                   <ClientDropMenu lookUp={stateChange} />
                 </Form.Group>
-              </Col> */}
+              </Col>
             </Row>
             <Row className="d-flex align-items-end">
-              {/* <Col xs={12} md={8}>
+              <Col xs={12} md={8}>
                 <Dropdown
                   lookUp={stateChange}
                   settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
                   path="/api/locations"
                 />
-              </Col> */}
+              </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="serialNumber">
                   <Form.Label>Serial Number</Form.Label>
@@ -275,32 +299,17 @@ const TicketModel = ({ data, stateChange, toggleUserModal, setToggleUserModal })
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeInAt">
                   <Form.Label>Time Started</Form.Label>
-                  {/* <TimeRange name="timeInAt" data={data} setData={setTicket}></TimeRange> */}
+                  <TimeRange name="timeInAt" date={data.dateOn} change={stateChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeOutAt">
                   <Form.Label>Time Finished</Form.Label>
-                  {/* <TimeRange name="timeOutAt" data={data} setData={setTicket}></TimeRange> */}
+                  <TimeRange name="timeOutAt" date={data.dateOn} change={stateChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
-                <Form.Group controlId="hasCharger">
-                  <Form.Label>Charger: </Form.Label>
-                  <Form.Label>{data?.hasCharger ? 'Yes' : 'No'}</Form.Label>
-                </Form.Group>
-                <Button
-                name="hasCharger"
-                value={true}
-                  onClick={stateChange}>
-                  Yes
-                </Button>
-                <Button
-                name="hasCharger"
-                value={false}
-                onClick={stateChange}>
-                  No
-                </Button>
+                <Charger stateChange={stateChange}></Charger>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="notes">
@@ -328,6 +337,8 @@ TicketModel.propTypes = {
   toggleUserModal: PropTypes.bool.isRequired,
   setToggleUserModal: PropTypes.func.isRequired,
   stateChange: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
 const Tickets = () => {
@@ -359,8 +370,11 @@ const Tickets = () => {
         });
         setData(data);
       });
-      setTicket({ ...ticket, UserId: user?.id });
-  }, [setData, user, setTicket]);
+  }, [setData, user]);
+
+  function updateTicket(ticket) {
+    setData([...data, ticket]);
+  }
 
   const table = useReactTable({
     data: data || [],
@@ -376,10 +390,12 @@ const Tickets = () => {
   });
 
   const handleChange = (e) => {
+    if (ticket.UserId === null && user?.id) {
+      setTicket({ ...ticket, UserId: user?.id });
+    }
     const newData = { ...ticket };
     newData[e.target.name] = e.target.value;
     setTicket(newData);
-    console.log(ticket);
   };
 
   return (
@@ -388,7 +404,13 @@ const Tickets = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleUserModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <TicketModel data={ticket} stateChange={handleChange} toggleUserModal={toggleUserModal} setToggleUserModal={setToggleUserModal} />
+        <TicketModel
+          update={updateTicket}
+          data={ticket}
+          stateChange={handleChange}
+          toggleUserModal={toggleUserModal}
+          setToggleUserModal={setToggleUserModal}
+        />
         <i className="bi bi-person-fill">Tickets</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>

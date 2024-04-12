@@ -9,7 +9,7 @@ Dropdown.propTypes = {
   lookUp: PropTypes.func.isRequired,
 };
 
-export default function Dropdown({lookUp, settings, path }) {
+export default function Dropdown({ lookUp, settings, path }) {
   const [singleSelections, setSingleSelections] = useState([]);
   const [options, setOptions] = useState([]);
 
@@ -19,20 +19,18 @@ export default function Dropdown({lookUp, settings, path }) {
       .then((data) => {
         setOptions(data);
       });
-  }, []);
+  }, [path]);
 
   return (
     <>
       <Form.Group>
         <Form.Label>{settings.title}</Form.Label>
         <Typeahead
-          name={settings.id}
           id={settings.id}
-          value={singleSelections[0].id}
           labelKey={settings.labelKey}
           onChange={(value) => {
             setSingleSelections(value);
-            lookUp();
+            lookUp({ target: { name: settings?.id, value: value[0]?.id } });
           }}
           options={options}
           placeholder={settings.placeholder}
