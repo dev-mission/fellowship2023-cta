@@ -127,9 +127,6 @@ function requireAdmin(req, res, next) {
 }
 
 function requireCTA(req, res, next) {
-  if (req.user === undefined) {
-    return sendErrorUnauthorized(req, res);
-  }
   if (req.user?.role === 'CTA' || req.user?.isAdmin) {
     next();
   } else {
@@ -138,10 +135,7 @@ function requireCTA(req, res, next) {
 }
 
 function requireInventory(req, res, next) {
-  if (req.user === undefined) {
-    return sendErrorUnauthorized(req, res);
-  }
-  if (req.user.role === 'Inventory' || req.user.isAdmin) {
+  if (req.user?.role === 'Inventory' || req.user?.isAdmin) {
     next();
   } else {
     sendErrorUnauthorized(req, res);

@@ -7,7 +7,9 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
-import { AddLocationModal, EditLocationModal, DeleteModal } from '../Components';
+import { DeleteModal } from '../Components';
+import AddCourseModal from './AddCourseModal';
+import EditCourseModal from './EditCourseModal';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
@@ -15,32 +17,7 @@ import { useLocation } from 'react-router-dom';
 const columns = [
   {
     accessorKey: 'name',
-    header: 'Location Name',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'address1',
-    header: 'Address 1',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'address2',
-    header: 'Address 2',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'city',
-    header: 'City',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'state',
-    header: 'State',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'zipCode',
-    header: 'Zip Code',
+    header: 'Course Name',
     enableColumnFilter: true,
   },
 ];
@@ -57,7 +34,7 @@ const Filters = ({ setColumnFilters }) => {
         <input
           type="search"
           className="form-control me-2"
-          placeholder="Search Locations"
+          placeholder="Search Courses"
           onChange={(e) => onFilterChange('name', e.target.value)}
         />
       </div>
@@ -69,7 +46,7 @@ Filters.propTypes = {
   setColumnFilters: PropTypes.func,
 };
 
-const LocationTable = ({ table, data, setData }) => {
+const CourseTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
   const [toggleEditModal, setToggleEditModal] = useState(false);
   const [editData, setEditData] = useState({});
@@ -92,11 +69,6 @@ const LocationTable = ({ table, data, setData }) => {
       setEditData({
         id: row.original.id,
         name: row.original.name,
-        address1: row.original.address1,
-        address2: row.original.address2,
-        city: row.original.city,
-        state: row.original.state,
-        zipCode: row.original.zipCode,
       });
     } catch (err) {
       console.log(err);
@@ -144,9 +116,9 @@ const LocationTable = ({ table, data, setData }) => {
           row={propRow}
           data={data}
           setData={setData}
-          model="locations"
+          model="courses"
         />
-        <EditLocationModal
+        <EditCourseModal
           toggleEditModal={toggleEditModal}
           setToggleEditModal={setToggleEditModal}
           row={propRow}
@@ -160,13 +132,13 @@ const LocationTable = ({ table, data, setData }) => {
   );
 };
 
-LocationTable.propTypes = {
+CourseTable.propTypes = {
   table: PropTypes.object,
   data: PropTypes.array,
   setData: PropTypes.func,
 };
 
-const Locations = () => {
+const Courses = () => {
   const [data, setData] = useState();
   const [columnFilters, setColumnFilters] = useState([]);
   const [toggleAddModal, setToggleAddModal] = useState(false);
@@ -176,7 +148,7 @@ const Locations = () => {
   const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
-    Api.locations.index(page).then((response) => {
+    Api.courses.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -208,14 +180,14 @@ const Locations = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <AddLocationModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
-        <i className="bi bi-person-fill">Locations</i>
+        <AddCourseModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
+        <i className="bi bi-person-fill">Courses</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <LocationTable table={table} data={data} setData={setData} />
+      <CourseTable table={table} data={data} setData={setData} />
       <Pagination page={page} lastPage={lastPage} />
     </main>
   );
 };
 
-export default Locations;
+export default Courses;
