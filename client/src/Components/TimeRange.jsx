@@ -10,14 +10,15 @@ TimeRange.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-function convertISOTime(time) {
+function convertISOTime(time, date) {
   if (time === null) {
     return '';
   }
-  let dt = DateTime.now();
+  let dt = DateTime.now().setZone("America/Los_Angeles");
   const [hour, minute] = time.split(':');
   dt = dt.set({ hour: parseInt(hour), minute: parseInt(minute) });
-  return dt.toISOTime();
+  let newDate = date + " "+ dt.toISOTime();
+  return newDate;
 }
 
 export default function TimeRange({ name, data, setData }) {
@@ -27,13 +28,10 @@ export default function TimeRange({ name, data, setData }) {
     <div>
       <TimePicker
         name={name}
-        minTime={'10:00'}
-        maxTime={'17:00'}
         disableClock={true}
         onChange={(value) => {
           setTime(value);
-          setData({ ...data, [name]: convertISOTime(value) });
-          console.log(data);
+          setData({ ...data, [name]: convertISOTime(value, data.dateOn) });
         }}
         value={time}
       />
