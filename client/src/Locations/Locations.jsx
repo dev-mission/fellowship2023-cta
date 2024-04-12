@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getCoreRowModel, getFilteredRowModel, useReactTable, flexRender } from '@tanstack/react-table';
+import { getCoreRowModel, getFilteredRowModel, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import AddLocationModal from './AddLocationModal';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
-import LocationTable from './LocationTable';
+import LocationsTable from './LocationsTable';
 
 const columns = [
   {
@@ -106,10 +106,10 @@ const Locations = () => {
           New <i className="bi bi-plus-lg" />
         </button>
         <AddLocationModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
-        <i className="bi bi-person-fill">Locations</i>
+        <i className="bi bi-person-fill title-icon">Locations</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <LocationTable table={table} data={data} setData={setData} />
+      <LocationsTable table={table} data={data} setData={setData} />
       <Pagination page={page} lastPage={lastPage} />
     </main>
   );

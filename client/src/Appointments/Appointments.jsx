@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react';
-import // getCoreRowModel,
-// getFilteredRowModel,
-// getSortedRowModel,
-// useReactTable,
-// flexRender,
-'@tanstack/react-table';
-// import PropTypes from 'prop-types';
-// import { DeleteModal } from '../Components';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
-// import Pagination from '../Components/Pagination';
+import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import AppointmentsTable from './AppointmentsTable';
+import AddAppointmentModal from './AddAppointmentModal';
 
 const columns = [
   {
-    accessorKey: `Client['fullName']`,
+    accessorKey: 'Client.fullName',
     header: 'Client',
   },
   {
@@ -22,23 +17,24 @@ const columns = [
     header: 'Date Time',
   },
   {
-    accessorKey: `User['firstName']` + ' ' + `User['lastName']`,
     header: 'User',
+    accessorKey: 'User',
+    cell: ({ row }) => <p>{row.original.User.firstName + ' ' + row.original.User.lastName}</p>,
   },
   {
-    accessorKey: `Client['phone']`,
+    accessorKey: 'Client.phone',
     header: 'Phone',
   },
   {
-    accessorKey: `Client['email']`,
+    accessorKey: 'Client.email',
     header: 'Email',
   },
   {
-    accessorKey: `Location['name']`,
+    accessorKey: 'Location.name',
     header: 'Location',
   },
   {
-    accessorKey: `Device['model']`,
+    accessorKey: 'Client.Device.model',
     header: 'Device',
   },
   {
@@ -48,7 +44,7 @@ const columns = [
   {
     accessorKey: 'status',
     header: 'Status',
-  }
+  },
 ];
 
 const Appointments = () => {
@@ -59,9 +55,6 @@ const Appointments = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
   const [radioValue, setRadioValue] = useState('Upcoming');
-
-  console.log(toggleAddModal);
-  console.log(lastPage);
 
   useEffect(() => {
     Api.appointments.index(page).then((response) => {
@@ -80,14 +73,14 @@ const Appointments = () => {
 
   console.log(data);
 
-  // const table = useReactTable({
-  //   data: data || [],
-  //   columns,
-  //   state: {
-  //     data,
-  //   },
-  //   getCoreRowModel: getCoreRowModel(),
-  // });
+  const table = useReactTable({
+    data: data || [],
+    columns,
+    state: {
+      data,
+    },
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   return (
     <main className="container">
@@ -95,7 +88,8 @@ const Appointments = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <i className="bi bi-clock">Appointments</i>
+        <AddAppointmentModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
+        <i className="bi bi-clock title-icon">Appointments</i>
         <form className="d-flex" role="search">
           <div className="input-group">
             <span className="input-group-text" id="basic-addon1">
@@ -105,34 +99,34 @@ const Appointments = () => {
           </div>
         </form>
       </div>
-      <div>
-        <ButtonGroup>
-          <ToggleButton
-            className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
-            id="radio-upcoming"
-            type="radio"
-            variant={radioValue === 'Upcoming' ? 'outline-primary' : ''}
-            name="radio"
-            value="Upcoming"
-            checked={radioValue === 'Upcoming'}
-            onChange={(e) => setRadioValue(e.currentTarget.value)}
-            size="md">
-            Upcoming
-          </ToggleButton>
-          <ToggleButton
-            className={`border-primary ${radioValue === 'Archive' ? 'text-white' : 'text-primary'}`}
-            id="radio-archive"
-            type="radio"
-            variant={radioValue === 'Archive' ? 'outline-primary' : ''}
-            name="radio"
-            value="Archive"
-            checked={radioValue === 'Archive'}
-            onChange={(e) => setRadioValue(e.currentTarget.value)}
-            size="md">
-            Archive
-          </ToggleButton>
-        </ButtonGroup>
-      </div>
+      <ButtonGroup>
+        <ToggleButton
+          className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
+          id="radio-upcoming"
+          type="radio"
+          variant={radioValue === 'Upcoming' ? 'outline-primary' : ''}
+          name="radio"
+          value="Upcoming"
+          checked={radioValue === 'Upcoming'}
+          onChange={(e) => setRadioValue(e.currentTarget.value)}
+          size="md">
+          Upcoming
+        </ToggleButton>
+        <ToggleButton
+          className={`border-primary ${radioValue === 'Archive' ? 'text-white' : 'text-primary'}`}
+          id="radio-archive"
+          type="radio"
+          variant={radioValue === 'Archive' ? 'outline-primary' : ''}
+          name="radio"
+          value="Archive"
+          checked={radioValue === 'Archive'}
+          onChange={(e) => setRadioValue(e.currentTarget.value)}
+          size="md">
+          Archive
+        </ToggleButton>
+      </ButtonGroup>
+      <AppointmentsTable table={table} data={data} setData={setData} />
+      <Pagination page={page} lastPage={lastPage} />
     </main>
   );
 };
