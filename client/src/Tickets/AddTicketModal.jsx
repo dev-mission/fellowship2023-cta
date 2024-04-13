@@ -1,8 +1,10 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
-import { useState } from 'react';
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+
 import Dropdown from '../Components/DropDown';
 import TimeRange from '../Components/TimeRange';
 
@@ -84,7 +86,9 @@ function Charger({ stateChange }) {
   );
 }
 
-const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleUserModal }) => {
+const AddTicketModel = ({ update, data, stateChange }) => {
+  const navigate = useNavigate();
+
   const submitTicket = async (e) => {
     e.preventDefault();
     const result = await fetch('/api/tickets', {
@@ -99,11 +103,11 @@ const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleU
       update(ticket);
     });
 
-    setToggleUserModal(false);
+    navigate('/tickets');
   };
 
   return (
-    <Modal show={toggleUserModal} onHide={() => setToggleUserModal(false)}>
+    <Modal show={true} onHide={() => navigate('/tickets')}>
       <Modal.Header closeButton>
         <Modal.Title>New Ticket</Modal.Title>
       </Modal.Header>
@@ -188,8 +192,8 @@ const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleU
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setToggleUserModal(false)}>
-          Close
+        <Button variant="secondary" onClick={() => navigate('/tickets')}>
+          Cancel
         </Button>
         <Button variant="primary" onClick={submitTicket}>
           Submit
@@ -200,8 +204,6 @@ const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleU
 };
 
 AddTicketModel.propTypes = {
-  toggleUserModal: PropTypes.bool.isRequired,
-  setToggleUserModal: PropTypes.func.isRequired,
   stateChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   update: PropTypes.func.isRequired,

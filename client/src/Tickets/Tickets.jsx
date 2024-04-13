@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link, Routes, Route } from 'react-router-dom';
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
@@ -75,7 +76,6 @@ Filters.propTypes = {
 
 const Tickets = () => {
   const [columnFilters, setColumnFilters] = useState([]);
-  const [toggleUserModal, setToggleUserModal] = useState(false);
   const [data, setData] = useState([]);
   const { user } = useAuthContext();
   const [ticket, setTicket] = useState({
@@ -138,16 +138,9 @@ const Tickets = () => {
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
-        <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleUserModal(true)}>
+        <Link className="btn btn-primary d-flex align-items-center" to="new">
           New <i className="bi bi-plus-lg" />
-        </button>
-        <AddTicketModel
-          update={updateTable}
-          data={ticket}
-          stateChange={handleChange}
-          toggleUserModal={toggleUserModal}
-          setToggleUserModal={setToggleUserModal}
-        />
+        </Link>
         <i className="bi bi-person-fill">Tickets</i>
         <Filters setColumnFilters={setColumnFilters} />
       </div>
@@ -163,6 +156,9 @@ const Tickets = () => {
           {'>'}
         </button>
       </div>
+      <Routes>
+        <Route path="new" element={<AddTicketModel update={updateTable} data={ticket} stateChange={handleChange} />} />
+      </Routes>
     </main>
   );
 };
