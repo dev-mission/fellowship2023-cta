@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
@@ -86,9 +86,9 @@ function Charger({ onChange }) {
   );
 }
 
-const AddTicketModal = ({ onCreate }) => {
+const TicketModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
-
+  const { ticketId } = useParams();
   const [data, setData] = useState({
     ClientId: null,
     LocationId: null,
@@ -105,6 +105,19 @@ const AddTicketModal = ({ onCreate }) => {
     notes: '',
   });
 
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`/api/tickets/${ticketId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setData(data);
+      }
+    }
+    if (ticketId) {
+      fetchData();
+    }
+  }, [ticketId]);
+
   const onChange = (e) => {
     const newData = { ...data };
     newData[e.target.name] = e.target.value;
@@ -113,19 +126,34 @@ const AddTicketModal = ({ onCreate }) => {
 
   const submitTicket = async (e) => {
     e.preventDefault();
-    const result = await fetch('/api/tickets', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    result.json().then((ticket) => {
-      ticket['createdAt'] = DateTime.fromISO(ticket['createdAt']).toLocaleString();
-      onCreate(ticket);
-    });
-
-    navigate('/tickets');
+    let response;
+    if (data.id) {
+      response = await fetch(`/api/tickets/${data.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    } else {
+      response = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    }
+    if (response.ok) {
+      const newData = response.json();
+      newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toLocaleString();
+      if (data.id) {
+        onUpdate(newData);
+      } else {
+        onCreate(newData);
+      }
+      navigate('/tickets');
+    }
   };
 
   return (
@@ -225,8 +253,9 @@ const AddTicketModal = ({ onCreate }) => {
   );
 };
 
-AddTicketModal.propTypes = {
-  onCreate: PropTypes.func.isRequired,
+TicketModal.propTypes = {
+  onCreate: PropTypes.func,
+  onUpdate: PropTypes.func,
 };
 
-export default AddTicketModal;
+export default TicketModal;

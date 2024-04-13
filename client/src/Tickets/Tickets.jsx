@@ -3,8 +3,9 @@ import { Link, Routes, Route } from 'react-router-dom';
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
+
 import TicketTable from './TicketTable';
-import AddTicketModal from './AddTicketModal';
+import TicketModal from './TicketModal';
 
 const columns = [
   {
@@ -88,8 +89,12 @@ const Tickets = () => {
       });
   }, []);
 
-  function updateTable(ticket) {
+  function onCreate(ticket) {
     setData([...data, ticket]);
+  }
+
+  function onUpdate(ticket) {
+    setData(data.map((t) => (t.id == ticket.id ? { ...ticket } : t)));
   }
 
   function removeData(ticket) {
@@ -131,7 +136,8 @@ const Tickets = () => {
         </button>
       </div>
       <Routes>
-        <Route path="new" element={<AddTicketModal onCreate={updateTable} />} />
+        <Route path="new" element={<TicketModal onCreate={onCreate} />} />
+        <Route path=":ticketId" element={<TicketModal onUpdate={onUpdate} />} />
       </Routes>
     </main>
   );
