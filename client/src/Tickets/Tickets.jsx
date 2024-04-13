@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
-import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
-import PropTypes from 'prop-types';
+import { getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import { DateTime } from 'luxon';
 
 import TicketTable from './TicketTable';
@@ -11,71 +10,34 @@ const columns = [
   {
     accessorKey: 'id',
     header: 'Ticket #',
-    enableColumnFilter: true,
   },
   {
     accessorKey: 'Client',
     header: 'Client',
-    enableColumnFilter: true,
   },
   {
     accessorKey: 'Location',
     header: 'Location',
-    enableColumnFilter: true,
-    enableSorting: false,
   },
   {
     accessorKey: 'User',
     header: 'CTA Assigned',
-    enableColumnFilter: true,
-    enableSorting: false,
   },
   {
     accessorKey: 'device',
     header: 'Device',
-    enableColumnFilter: true,
-    enableSorting: true,
   },
   {
     accessorKey: 'problem',
     header: 'Problem',
-    enableColumnFilter: false,
-    enableSorting: false,
   },
   {
     accessorKey: 'createdAt',
     header: 'Date Met',
-    enableColumnFilter: true,
-    enableSorting: true,
   },
 ];
 
-const Filters = ({ setColumnFilters }) => {
-  const onFilterChange = (id, value) => setColumnFilters((prev) => prev.filter((f) => f.id !== id).concat({ id, value }));
-
-  return (
-    <form className="d-flex" role="search">
-      <div className="input-group">
-        <span className="input-group-text" id="basic-addon1">
-          <i className="bi bi-search" />
-        </span>
-        <input
-          type="search"
-          className="form-control me-2"
-          placeholder="Search Users"
-          onChange={(e) => onFilterChange('firstName', e.target.value)}
-        />
-      </div>
-    </form>
-  );
-};
-
-Filters.propTypes = {
-  setColumnFilters: PropTypes.func.isRequired,
-};
-
 const Tickets = () => {
-  const [columnFilters, setColumnFilters] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -105,12 +67,9 @@ const Tickets = () => {
     data: data || [],
     columns,
     state: {
-      columnFilters,
       data,
     },
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
 
@@ -121,7 +80,6 @@ const Tickets = () => {
           New <i className="bi bi-plus-lg" />
         </Link>
         <i className="bi bi-person-fill">Tickets</i>
-        <Filters setColumnFilters={setColumnFilters} />
       </div>
       <TicketTable table={table} data={data} setData={removeData} />
       <p>
