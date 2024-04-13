@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 import { useAuthContext } from '../AuthContext';
 import TicketTable from './TicketTable';
-import AddTicketModel from './AddTicketModal';
+import AddTicketModal from './AddTicketModal';
 
 const columns = [
   {
@@ -157,7 +157,7 @@ const Tickets = () => {
         </button>
       </div>
       <Routes>
-        <Route path="new" element={<AddTicketModel update={updateTable} data={ticket} stateChange={handleChange} />} />
+        <Route path="new" element={<AddTicketModal update={updateTable} data={ticket} stateChange={handleChange} />} />
       </Routes>
     </main>
   );

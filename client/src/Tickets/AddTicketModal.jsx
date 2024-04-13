@@ -86,7 +86,7 @@ function Charger({ stateChange }) {
   );
 }
 
-const AddTicketModel = ({ update, data, stateChange }) => {
+const AddTicketModal = ({ update, data, stateChange }) => {
   const navigate = useNavigate();
 
   const submitTicket = async (e) => {
@@ -203,10 +203,10 @@ const AddTicketModel = ({ update, data, stateChange }) => {
   );
 };
 
-AddTicketModel.propTypes = {
+AddTicketModal.propTypes = {
   stateChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   update: PropTypes.func.isRequired,
 };
 
-export default AddTicketModel;
+export default AddTicketModal;
