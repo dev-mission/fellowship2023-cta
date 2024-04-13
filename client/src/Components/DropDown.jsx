@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 
 Dropdown.propTypes = {
-  setData: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   path: PropTypes.string.isRequired,
+  lookUp: PropTypes.func.isRequired,
 };
 
-export default function Dropdown({ setData, data, settings, path }) {
+export default function Dropdown({ lookUp, settings, path }) {
   const [singleSelections, setSingleSelections] = useState([]);
   const [options, setOptions] = useState([]);
 
@@ -20,7 +19,7 @@ export default function Dropdown({ setData, data, settings, path }) {
       .then((data) => {
         setOptions(data);
       });
-  }, [setData, data, settings, path]);
+  }, [path]);
 
   return (
     <>
@@ -31,7 +30,7 @@ export default function Dropdown({ setData, data, settings, path }) {
           labelKey={settings.labelKey}
           onChange={(value) => {
             setSingleSelections(value);
-            setData({ ...data, [settings.id]: value[0]?.id });
+            lookUp({ target: { name: settings?.id, value: value[0]?.id } });
           }}
           options={options}
           placeholder={settings.placeholder}
