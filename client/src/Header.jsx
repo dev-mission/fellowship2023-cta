@@ -71,7 +71,7 @@ function Header() {
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Tickets" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/tickets" onClick={hideNavbar}>
                         Tickets
                       </Link>
                     </li>
