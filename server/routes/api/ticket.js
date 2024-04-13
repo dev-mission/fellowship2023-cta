@@ -9,13 +9,29 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   let tickets = {};
   if (req.user.isAdmin) {
-    tickets = await models.Ticket.findAll({ include: [models.Client, models.User, models.Location] });
+    tickets = await models.Ticket.findAll({
+      include: [
+        { model: models.Client, attributes: ['firstName', 'lastName'] },
+        { model: models.User, attributes: ['firstName', 'lastName'] },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
   } else {
     tickets = await models.Ticket.findAll({
-      include: [models.Client, models.User, models.Location],
+      include: [
+        { model: 'Client', attributes: ['firstName', 'lastName'] },
+        { model: 'User', attributes: ['firstName', 'lastName'] },
+        { model: 'Location', attributes: ['name'] },
+      ],
       where: { UserId: req.user.id },
     });
   }
+  tickets = tickets.map((ticket) => {
+    ticket.dataValues.Client = ticket.Client?.fullName;
+    ticket.dataValues.User = ticket.User?.fullName;
+    ticket.dataValues.Location = ticket.Location.name;
+    return ticket;
+  });
   res.json(tickets);
 });
 
@@ -62,13 +78,13 @@ router.delete('/:id', async (req, res) => {
     const ticket = await models.Ticket.findByPk(req.params.id);
     if (req.user.isAdmin || ticket.UserId === req.user.id) {
       await ticket.destroy();
-      res.status(StatusCodes.OK).end();
+      res.status(StatusCodes.OK).send({ message: 'Ticket deleted' }).end();
     } else {
       res.status(StatusCodes.UNAUTHORIZED).end();
     }
   } catch (err) {
     console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: err.original.detail, error: err.original.name }).end();
   }
 });
 
@@ -94,7 +110,17 @@ router.post('/', async (req, res) => {
       'notes',
     ]);
     const record = await models.Ticket.create(ticketInfo);
-    res.status(StatusCodes.CREATED).json(record);
+    const ticket = await models.Ticket.findByPk(record.id, {
+      include: [
+        { model: models.Client, attributes: ['firstName', 'lastName'] },
+        { model: models.User, attributes: ['firstName', 'lastName'] },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
+    ticket.dataValues.Client = ticket.Client?.fullName;
+    ticket.dataValues.User = ticket.User?.fullName;
+    ticket.dataValues.Location = ticket.Location.name;
+    res.status(StatusCodes.CREATED).json(ticket);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

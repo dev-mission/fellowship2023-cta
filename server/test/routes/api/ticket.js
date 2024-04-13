@@ -15,19 +15,19 @@ describe('/api/ticket', () => {
 
   context('Not Authenticated', () => {
     it('fetching entries', async () => {
-      await testSession.get('/api/ticket').expect(StatusCodes.UNAUTHORIZED);
+      await testSession.get('/api/tickets').expect(StatusCodes.UNAUTHORIZED);
     });
     it('fetching single entry', async () => {
-      await testSession.get('/api/ticket/1').expect(StatusCodes.UNAUTHORIZED);
+      await testSession.get('/api/tickets/1').expect(StatusCodes.UNAUTHORIZED);
     });
     it('updating an entry', async () => {
-      await testSession.patch('/api/ticket/1').expect(StatusCodes.UNAUTHORIZED);
+      await testSession.patch('/api/tickets/1').expect(StatusCodes.UNAUTHORIZED);
     });
     it('deleting an entry', async () => {
-      await testSession.delete('/api/ticket/1').expect(StatusCodes.UNAUTHORIZED);
+      await testSession.delete('/api/tickets/1').expect(StatusCodes.UNAUTHORIZED);
     });
     it('creating an entry', async () => {
-      await testSession.post('/api/ticket').expect(StatusCodes.UNAUTHORIZED);
+      await testSession.post('/api/tickets').expect(StatusCodes.UNAUTHORIZED);
     });
   });
 
@@ -41,14 +41,14 @@ describe('/api/ticket', () => {
     });
 
     it('Delete a ticket', async () => {
-      const response = await testSession.delete('/api/ticket/1').expect(StatusCodes.OK);
+      const response = await testSession.delete('/api/tickets/1').expect(StatusCodes.OK);
       const records = await models.Ticket.findByPk(response.body.id);
       assert.deepStrictEqual(records, null);
     });
 
     it('Update a ticket information', async () => {
       const response = await testSession
-        .patch('/api/ticket/1')
+        .patch('/api/tickets/1')
         .send({
           problem: 'Retested Probolem',
           troubleshooting: 'Retested Troubleshooting',
@@ -61,7 +61,7 @@ describe('/api/ticket', () => {
 
     it('Create a new ticket with existing client', async () => {
       const response = await testSession
-        .post('/api/ticket')
+        .post('/api/tickets')
         .send({
           ClientId: 1,
           LocationId: 1,
@@ -90,7 +90,7 @@ describe('/api/ticket', () => {
 
     it('Create a new ticket with no appointment', async () => {
       const response = await testSession
-        .post('/api/ticket')
+        .post('/api/tickets')
         .send({
           ClientId: 1,
           LocationId: 1,
@@ -117,11 +117,11 @@ describe('/api/ticket', () => {
     });
 
     it('fetch all items from the ticket table', async () => {
-      await testSession.get('/api/ticket').expect(StatusCodes.OK);
+      await testSession.get('/api/tickets').expect(StatusCodes.OK);
     });
 
     it('fetch a single item from the ticket table', async () => {
-      const response = await testSession.get('/api/ticket/1').expect(StatusCodes.OK);
+      const response = await testSession.get('/api/tickets/1').expect(StatusCodes.OK);
       assert.deepStrictEqual(response.body?.problem, 'Broken screen');
     });
   });
