@@ -3,7 +3,6 @@ import { Link, Routes, Route } from 'react-router-dom';
 import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
-import { useAuthContext } from '../AuthContext';
 import TicketTable from './TicketTable';
 import AddTicketModal from './AddTicketModal';
 
@@ -77,22 +76,6 @@ Filters.propTypes = {
 const Tickets = () => {
   const [columnFilters, setColumnFilters] = useState([]);
   const [data, setData] = useState([]);
-  const { user } = useAuthContext();
-  const [ticket, setTicket] = useState({
-    ClientId: null,
-    LocationId: null,
-    UserId: null,
-    serialNumber: '',
-    device: '',
-    problem: '',
-    troubleshooting: '',
-    resolution: '',
-    dateOn: DateTime.now().toISODate(),
-    timeInAt: '',
-    timeOutAt: '',
-    hasCharger: false,
-    notes: '',
-  });
 
   useEffect(() => {
     fetch('/api/tickets')
@@ -103,10 +86,7 @@ const Tickets = () => {
         });
         setData(data);
       });
-    if (user) {
-      setTicket((prevTicket) => ({ ...prevTicket, UserId: user.id }));
-    }
-  }, [setData, user]);
+  }, []);
 
   function updateTable(ticket) {
     setData([...data, ticket]);
@@ -128,12 +108,6 @@ const Tickets = () => {
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
-  const handleChange = (e) => {
-    const newData = { ...ticket };
-    newData[e.target.name] = e.target.value;
-    setTicket(newData);
-  };
 
   return (
     <main className="container">
@@ -157,7 +131,7 @@ const Tickets = () => {
         </button>
       </div>
       <Routes>
-        <Route path="new" element={<AddTicketModal update={updateTable} data={ticket} stateChange={handleChange} />} />
+        <Route path="new" element={<AddTicketModal onCreate={updateTable} />} />
       </Routes>
     </main>
   );
