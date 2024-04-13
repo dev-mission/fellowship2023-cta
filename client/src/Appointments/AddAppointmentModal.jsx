@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 const AddAppointmentModal = ({ toggleAddModal, setToggleAddModal, data, setData }) => {
   const [status, setStatus] = useState('Status');
   const [addData, setAddData] = useState({
-    client: '',
+    ClientId: '',
+    UserId: '',
     dateTimeAt: '',
     user: '',
     phone: '',
@@ -41,7 +42,7 @@ const AddAppointmentModal = ({ toggleAddModal, setToggleAddModal, data, setData 
       console.log(err);
     }
   };
-  
+
   return (
     <Modal show={toggleAddModal} onHide={() => setToggleAddModal(false)}>
       <Modal.Header closeButton>

@@ -28,12 +28,14 @@ const AppointmentsTable = ({ table, data, setData }) => {
       setPropRow(row);
       setEditData({
         id: row.original.id,
-        name: row.original.name,
-        address1: row.original.address1,
-        address2: row.original.address2,
-        city: row.original.city,
-        state: row.original.state,
-        zipCode: row.original.zipCode,
+        ClientId: row.original.ClientId,
+        client: row.original.Client.fullName,
+        user: row.original.User.firstName + ' ' + row.original.User.lastName,
+        UserId: row.original.UserId,
+        LocationId: row.original.LocationId,
+        dateTimeAt: row.original.dateTimeAt,
+        problem: row.original.problem,
+        status: row.original.status,
       });
     } catch (err) {
       console.log(err);
@@ -74,7 +76,7 @@ const AppointmentsTable = ({ table, data, setData }) => {
           </tr>
         ))}
       </tbody>
-      {/* <DeleteModal
+      <DeleteModal
         toggleDeleteModal={toggleDeleteModal}
         setToggleDeleteModal={setToggleDeleteModal}
         row={propRow}
@@ -90,7 +92,7 @@ const AppointmentsTable = ({ table, data, setData }) => {
         setData={setData}
         editData={editData}
         setEditData={setEditData}
-      /> */}
+      />
     </table>
   );
 };

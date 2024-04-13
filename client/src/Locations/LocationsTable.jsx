@@ -14,6 +14,7 @@ const LocationsTable = ({ table, data, setData }) => {
     try {
       setToggleDeleteModal(true);
       setPropRow(row);
+      console.log(row.original.id)
     } catch (err) {
       console.log(err);
       console.log(e);
