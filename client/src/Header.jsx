@@ -66,7 +66,7 @@ function Header() {
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Appointments" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/appointments" onClick={hideNavbar}>
                         Appointments
                       </Link>
                     </li>
@@ -76,17 +76,17 @@ function Header() {
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Clients" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/clients" onClick={hideNavbar}>
                         Clients
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Locations" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/locations" onClick={hideNavbar}>
                         Locations
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Courses" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
                         Courses
                       </Link>
                     </li>
@@ -95,12 +95,12 @@ function Header() {
                 {user.role === 'Inventory' && (
                   <>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Inventory" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/inventory" onClick={hideNavbar}>
                         Inventory
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Donors" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/donors" onClick={hideNavbar}>
                         Donors
                       </Link>
                     </li>
