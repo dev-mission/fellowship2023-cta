@@ -78,13 +78,13 @@ router.delete('/:id', async (req, res) => {
     const ticket = await models.Ticket.findByPk(req.params.id);
     if (req.user.isAdmin || ticket.UserId === req.user.id) {
       await ticket.destroy();
-      res.status(StatusCodes.OK).end();
+      res.status(StatusCodes.OK).send({ message: 'Ticket deleted' }).end();
     } else {
       res.status(StatusCodes.UNAUTHORIZED).end();
     }
   } catch (err) {
     console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: err.original.detail, error: err.original.name }).end();
   }
 });
 

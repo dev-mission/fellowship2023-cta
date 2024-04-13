@@ -19,7 +19,8 @@ const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setDa
         setToggleErrorModal(true);
         setErrorMessage(json.message.split(' ').pop().slice(1, -2));
       } else {
-        setData(data.filter((d) => d.id !== row.original.id));
+        const newData = data.filter((item) => item.id !== row.original.id);
+        setData(newData);
       }
     });
   };
