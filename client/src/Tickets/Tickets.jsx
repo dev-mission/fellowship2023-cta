@@ -49,18 +49,7 @@ const Tickets = () => {
         });
         setData(data);
       });
-    if (user) {
-      setTicket((prevTicket) => ({ ...prevTicket, UserId: user.id }));
-    }
-  }, [setData, user]);
-
-  function updateTable(ticket) {
-    setData([...data, ticket]);
-  }
-
-  function removeData(ticket) {
-    setData(ticket);
-  }
+  }, []);
 
   function onCreate(ticket) {
     setData([...data, ticket]);
@@ -73,7 +62,6 @@ const Tickets = () => {
   function removeData(ticket) {
     setData(ticket);
   }
-
   const table = useReactTable({
     data: data || [],
     columns,
@@ -83,12 +71,6 @@ const Tickets = () => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
-  const handleChange = (e) => {
-    const newData = { ...ticket };
-    newData[e.target.name] = e.target.value;
-    setTicket(newData);
-  };
 
   return (
     <main className="container">
