@@ -127,10 +127,12 @@ function requireAdmin(req, res, next) {
 }
 
 function requireCTA(req, res, next) {
-  if (req.user?.role === 'CTA' || req.user?.isAdmin) {
-    next();
-  } else {
+  if (!req.user) {
     sendErrorUnauthorized(req, res);
+  } else if (req.user.role !== 'CTA' && !req.user.isAdmin) {
+    sendErrorForbidden(req, res);
+  } else {
+    next();
   }
 }
 
