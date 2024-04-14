@@ -176,7 +176,7 @@ export default function (sequelize, DataTypes) {
         type: DataTypes.DATE,
       },
       fullName: {
-        type: DataTypes.VIRTUAL,
+        type: DataTypes.VIRTUAL(DataTypes.TEXT, ['firstName', 'lastName']),
         get() {
           return `${this.firstName} ${this.lastName}`;
         },

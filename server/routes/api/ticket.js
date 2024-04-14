@@ -12,16 +12,16 @@ router.get('/', interceptors.requireCTA, async (req, res) => {
   if (req.user.isAdmin) {
     tickets = await models.Ticket.findAll({
       include: [
-        { model: models.Client, attributes: ['firstName', 'lastName', 'fullName'] },
-        { model: models.User, attributes: ['firstName', 'lastName', 'fullName'] },
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
         { model: models.Location, attributes: ['name'] },
       ],
     });
   } else {
     tickets = await models.Ticket.findAll({
       include: [
-        { model: 'Client', attributes: ['firstName', 'lastName', 'fullName'] },
-        { model: 'User', attributes: ['firstName', 'lastName', 'fullName'] },
+        { model: 'Client', attributes: ['fullName'] },
+        { model: 'User', attributes: ['fullName'] },
         { model: 'Location', attributes: ['name'] },
       ],
       where: { UserId: req.user.id },
