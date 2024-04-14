@@ -42,9 +42,12 @@ router.get('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   try {
-    const tickets = await models.Ticket.findByPk(req.params.id);
-    await tickets.update(
+    const ticket = await models.Ticket.findByPk(req.params.id);
+    await ticket.update(
       _.pick(req.body, [
+        'AppointmentId',
+        'ClientId',
+        'LocationId',
         'device',
         'problem',
         'troubleshooting',
@@ -57,7 +60,14 @@ router.patch('/:id', async (req, res) => {
         'notes',
       ]),
     );
-    res.json(tickets);
+    const updatedTicket = await models.Ticket.findByPk(ticket.id, {
+      include: [
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
+    res.json(updatedTicket);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

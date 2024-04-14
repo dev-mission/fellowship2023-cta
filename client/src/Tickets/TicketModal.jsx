@@ -88,13 +88,14 @@ function Charger({ onChange }) {
 
 const TicketModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
+  const [title, setTitle] = useState('New Ticket');
   const { ticketId } = useParams();
   const [data, setData] = useState({
     ClientId: null,
     LocationId: null,
     UserId: null,
-    serialNumber: '',
-    device: '',
+    serialNumber: ' ',
+    device: ' ',
     problem: '',
     troubleshooting: '',
     resolution: '',
@@ -115,6 +116,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
     }
     if (ticketId) {
       fetchData();
+      setTitle('Edit Ticket');
     }
   }, [ticketId]);
 
@@ -159,7 +161,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
   return (
     <Modal show={true} onHide={() => navigate('/tickets')}>
       <Modal.Header closeButton>
-        <Modal.Title>New Ticket</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -183,13 +185,13 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="serialNumber">
                   <Form.Label>Serial Number</Form.Label>
-                  <Form.Control name="serialNumber" value={data.serialNumber} type="text" autoFocus onChange={onChange} />
+                  <Form.Control name="serialNumber" value={data.serialNumber || ''} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="device">
                   <Form.Label>Device</Form.Label>
-                  <Form.Control name="device" value={data.device} type="text" autoFocus onChange={onChange} />
+                  <Form.Control name="device" value={data.device || ''} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
@@ -213,18 +215,18 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="Date">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={onChange} />
+                  <Form.Control name="dateOn" value={DateTime.fromISO(data.dateOn).toISODate()} type="date" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeInAt">
-                  <Form.Label>Time Started</Form.Label>
+                  <Form.Label>Time Started: {DateTime.fromISO(data.timeInAt).toISOTime()}</Form.Label>
                   <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeOutAt">
-                  <Form.Label>Time Finished</Form.Label>
+                  <Form.Label>Time Finished: {DateTime.fromISO(data.timeOutAt).toISOTime()}</Form.Label>
                   <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
