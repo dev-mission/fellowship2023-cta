@@ -12,15 +12,15 @@ const columns = [
     header: 'Ticket #',
   },
   {
-    accessorKey: 'Client',
+    accessorKey: 'Client.fullName',
     header: 'Client',
   },
   {
-    accessorKey: 'Location',
+    accessorKey: 'Location.name',
     header: 'Location',
   },
   {
-    accessorKey: 'User',
+    accessorKey: 'User.fullName',
     header: 'CTA Assigned',
   },
   {
@@ -53,6 +53,7 @@ const Tickets = () => {
 
   function onCreate(ticket) {
     setData([...data, ticket]);
+    console.log(data);
   }
 
   function onUpdate(ticket) {
@@ -79,6 +80,7 @@ const Tickets = () => {
           New <i className="bi bi-plus-lg" />
         </Link>
         <i className="bi bi-person-fill">Tickets</i>
+        <p>Search Box</p>
       </div>
       <TicketTable table={table} data={data} setData={removeData} />
       <p>

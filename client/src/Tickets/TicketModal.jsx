@@ -145,7 +145,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
       });
     }
     if (response.ok) {
-      const newData = response.json();
+      const newData = await response.json();
       newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toLocaleString();
       if (data.id) {
         onUpdate(newData);

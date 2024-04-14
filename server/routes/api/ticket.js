@@ -7,36 +7,30 @@ import interceptors from '../interceptors.js';
 
 const router = express.Router();
 
-router.get('/', interceptors.requireCTA, async (req, res) => {
-  let tickets = {};
+router.get('/', async (req, res) => {
+  let tickets;
   if (req.user.isAdmin) {
     tickets = await models.Ticket.findAll({
       include: [
-        { model: models.Client, attributes: ['firstName', 'lastName'] },
-        { model: models.User, attributes: ['firstName', 'lastName'] },
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
         { model: models.Location, attributes: ['name'] },
       ],
     });
   } else {
     tickets = await models.Ticket.findAll({
       include: [
-        { model: 'Client', attributes: ['firstName', 'lastName'] },
-        { model: 'User', attributes: ['firstName', 'lastName'] },
+        { model: 'Client', attributes: ['fullName'] },
+        { model: 'User', attributes: ['fullName'] },
         { model: 'Location', attributes: ['name'] },
       ],
       where: { UserId: req.user.id },
     });
   }
-  tickets = tickets.map((ticket) => {
-    ticket.dataValues.Client = ticket.Client?.fullName;
-    ticket.dataValues.User = ticket.User?.fullName;
-    ticket.dataValues.Location = ticket.Location.name;
-    return ticket;
-  });
   res.json(tickets);
 });
 
-router.get('/:id', interceptors.requireCTA, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const tickets = await models.Ticket.findByPk(req.params.id);
     res.json(tickets);
@@ -46,7 +40,7 @@ router.get('/:id', interceptors.requireCTA, async (req, res) => {
   }
 });
 
-router.patch('/:id', interceptors.requireCTA, async (req, res) => {
+router.patch('/:id', async (req, res) => {
   try {
     const tickets = await models.Ticket.findByPk(req.params.id);
     await tickets.update(
@@ -74,7 +68,7 @@ router.patch('/:id', interceptors.requireCTA, async (req, res) => {
   Users can only delete their own tickets.
   Admin can delete any ticket.
 */
-router.delete('/:id', interceptors.requireCTA, async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
     if (req.user.isAdmin || ticket.UserId === req.user.id) {
@@ -113,14 +107,11 @@ router.post('/', interceptors.requireCTA, async (req, res) => {
     const record = await models.Ticket.create(ticketInfo);
     const ticket = await models.Ticket.findByPk(record.id, {
       include: [
-        { model: models.Client, attributes: ['firstName', 'lastName'] },
-        { model: models.User, attributes: ['firstName', 'lastName'] },
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
         { model: models.Location, attributes: ['name'] },
       ],
     });
-    ticket.dataValues.Client = ticket.Client?.fullName;
-    ticket.dataValues.User = ticket.User?.fullName;
-    ticket.dataValues.Location = ticket.Location.name;
     res.status(StatusCodes.CREATED).json(ticket);
   } catch (err) {
     console.log(err);
