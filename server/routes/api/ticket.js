@@ -8,31 +8,25 @@ import interceptors from '../interceptors.js';
 const router = express.Router();
 
 router.get('/', interceptors.requireCTA, async (req, res) => {
-  let tickets = {};
+  let tickets;
   if (req.user.isAdmin) {
     tickets = await models.Ticket.findAll({
       include: [
-        { model: models.Client, attributes: ['firstName', 'lastName'] },
-        { model: models.User, attributes: ['firstName', 'lastName'] },
+        { model: models.Client, attributes: ['firstName', 'lastName', 'fullName'] },
+        { model: models.User, attributes: ['firstName', 'lastName', 'fullName'] },
         { model: models.Location, attributes: ['name'] },
       ],
     });
   } else {
     tickets = await models.Ticket.findAll({
       include: [
-        { model: 'Client', attributes: ['firstName', 'lastName'] },
-        { model: 'User', attributes: ['firstName', 'lastName'] },
+        { model: 'Client', attributes: ['firstName', 'lastName', 'fullName'] },
+        { model: 'User', attributes: ['firstName', 'lastName', 'fullName'] },
         { model: 'Location', attributes: ['name'] },
       ],
       where: { UserId: req.user.id },
     });
   }
-  tickets = tickets.map((ticket) => {
-    ticket.dataValues.Client = ticket.Client?.fullName;
-    ticket.dataValues.User = ticket.User?.fullName;
-    ticket.dataValues.Location = ticket.Location.name;
-    return ticket;
-  });
   res.json(tickets);
 });
 

@@ -12,15 +12,15 @@ const columns = [
     header: 'Ticket #',
   },
   {
-    accessorKey: 'Client',
+    accessorKey: 'Client.fullName',
     header: 'Client',
   },
   {
-    accessorKey: 'Location',
+    accessorKey: 'Location.name',
     header: 'Location',
   },
   {
-    accessorKey: 'User',
+    accessorKey: 'User.fullName',
     header: 'CTA Assigned',
   },
   {
