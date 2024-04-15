@@ -1,73 +1,41 @@
 import { useState, useEffect } from 'react';
-import { getCoreRowModel, getFilteredRowModel, useReactTable } from '@tanstack/react-table';
-import PropTypes from 'prop-types';
-import AddLocationModal from './AddLocationModal';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import LocationsTable from './LocationsTable';
+import LocationsModal from './LocationsModal';
+import DeleteModal from '../Components/DeleteModal';
 
 const columns = [
   {
     accessorKey: 'name',
     header: 'Location Name',
-    enableColumnFilter: true,
   },
   {
     accessorKey: 'address1',
     header: 'Address 1',
-    enableColumnFilter: true,
   },
   {
     accessorKey: 'address2',
     header: 'Address 2',
-    enableColumnFilter: true,
   },
   {
     accessorKey: 'city',
     header: 'City',
-    enableColumnFilter: true,
   },
   {
     accessorKey: 'state',
     header: 'State',
-    enableColumnFilter: true,
   },
   {
     accessorKey: 'zipCode',
     header: 'Zip Code',
-    enableColumnFilter: true,
   },
 ];
 
-const Filters = ({ setColumnFilters }) => {
-  const onFilterChange = (id, value) => setColumnFilters((prev) => prev.filter((f) => f.id !== id).concat({ id, value }));
-
-  return (
-    <form className="d-flex" role="search">
-      <div className="input-group">
-        <span className="input-group-text" id="basic-addon1">
-          <i className="bi bi-search" />
-        </span>
-        <input
-          type="search"
-          className="form-control me-2"
-          placeholder="Search Locations"
-          onChange={(e) => onFilterChange('name', e.target.value)}
-        />
-      </div>
-    </form>
-  );
-};
-
-Filters.propTypes = {
-  setColumnFilters: PropTypes.func,
-};
-
 const Locations = () => {
-  const [data, setData] = useState();
-  const [columnFilters, setColumnFilters] = useState([]);
-  const [toggleAddModal, setToggleAddModal] = useState(false);
+  const [data, setData] = useState([]);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
@@ -88,29 +56,42 @@ const Locations = () => {
     });
   }, [page]);
 
+  const onCreate = (location) => {
+    setData([...data, location]);
+  }
+
+  const onUpdate = (location) => {
+    setData(data.map(l => l.id === location.id ? { ...location } : l));
+  }
+
+  const onDelete = (ticketId) => {
+    setData(data.filter((location) => location.id !== ticketId));
+  }
+
   const table = useReactTable({
     data: data || [],
     columns,
     state: {
-      columnFilters,
       data,
     },
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
   });
 
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
-        <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
+        <Link className="btn btn-primary d-flex align-items-center" to='new'>
           New <i className="bi bi-plus-lg" />
-        </button>
-        <AddLocationModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
+        </Link>
         <i className="bi bi-person-fill title-icon">Locations</i>
-        <Filters setColumnFilters={setColumnFilters} />
       </div>
-      <LocationsTable table={table} data={data} setData={setData} />
+      <LocationsTable table={table} data={data} setData={onDelete} />
       <Pagination page={page} lastPage={lastPage} />
+      <Routes>
+        <Route path='new' element={<LocationsModal onCreate={onCreate}/>} />
+        <Route path=':locationId' element={<LocationsModal onUpdate={onUpdate}/>} />
+        <Route path=':locationId' element={<DeleteModal model='locations' onDelete={onDelete}/>} />
+      </Routes>
     </main>
   );
 };
