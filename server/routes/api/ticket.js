@@ -4,30 +4,45 @@ import _ from 'lodash';
 
 import models from '../../models/index.js';
 import interceptors from '../interceptors.js';
+import helpers from '../helpers.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  let tickets;
+  const page = req.query.page || '1';
+  let records, pages, total;
   if (req.user.isAdmin) {
-    tickets = await models.Ticket.findAll({
+    ({ records, pages, total } = await models.Ticket.paginate({
+      page,
+      order: [
+        ['id', 'DESC'],
+        ['dateOn', 'DESC'],
+        ['timeInAt', 'DESC'],
+      ],
       include: [
         { model: models.Client, attributes: ['fullName'] },
         { model: models.User, attributes: ['fullName'] },
         { model: models.Location, attributes: ['name'] },
       ],
-    });
+    }));
   } else {
-    tickets = await models.Ticket.findAll({
+    ({ records, pages, total } = await models.Ticket.paginate({
+      page,
+      order: [
+        ['id', 'DESC'],
+        ['dateOn', 'DESC'],
+        ['timeInAt', 'DESC'],
+      ],
       include: [
-        { model: 'Client', attributes: ['fullName'] },
-        { model: 'User', attributes: ['fullName'] },
-        { model: 'Location', attributes: ['name'] },
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
+        { model: models.Location, attributes: ['name'] },
       ],
       where: { UserId: req.user.id },
-    });
+    }));
   }
-  res.json(tickets);
+  helpers.setPaginationHeaders(req, res, page, pages, total);
+  res.json(records.map((t) => t.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
