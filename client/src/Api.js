@@ -108,6 +108,17 @@ const Api = {
       return instance.patch(`/api/locations/${id}`, data);
     },
   },
+  devices: {
+    index(page = 1) {
+      return instance.get('/api/devices', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/devices/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/devices/${id}`, data);
+    },
+  },
   appointments: {
     index(page = 1) {
       return instance.get('/api/appointments', { params: { page } });
