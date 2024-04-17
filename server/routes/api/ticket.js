@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import models from '../../models/index.js';
 import interceptors from '../interceptors.js';
+
 import helpers from '../helpers.js';
 
 const router = express.Router();
@@ -45,7 +46,7 @@ router.get('/', async (req, res) => {
   res.json(records.map((t) => t.toJSON()));
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const tickets = await models.Ticket.findByPk(req.params.id);
     res.json(tickets);
@@ -55,7 +56,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
     await ticket.update(
@@ -93,7 +94,7 @@ router.patch('/:id', async (req, res) => {
   Users can only delete their own tickets.
   Admin can delete any ticket.
 */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
     if (req.user.isAdmin || ticket.UserId === req.user.id) {
