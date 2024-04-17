@@ -37,8 +37,8 @@ export function handleRedirects(authContext, location, pathname, callback) {
     for (const pattern of CTA_PATHS) {
       match = matchPath(pattern, pathname);
       if (match) {
-        if (!authContext.role == 'CTA') {
-          return callback('/login', { from: location });
+        if (authContext.user?.role !== 'CTA' || authContext.user?.role === undefined) {
+          return callback('/');
         }
         break;
       }
@@ -48,8 +48,8 @@ export function handleRedirects(authContext, location, pathname, callback) {
     for (const pattern of INVENTORY_PATHS) {
       match = matchPath(pattern, pathname);
       if (match) {
-        if (!authContext.role == 'Inventory') {
-          return callback('/login', { from: location });
+        if (!authContext.user?.role === 'Inventory' || authContext.user?.role === undefined) {
+          return callback('/');
         }
         break;
       }
