@@ -23,7 +23,7 @@ router.get('/', interceptors.requireAdmin, async (req, res) => {
 });
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
-  const invite = models.Invite.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'message']));
+  const invite = models.Invite.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'message', 'role', 'LocationId']));
   invite.CreatedByUserId = req.user.id;
   try {
     await invite.save();
@@ -81,9 +81,9 @@ router.post('/:id/accept', async (req, res, next) => {
             res.status(StatusCodes.FORBIDDEN).end();
             return;
           }
-          user = models.User.build(
-            _.pick(req.body, ['LocationId', 'firstName', 'lastName', 'username', 'email', 'password', 'confirmPassword', 'role']),
-          );
+          user = models.User.build(_.pick(req.body, ['firstName', 'lastName', 'username', 'email', 'password', 'confirmPassword']));
+          user.LocationId = invite.LocationId;
+          user.role = invite.role;
           await user.save({ transaction });
           await invite.update(
             {
