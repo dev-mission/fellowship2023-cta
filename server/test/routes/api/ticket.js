@@ -117,7 +117,11 @@ describe('/api/ticket', () => {
     });
 
     it('fetch all items from the ticket table', async () => {
-      await testSession.get('/api/tickets').expect(StatusCodes.OK);
+      const response = await testSession.get('/api/tickets').expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body[0].id, 2);
+      assert.deepStrictEqual(response.body[0].Client.fullName, 'Apple Bees');
+      assert.deepStrictEqual(response.body[0].User.fullName, 'Inventory User');
+      assert.deepStrictEqual(response.body[0].Location.name, 'Hayes Valley');
     });
 
     it('fetch a single item from the ticket table', async () => {

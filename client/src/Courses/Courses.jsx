@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  getCoreRowModel,
-  getFilteredRowModel,
-  // getSortedRowModel,
-  useReactTable,
-  flexRender,
-} from '@tanstack/react-table';
+import { getCoreRowModel, useReactTable, flexRender } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
 import { DeleteModal } from '../Components';
 import AddCourseModal from './AddCourseModal';
@@ -18,33 +12,8 @@ const columns = [
   {
     accessorKey: 'name',
     header: 'Course Name',
-    enableColumnFilter: true,
   },
 ];
-
-const Filters = ({ setColumnFilters }) => {
-  const onFilterChange = (id, value) => setColumnFilters((prev) => prev.filter((f) => f.id !== id).concat({ id, value }));
-
-  return (
-    <form className="d-flex" role="search">
-      <div className="input-group">
-        <span className="input-group-text" id="basic-addon1">
-          <i className="bi bi-search" />
-        </span>
-        <input
-          type="search"
-          className="form-control me-2"
-          placeholder="Search Courses"
-          onChange={(e) => onFilterChange('name', e.target.value)}
-        />
-      </div>
-    </form>
-  );
-};
-
-Filters.propTypes = {
-  setColumnFilters: PropTypes.func,
-};
 
 const CourseTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -140,7 +109,6 @@ CourseTable.propTypes = {
 
 const Courses = () => {
   const [data, setData] = useState();
-  const [columnFilters, setColumnFilters] = useState([]);
   const [toggleAddModal, setToggleAddModal] = useState(false);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
@@ -166,12 +134,9 @@ const Courses = () => {
     data: data || [],
     columns,
     state: {
-      columnFilters,
       data,
     },
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    // getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -182,7 +147,6 @@ const Courses = () => {
         </button>
         <AddCourseModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
         <i className="bi bi-person-fill">Courses</i>
-        <Filters setColumnFilters={setColumnFilters} />
       </div>
       <CourseTable table={table} data={data} setData={setData} />
       <Pagination page={page} lastPage={lastPage} />

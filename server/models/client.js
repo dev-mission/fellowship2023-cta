@@ -37,7 +37,7 @@ export default function (sequelize, DataTypes) {
       gender: DataTypes.TEXT,
       language: DataTypes.TEXT,
       fullName: {
-        type: DataTypes.VIRTUAL,
+        type: DataTypes.VIRTUAL(DataTypes.TEXT, ['firstName', 'lastName']),
         get() {
           return `${this.firstName} ${this.lastName}`;
         },

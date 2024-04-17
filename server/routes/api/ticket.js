@@ -3,39 +3,50 @@ import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 
 import models from '../../models/index.js';
+import interceptors from '../interceptors.js';
+
+import helpers from '../helpers.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  let tickets = {};
+  const page = req.query.page || '1';
+  let records, pages, total;
   if (req.user.isAdmin) {
-    tickets = await models.Ticket.findAll({
+    ({ records, pages, total } = await models.Ticket.paginate({
+      page,
+      order: [
+        ['id', 'DESC'],
+        ['dateOn', 'DESC'],
+        ['timeInAt', 'DESC'],
+      ],
       include: [
-        { model: models.Client, attributes: ['firstName', 'lastName'] },
-        { model: models.User, attributes: ['firstName', 'lastName'] },
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
         { model: models.Location, attributes: ['name'] },
       ],
-    });
+    }));
   } else {
-    tickets = await models.Ticket.findAll({
+    ({ records, pages, total } = await models.Ticket.paginate({
+      page,
+      order: [
+        ['id', 'DESC'],
+        ['dateOn', 'DESC'],
+        ['timeInAt', 'DESC'],
+      ],
       include: [
-        { model: 'Client', attributes: ['firstName', 'lastName'] },
-        { model: 'User', attributes: ['firstName', 'lastName'] },
-        { model: 'Location', attributes: ['name'] },
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
+        { model: models.Location, attributes: ['name'] },
       ],
       where: { UserId: req.user.id },
-    });
+    }));
   }
-  tickets = tickets.map((ticket) => {
-    ticket.dataValues.Client = ticket.Client?.fullName;
-    ticket.dataValues.User = ticket.User?.fullName;
-    ticket.dataValues.Location = ticket.Location.name;
-    return ticket;
-  });
-  res.json(tickets);
+  helpers.setPaginationHeaders(req, res, page, pages, total);
+  res.json(records.map((t) => t.toJSON()));
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const tickets = await models.Ticket.findByPk(req.params.id);
     res.json(tickets);
@@ -45,11 +56,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', interceptors.requireCTA, async (req, res) => {
   try {
-    const tickets = await models.Ticket.findByPk(req.params.id);
-    await tickets.update(
+    const ticket = await models.Ticket.findByPk(req.params.id);
+    await ticket.update(
       _.pick(req.body, [
+        'AppointmentId',
+        'ClientId',
+        'LocationId',
         'device',
         'problem',
         'troubleshooting',
@@ -62,7 +76,14 @@ router.patch('/:id', async (req, res) => {
         'notes',
       ]),
     );
-    res.json(tickets);
+    const updatedTicket = await models.Ticket.findByPk(ticket.id, {
+      include: [
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
+    res.json(updatedTicket);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
@@ -73,7 +94,7 @@ router.patch('/:id', async (req, res) => {
   Users can only delete their own tickets.
   Admin can delete any ticket.
 */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
     if (req.user.isAdmin || ticket.UserId === req.user.id) {
@@ -88,11 +109,10 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', interceptors.requireCTA, async (req, res) => {
   try {
     const ticketInfo = _.pick(req.body, [
       'AppointmentId',
-      'UserId',
       'LocationId',
       'ClientId',
       'ticketType',
@@ -109,17 +129,15 @@ router.post('/', async (req, res) => {
       'hasCharger',
       'notes',
     ]);
+    ticketInfo.UserId = req.user.id;
     const record = await models.Ticket.create(ticketInfo);
     const ticket = await models.Ticket.findByPk(record.id, {
       include: [
-        { model: models.Client, attributes: ['firstName', 'lastName'] },
-        { model: models.User, attributes: ['firstName', 'lastName'] },
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.User, attributes: ['fullName'] },
         { model: models.Location, attributes: ['name'] },
       ],
     });
-    ticket.dataValues.Client = ticket.Client?.fullName;
-    ticket.dataValues.User = ticket.User?.fullName;
-    ticket.dataValues.Location = ticket.Location.name;
     res.status(StatusCodes.CREATED).json(ticket);
   } catch (err) {
     console.log(err);
