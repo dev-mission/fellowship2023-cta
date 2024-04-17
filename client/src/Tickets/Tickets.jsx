@@ -60,10 +60,6 @@ const Tickets = () => {
     setData(data.map((t) => (t.id == ticket.id ? { ...ticket } : t)));
   }
 
-  function onUpdate(ticket) {
-    setData(data.map((t) => (t.id == ticket.id ? { ...ticket } : t)));
-  }
-
   function removeData(ticket) {
     setData(ticket);
   }
