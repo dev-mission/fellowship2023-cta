@@ -1,46 +1,65 @@
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useParams, useNavigate, Route, Routes } from 'react-router-dom';
 
-const DeleteModal = ({ toggleDeleteModal, setToggleDeleteModal, row, data, setData }) => {
-  const onDelete = async () => {
-    setToggleDeleteModal(false);
-    try {
-      await fetch(`/api/locations/${row.original.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      setData(data.filter((d) => d.id !== row.original.id));
-    } catch (e) {
-      console.log(e);
+const DeleteModal = ({ model, onDelete }) => {
+  const navigate = useNavigate();
+  const { locationId } = useParams();
+  const [toggleErrorModal, setToggleErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const deleteTicket = async () => {
+    const response = await fetch(`/api/${model}/${locationId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await response.json();
+    if (json.error === 'error') {
+      setErrorMessage(json.message.split(' ').pop().slice(1, -2));
+      setToggleErrorModal(true);
+    } else {
+      onDelete(locationId);
+      navigate('/locations');
     }
   };
 
   return (
-    <Modal show={toggleDeleteModal} onHide={() => setToggleDeleteModal(false)}>
-      <Modal.Header closeButton>
-        <Modal.Title>Delete Location</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Are you sure you want to delete this location?</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => setToggleDeleteModal(false)}>
-          No
-        </Button>
-        <Button variant="danger" onClick={onDelete}>
-          Yes
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <>
+      <Modal show={true} onHide={() => navigate('/locations')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete {model.slice(0, -1)}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this {model.slice(0, -1)}?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => navigate('/locations')}>
+            No
+          </Button>
+          <Button variant="danger" onClick={deleteTicket}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={toggleErrorModal} onHide={() => setToggleErrorModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Error</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{'Must remove from table in ' + errorMessage + ' page first.'}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setToggleErrorModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 
 DeleteModal.propTypes = {
-  toggleDeleteModal: PropTypes.bool,
-  setToggleDeleteModal: PropTypes.func,
-  row: PropTypes.object,
-  data: PropTypes.array,
-  setData: PropTypes.func,
+  model: PropTypes.string,
+  onDelete: PropTypes.func,
 };
 
 export default DeleteModal;

@@ -10,7 +10,11 @@ describe('/api/donors', () => {
   let testSession;
 
   beforeEach(async () => {
+<<<<<<< HEAD
     await helper.loadFixtures(['locations','users','donors']);
+=======
+    await helper.loadFixtures(['locations', 'users', 'donors']);
+>>>>>>> 60a3b323766f866b333611797fddb1bbb59f8d4f
     testSession = session(app);
   });
 
@@ -22,35 +26,42 @@ describe('/api/donors', () => {
         .send({ email: 'Inventory1.user@test.com', password: 'abcd1234' })
         .expect(StatusCodes.OK);
     });
+<<<<<<< HEAD
 
   it('creates a new Donor', async () => {
     const response = await testSession.post('/api/donors').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
+=======
+>>>>>>> 60a3b323766f866b333611797fddb1bbb59f8d4f
 
-    const record = await models.Donor.findByPk(response.body.id);
-    assert.deepStrictEqual(record.name, 'Created Name');
-  });
+    it('creates a new Donor', async () => {
+      const response = await testSession.post('/api/donors').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
 
-  it('fetch all donors from the Courses table', async () => {
-    const response = await testSession.get('/api/donors').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.length, 3);
-  });
+      const record = await models.Donor.findByPk(response.body.id);
+      assert.deepStrictEqual(record.name, 'Created Name');
+    });
 
-  it('fetch one Donor record from the Donor table', async () => {
-    const response = await testSession.get('/api/donors/1').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.name, 'john doe');
-  });
+    it('fetch all donors from the Courses table', async () => {
+      const response = await testSession.get('/api/donors').expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body?.length, 3);
+    });
 
-  it('updates an existing Donor', async () => {
-    await testSession.patch('/api/donors/2').send({ name: 'jane doe 2' }).expect(StatusCodes.OK);
-    assert.deepStrictEqual((await models.Donor.findByPk(2)).name, 'jane doe 2');
-  });
+    it('fetch one Donor record from the Donor table', async () => {
+      const response = await testSession.get('/api/donors/1').expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body?.name, 'john doe');
+    });
 
-  it('deletes an existing Donor', async () => {
-    await testSession.delete('/api/donors/3').expect(StatusCodes.OK);
-    const response = await testSession.get('/api/donors');
-    const record = await models.Donor.findByPk(3);
-    assert.deepStrictEqual(record, null);
-    assert.deepStrictEqual(response.body?.length, 2);
+    it('updates an existing Donor', async () => {
+      await testSession.patch('/api/donors/2').send({ name: 'jane doe 2' }).expect(StatusCodes.OK);
+      assert.deepStrictEqual((await models.Donor.findByPk(2)).name, 'jane doe 2');
+    });
+
+    it('deletes an existing Donor', async () => {
+      await testSession.delete('/api/donors/3').expect(StatusCodes.OK);
+      const response = await testSession.get('/api/donors');
+      const record = await models.Donor.findByPk(3);
+      assert.deepStrictEqual(record, null);
+      assert.deepStrictEqual(response.body?.length, 2);
+    });
   });
   });
 });

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 
-const EditLocationModal = ({ toggleEditModal, setToggleEditModal, data, setData, editData, setEditData }) => {
+const EditDonorModal = ({ toggleEditModal, setToggleEditModal, data, setData, editData, setEditData }) => {
   const onChange = (e) => {
     const newData = { ...editData };
     newData[e.target.name] = e.target.value;
@@ -13,7 +13,7 @@ const EditLocationModal = ({ toggleEditModal, setToggleEditModal, data, setData,
     setToggleEditModal(false);
     e.preventDefault();
     try {
-      await fetch(`/api/locations/${editData.id}`, {
+      await fetch(`/api/Donors/${editData.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const EditLocationModal = ({ toggleEditModal, setToggleEditModal, data, setData,
         body: JSON.stringify(editData),
       });
 
-      setData(data.map((location) => (location.id == editData.id ? { ...editData } : location)));
+      setData(data.map((donor) => (donor.id == editData.id ? { ...editData } : donor)));
     } catch (err) {
       console.log(err);
     }
@@ -30,32 +30,45 @@ const EditLocationModal = ({ toggleEditModal, setToggleEditModal, data, setData,
   return (
     <Modal show={toggleEditModal} onHide={() => setToggleEditModal(false)}>
       <Modal.Header closeButton>
-        <Modal.Title>New Location</Modal.Title>
+        <Modal.Title>Edit Donor</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
           <Form>
             <Row>
-              <Col xs={18} md={12}>
+              <Col xs={18} md={8}>
                 <Form.Group controlId="name">
-                  <Form.Label>Location Name</Form.Label>
+                  <Form.Label>Donor Name</Form.Label>
                   <Form.Control name="name" autoFocus value={editData.name} onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={18} md={4}>
+                <Form.Group controlId="phone">
+                  <Form.Label>Donor Phone</Form.Label>
+                  <Form.Control name="phone" autoFocus value={editData.phone} onChange={onChange} />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={18} md={12}>
+                <Form.Group controlId="email">
+                  <Form.Label>Donor Email</Form.Label>
+                  <Form.Control name="email" autoFocus value={editData.email} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
             <Row>
-              <Col xs={18} md={12}>
+              <Col xs={18} md={8}>
                 <Form.Group controlId="address1">
                   <Form.Label>Address 1</Form.Label>
                   <Form.Control name="address1" autoFocus value={editData.address1} onChange={onChange} />
                 </Form.Group>
               </Col>
-            </Row>
-            <Row>
-              <Col xs={18} md={12}>
+              <Col xs={18} md={4}>
                 <Form.Group controlId="address2">
                   <Form.Label>Address 2</Form.Label>
-                  <Form.Control name="address2" autoFocus value={editData.address2} onChange={onChange} />
+                  <Form.Control name="address2" autoFocus value={editData.address2} placeholder="Ex: Apt 1" onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -73,9 +86,9 @@ const EditLocationModal = ({ toggleEditModal, setToggleEditModal, data, setData,
                 </Form.Group>
               </Col>
               <Col xs={4.5} md={3}>
-                <Form.Group controlId="zipCode">
+                <Form.Group controlId="zip">
                   <Form.Label>Zip Code</Form.Label>
-                  <Form.Control name="zipCode" autoFocus value={editData.zipCode} onChange={onChange} />
+                  <Form.Control name="zip" autoFocus value={editData.zip} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -94,7 +107,7 @@ const EditLocationModal = ({ toggleEditModal, setToggleEditModal, data, setData,
   );
 };
 
-EditLocationModal.propTypes = {
+EditDonorModal.propTypes = {
   toggleEditModal: PropTypes.bool,
   setToggleEditModal: PropTypes.func,
   data: PropTypes.array,
@@ -103,4 +116,4 @@ EditLocationModal.propTypes = {
   setEditData: PropTypes.func,
 };
 
-export default EditLocationModal;
+export default EditDonorModal;

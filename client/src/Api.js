@@ -108,9 +108,37 @@ const Api = {
       return instance.patch(`/api/locations/${id}`, data);
     },
   },
+<<<<<<< HEAD
   appointments: {
     index(page = 1) {
       return instance.get('/api/appointments', { params: {page } });
+=======
+  donors: {
+    index(page = 1) {
+      return instance.get('/api/donors', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/donors/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/donors/${id}`, data);
+    },
+  },
+  courses: {
+    index(page = 1) {
+      return instance.get('/api/courses', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/courses/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/courses/${id}`, data);
+    },
+  },
+  appointments: {
+    index(page = 1) {
+      return instance.get('/api/appointments', { params: { page } });
+>>>>>>> 60a3b323766f866b333611797fddb1bbb59f8d4f
     },
     get(id) {
       return instance.get(`/api/appointments/${id}`);

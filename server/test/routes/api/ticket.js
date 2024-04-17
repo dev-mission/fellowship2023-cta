@@ -11,103 +11,118 @@ describe('/api/ticket', () => {
   beforeEach(async () => {
     await helper.loadFixtures(['locations', 'users', 'donors', 'clients', 'devices', 'appointments', 'tickets']);
     testSession = session(app);
-    await testSession
-      .post('/api/auth/login')
-      .set('Accept', 'application/json')
-      .send({ email: 'admin.user@test.com', password: 'abcd1234' })
-      .expect(StatusCodes.OK);
   });
 
-  it('Delete a ticket', async () => {
-    const response = await testSession.delete('/api/ticket/1').expect(StatusCodes.OK);
-    const records = await models.Ticket.findByPk(response.body.id);
-    assert.deepStrictEqual(records, null);
+  context('Not Authenticated', () => {
+    it('fetching entries', async () => {
+      await testSession.get('/api/ticket').expect(StatusCodes.UNAUTHORIZED);
+    });
+    it('fetching single entry', async () => {
+      await testSession.get('/api/ticket/1').expect(StatusCodes.UNAUTHORIZED);
+    });
+    it('updating an entry', async () => {
+      await testSession.patch('/api/ticket/1').expect(StatusCodes.UNAUTHORIZED);
+    });
+    it('deleting an entry', async () => {
+      await testSession.delete('/api/ticket/1').expect(StatusCodes.UNAUTHORIZED);
+    });
+    it('creating an entry', async () => {
+      await testSession.post('/api/ticket').expect(StatusCodes.UNAUTHORIZED);
+    });
   });
 
-  it('Update a ticket information', async () => {
-    const response = await testSession
-      .patch('/api/ticket/1')
-      .send({
-        problem: 'Retested Probolem',
-        troubleshooting: 'Retested Troubleshooting',
-      })
-      .expect(StatusCodes.OK);
-    const records = await models.Ticket.findByPk(response.body.id);
-    assert.deepStrictEqual(records.problem, 'Retested Probolem');
-    assert.deepStrictEqual(records.troubleshooting, 'Retested Troubleshooting');
-  });
+  context('admin authenticated', () => {
+    beforeEach(async () => {
+      await testSession
+        .post('/api/auth/login')
+        .set('Accept', 'application/json')
+        .send({ email: 'admin.user@test.com', password: 'abcd1234' })
+        .expect(StatusCodes.OK);
+    });
 
-  it('Create a new ticket with existing client', async () => {
-    const response = await testSession
-      .post('/api/ticket')
-      .send({
-        AppointmentId: 3,
-        ClientId: 1,
-        LocationId: 1,
-        UserId: 1,
-        serialNumber: '1234567890',
-        device: 'TestDevice',
-        problem: 'TESTING TICKETS 3',
-        troubleshooting: 'TESTING TICKETS 3',
-        resolution: 'TESTING TICKETS 3',
-        dateOn: '2024-03-04',
-        timeInAt: '2024-03-04',
-        timeOutAt: '2024-03-04',
-        totalTime: 8,
-        hasCharger: true,
-        notes: 'TESTING TICKETS',
-      })
-      .expect(StatusCodes.CREATED);
-    const records = await models.Ticket.findByPk(response.body.id);
-    assert.deepStrictEqual(records.troubleshooting, 'TESTING TICKETS 3');
-    assert.deepStrictEqual(records.problem, 'TESTING TICKETS 3');
-    assert.deepStrictEqual(records.ClientId, 1);
-    assert.deepStrictEqual(records.AppointmentId, 3);
-    assert.deepStrictEqual(records.LocationId, 1);
-  });
+    it('Delete a ticket', async () => {
+      const response = await testSession.delete('/api/ticket/1').expect(StatusCodes.OK);
+      const records = await models.Ticket.findByPk(response.body.id);
+      assert.deepStrictEqual(records, null);
+    });
 
-  it('Create a new ticket without existing client', async () => {
-    const response = await testSession
-      .post('/api/ticket')
-      .send({
-        firstName: 'Link',
-        lastName: 'Zelda',
-        email: 'newEmail@email.com',
-        phone: '415-999-9999',
-        address: 'new wales',
-        ethnicity: 'N/A',
-        language: 'English',
-        gender: 'Male',
-        age: '21',
-        AppointmentId: 3,
-        LocationId: 1,
-        UserId: 1,
-        serialNumber: '1234567890',
-        device: 'TestDevice',
-        problem: 'TESTING TICKETS 3',
-        troubleshooting: 'TESTING TICKETS 3',
-        resolution: 'TESTING TICKETS 3',
-        dateOn: '2024-03-04',
-        timeInAt: '2024-03-04',
-        timeOutAt: '2024-03-04',
-        totalTime: 8,
-        hasCharger: true,
-        notes: 'TESTING TICKETS',
-      })
-      .expect(StatusCodes.CREATED);
-    const records = await models.Ticket.findByPk(response.body.id);
-    const client = await models.Client.findByPk(response.body.ClientId);
-    assert.deepStrictEqual(client.firstName, 'Link');
-    assert.deepStrictEqual(client.lastName, 'Zelda');
-    assert.deepStrictEqual(client.id === records.ClientId, true);
-  });
+    it('Update a ticket information', async () => {
+      const response = await testSession
+        .patch('/api/ticket/1')
+        .send({
+          problem: 'Retested Probolem',
+          troubleshooting: 'Retested Troubleshooting',
+        })
+        .expect(StatusCodes.OK);
+      const records = await models.Ticket.findByPk(response.body.id);
+      assert.deepStrictEqual(records.problem, 'Retested Probolem');
+      assert.deepStrictEqual(records.troubleshooting, 'Retested Troubleshooting');
+    });
 
-  it('fetch all items from the ticket table', async () => {
-    await testSession.get('/api/ticket').expect(StatusCodes.OK);
-  });
+    it('Create a new ticket with existing client', async () => {
+      const response = await testSession
+        .post('/api/ticket')
+        .send({
+          ClientId: 1,
+          LocationId: 1,
+          UserId: 1,
+          AppointmentId: 3,
+          serialNumber: '1234567890',
+          device: 'TestDevice',
+          problem: 'TESTING TICKETS 3',
+          troubleshooting: 'TESTING TICKETS 3',
+          resolution: 'TESTING TICKETS 3',
+          dateOn: '2024-03-04',
+          timeInAt: '2024-03-04',
+          timeOutAt: '2024-03-04',
+          totalTime: 8,
+          hasCharger: true,
+          notes: 'TESTING TICKETS',
+        })
+        .expect(StatusCodes.CREATED);
+      const records = await models.Ticket.findByPk(response.body.id);
+      assert.deepStrictEqual(records.troubleshooting, 'TESTING TICKETS 3');
+      assert.deepStrictEqual(records.problem, 'TESTING TICKETS 3');
+      assert.deepStrictEqual(records.AppointmentId, 3);
+      assert.deepStrictEqual(records.ClientId, 1);
+      assert.deepStrictEqual(records.LocationId, 1);
+    });
 
-  it('fetch a single item from the ticket table', async () => {
-    const response = await testSession.get('/api/ticket/1').expect(StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.problem, 'Broken screen');
+    it('Create a new ticket with no appointment', async () => {
+      const response = await testSession
+        .post('/api/ticket')
+        .send({
+          ClientId: 1,
+          LocationId: 1,
+          UserId: 1,
+          serialNumber: '1234567890',
+          device: 'TestDevice',
+          problem: 'TESTING TICKETS 4',
+          troubleshooting: 'TESTING TICKETS 4',
+          resolution: 'TESTING TICKETS 4',
+          dateOn: '2024-03-05',
+          timeInAt: '2024-03-05',
+          timeOutAt: '2024-03-05',
+          totalTime: 3,
+          hasCharger: true,
+          notes: 'TESTING TICKETS',
+        })
+        .expect(StatusCodes.CREATED);
+      const records = await models.Ticket.findByPk(response.body.id);
+      assert.deepStrictEqual(records.troubleshooting, 'TESTING TICKETS 4');
+      assert.deepStrictEqual(records.problem, 'TESTING TICKETS 4');
+      assert.deepStrictEqual(records.ClientId, 1);
+      assert.deepStrictEqual(records.LocationId, 1);
+      assert.deepStrictEqual(records.AppointmentId, null);
+    });
+
+    it('fetch all items from the ticket table', async () => {
+      await testSession.get('/api/ticket').expect(StatusCodes.OK);
+    });
+
+    it('fetch a single item from the ticket table', async () => {
+      const response = await testSession.get('/api/ticket/1').expect(StatusCodes.OK);
+      assert.deepStrictEqual(response.body?.problem, 'Broken screen');
+    });
   });
 });

@@ -44,5 +44,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "react-bootstrap-typeahead": "^6.3.2"
   }
 }

@@ -10,7 +10,7 @@ export default function (sequelize, DataTypes) {
     static associate(models) {
       // define association here
       Client.hasMany(models.Ticket);
-      Client.hasMany(models.Device);
+      Client.hasOne(models.Device);
       Client.hasMany(models.Appointment);
       Client.hasMany(models.CourseClient);
       Client.belongsToMany(models.Course, { through: models.CourseClient });
@@ -36,6 +36,12 @@ export default function (sequelize, DataTypes) {
       address: DataTypes.TEXT,
       gender: DataTypes.TEXT,
       language: DataTypes.TEXT,
+      fullName: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+      },
     },
     {
       sequelize,
