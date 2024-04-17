@@ -2,6 +2,8 @@ import { matchPath } from 'react-router-dom';
 
 export const ADMIN_AUTH_PROTECTED_PATHS = ['/admin/*'];
 export const AUTH_PROTECTED_PATHS = ['/account/*'];
+export const CTA_PATHS = ['/tickets', '/appointments', '/clients', '/courses', 'location'];
+export const INVENTORY_PATHS = ['/devices', '/locations', '/donors'];
 export const REDIRECTS = [
   ['/admin', '/admin/users'],
   ['/passwords', '/passwords/forgot'],
@@ -31,6 +33,29 @@ export function handleRedirects(authContext, location, pathname, callback) {
       }
     }
   }
+  if (!match) {
+    for (const pattern of CTA_PATHS) {
+      match = matchPath(pattern, pathname);
+      if (match) {
+        if (!authContext.role == 'CTA') {
+          return callback('/login', { from: location });
+        }
+        break;
+      }
+    }
+  }
+  if (!match) {
+    for (const pattern of INVENTORY_PATHS) {
+      match = matchPath(pattern, pathname);
+      if (match) {
+        if (!authContext.role == 'Inventory') {
+          return callback('/login', { from: location });
+        }
+        break;
+      }
+    }
+  }
+
   for (const redirect of REDIRECTS) {
     let [src, dest] = redirect;
     match = matchPath(src, pathname);
