@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
 import { getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import { DateTime } from 'luxon';
+import DeleteModal from '../Components/DeleteModal';
 
 import TicketTable from './TicketTable';
 import TicketModal from './TicketModal';
@@ -53,16 +54,15 @@ const Tickets = () => {
 
   function onCreate(ticket) {
     setData([...data, ticket]);
-    console.log(data);
   }
 
   function onUpdate(ticket) {
     setData(data.map((t) => (t.id == ticket.id ? { ...ticket } : t)));
   }
 
-  function removeData(ticket) {
-    setData(ticket);
-  }
+  const onDelete = (ticketId) => {
+    setData(data.filter((t) => t.id != ticketId));
+  };
   const table = useReactTable({
     data: data || [],
     columns,
@@ -82,7 +82,7 @@ const Tickets = () => {
         <i className="bi bi-person-fill">Tickets</i>
         <p>Search Box</p>
       </div>
-      <TicketTable table={table} data={data} setData={removeData} />
+      <TicketTable table={table}/>
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
@@ -96,7 +96,8 @@ const Tickets = () => {
       </div>
       <Routes>
         <Route path="new" element={<TicketModal onCreate={onCreate} />} />
-        <Route path=":ticketId" element={<TicketModal onUpdate={onUpdate} />} />
+        <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} />} />
+        <Route path="delete/:ticketId" element={<DeleteModal model="tickets" onDelete={onDelete}></DeleteModal>} />
       </Routes>
     </main>
   );
