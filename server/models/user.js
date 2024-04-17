@@ -27,7 +27,11 @@ export default function (sequelize, DataTypes) {
     }
 
     toJSON() {
-      return _.pick(this.get(), ['id', 'firstName', 'lastName', 'email', 'picture', 'pictureUrl', 'isAdmin', 'role', 'LocationId']);
+      const data = _.pick(this.get(), ['id', 'firstName', 'lastName', 'email', 'picture', 'pictureUrl', 'isAdmin', 'role', 'LocationId']);
+      if (this.Location) {
+        data.Location = this.Location.toJSON();
+      }
+      return data;
     }
 
     hashPassword(password, options) {

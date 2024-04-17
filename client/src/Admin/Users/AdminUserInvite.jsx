@@ -5,6 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import classNames from 'classnames';
 
 import Api from '../../Api';
+import Dropdown from '../../Components/DropDown';
 import UnexpectedError from '../../UnexpectedError';
 import ValidationError from '../../ValidationError';
 import { useStaticContext } from '../../StaticContext';
@@ -16,6 +17,8 @@ function AdminUserInvite() {
     firstName: '',
     lastName: '',
     email: '',
+    role: 'CTA',
+    LocationId: '',
     message: '',
   });
   const [isLoading, setLoading] = useState(false);
@@ -100,6 +103,28 @@ function AdminUserInvite() {
                         value={invite.email ?? ''}
                       />
                       {error?.errorMessagesHTMLFor?.('email')}
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="role">
+                        Role
+                      </label>
+                      <select
+                        className={classNames('form-select', { 'is-invalid': error?.errorsFor?.('role') })}
+                        id="role"
+                        name="role"
+                        onChange={onChange}
+                        value={invite.role ?? ''}>
+                        <option value="CTA">CTA</option>
+                        <option value="Inventory">Inventory</option>
+                      </select>
+                      {error?.errorMessagesHTMLFor?.('role')}
+                    </div>
+                    <div className="mb-3">
+                      <Dropdown
+                        lookUp={onChange}
+                        settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
+                        path="/api/locations"
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="form-label" htmlFor="message">

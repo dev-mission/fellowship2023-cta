@@ -4,13 +4,8 @@ import mailer from '../emails/mailer.js';
 
 export default function (sequelize, DataTypes) {
   class Invite extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Invite.belongsTo(models.Location);
       Invite.belongsTo(models.User, { as: 'AcceptedByUser' });
       Invite.belongsTo(models.User, { as: 'RevokedByUser' });
       Invite.belongsTo(models.User, { as: 'CreatedByUser' });
@@ -24,6 +19,8 @@ export default function (sequelize, DataTypes) {
         'lastName',
         'email',
         'message',
+        'role',
+        'LocationId',
         'createdAt',
         'CreatedByUserId',
         'acceptedAt',
@@ -32,6 +29,9 @@ export default function (sequelize, DataTypes) {
         'RevokedByUserId',
         'updatedAt',
       ]);
+      if (this.Location) {
+        json.Location = this.Location.toJSON();
+      }
       return json;
     }
 
@@ -92,6 +92,10 @@ export default function (sequelize, DataTypes) {
         },
       },
       message: DataTypes.TEXT,
+      role: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
       acceptedAt: DataTypes.DATE,
       revokedAt: DataTypes.DATE,
     },
