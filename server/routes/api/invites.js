@@ -10,6 +10,7 @@ const router = express.Router();
 
 router.get('/', interceptors.requireAdmin, async (req, res) => {
   const options = {
+    include: [{ model: models.Location, attributes: ['name'] }],
     page: req.query.page || '1',
     order: [['createdAt', 'DESC']],
     where: {

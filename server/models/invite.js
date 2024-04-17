@@ -29,6 +29,9 @@ export default function (sequelize, DataTypes) {
         'RevokedByUserId',
         'updatedAt',
       ]);
+      if (this.Location) {
+        json.Location = this.Location.toJSON();
+      }
       return json;
     }
 
