@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { Button, Col, Container, Form, Modal, Row, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const AddAppointmentModal = ({ toggleAddModal, setToggleAddModal, data, setData }) => {
-  const [status, setStatus] = useState('Status');
   const [addData, setAddData] = useState({
     ClientId: '',
-    UserId: '',
     dateTimeAt: '',
-    user: '',
+    UserId: '',
     phone: '',
     email: '',
-    location: '',
-    device: '',
+    LocationId: '',
+    DeviceId: '',
     problem: '',
     status: '',
   });
@@ -25,7 +23,6 @@ const AddAppointmentModal = ({ toggleAddModal, setToggleAddModal, data, setData 
 
   const onSubmit = async (e) => {
     setToggleAddModal(false);
-    setStatus('Status');
     e.preventDefault();
     try {
       await fetch('/api/appointment', {
@@ -44,64 +41,81 @@ const AddAppointmentModal = ({ toggleAddModal, setToggleAddModal, data, setData 
   };
 
   return (
-    <Modal show={toggleAddModal} onHide={() => setToggleAddModal(false)}>
-      <Modal.Header closeButton>
-        <Modal.Title>New Appointment</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Container>
-          <Form>
-            <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="client">
-                  <Form.Label>Client</Form.Label>
-                  <Form.Control name="client" autoFocus value={addData.client} onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="dateTimeAt">
-                  <Form.Label>Date Time</Form.Label>
-                  <Form.Control name="dateTimeAt" autoFocus value={addData.dateTimeAt} onChange={onChange} />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={18} md={12}>
-                <Form.Group controlId="user">
-                  <Form.Label>User</Form.Label>
-                  <Form.Control name="user" autoFocus value={addData.user} onChange={onChange} />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={18} md={12}>
-                <Form.Group controlId="problem">
-                  <Form.Label>Problem</Form.Label>
-                  <Form.Control as="textarea" name="problem" autoFocus value={addData.problem} onChange={onChange} rows={3} />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <DropdownButton id="status" title={status} onSelect={(e) => setStatus(e)}>
-                <Dropdown.Item eventKey="Attended">Attended</Dropdown.Item>
-                <Dropdown.Item eventKey="No Show">No Show</Dropdown.Item>
-                <Dropdown.Item eventKey="Cancelled">Cancelled</Dropdown.Item>
-                <Dropdown.Item eventKey="Scheduled">Scheduled</Dropdown.Item>
-                <Dropdown.Item eventKey="Rescheduled">Rescheduled</Dropdown.Item>
-              </DropdownButton>
-            </Row>
-          </Form>
-        </Container>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => setToggleAddModal(false)}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={onSubmit} type="submit">
-          Submit
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    // <Modal show={toggleAddModal} onHide={() => setToggleAddModal(false)}>
+    //   <Modal.Header closeButton>
+    //     <Modal.Title>New Location</Modal.Title>
+    //   </Modal.Header>
+    //   <Modal.Body>
+    //     <Container>
+    //       <Form>
+    //         <Row>
+    //           <Col xs={18} md={12}>
+    //             <Form.Group controlId="name">
+    //               <Form.Label>Location Name</Form.Label>
+    //               <Form.Control name="name" autoFocus value={addData.name} onChange={onChange} />
+    //             </Form.Group>
+    //           </Col>
+    //         </Row>
+    //         <Row>
+    //           <Col xs={18} md={12}>
+    //             <Form.Group controlId="address1">
+    //               <Form.Label>Address 1</Form.Label>
+    //               <Form.Control name="address1" autoFocus value={addData.address1} onChange={onChange} />
+    //             </Form.Group>
+    //           </Col>
+    //         </Row>
+    //         <Row>
+    //             </Form.Group>
+    //           </Col>
+    //         </Row>
+    //           <DropdownButton id="status" title={status} onSelect={(e) => setStatus(e)}>
+    //             <Dropdown.Item eventKey="Attended">Attended</Dropdown.Item>
+    //             <Dropdown.Item eventKey="No Show">No Show</Dropdown.Item>
+    //             <Dropdown.Item eventKey="Cancelled">Cancelled</Dropdown.Item>
+    //             <Dropdown.Item eventKey="Scheduled">Scheduled</Dropdown.Item>
+    //             <Dropdown.Item eventKey="Rescheduled">Rescheduled</Dropdown.Item>
+    //           </DropdownButton>
+    //             <Form.Group controlId="address2">
+    //               <Form.Label>Address 2</Form.Label>
+    //               <Form.Control name="address2" autoFocus value={addData.address2} onChange={onChange} />
+    //             </Form.Group>
+    //           </Col>
+    //         </Row>
+    //         <Row>
+    //           <Col xs={9} md={6}>
+    //             <Form.Group controlId="city">
+    //               <Form.Label>City</Form.Label>
+    //               <Form.Control name="city" autoFocus value={addData.city} onChange={onChange} />
+    //             </Form.Group>
+    //           </Col>
+    //           <Col xs={4.5} md={3}>
+    //             <Form.Group controlId="state">
+    //               <Form.Label>State</Form.Label>
+    //               <Form.Control name="state" autoFocus value={addData.state} onChange={onChange} />
+    //             </Form.Group>
+    //           </Col>
+    //           <Col xs={4.5} md={3}>
+    //             <Form.Group controlId="zipCode">
+    //               <Form.Label>Zip Code</Form.Label>
+    //               <Form.Control name="zipCode" autoFocus value={addData.zipCode} onChange={onChange} />
+    //             </Form.Group>
+    //           </Col>
+    //         </Row>
+    //       </Form>
+    //     </Container>
+    //   </Modal.Body>
+    //   <Modal.Footer>
+    //     <Button variant="secondary" onClick={() => setToggleAddModal(false)}>
+    //       Close
+    //     </Button>
+    //     <Button variant="primary" onClick={onSubmit} type="submit">
+    //       Submit
+    //     </Button>
+    //   </Modal.Footer>
+    // </Modal>
+    <div>
+      
+    </div>
   );
 };
 

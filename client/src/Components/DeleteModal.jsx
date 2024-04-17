@@ -15,6 +15,15 @@ const DeleteModal = ({ model, onDelete }) => {
       headers: {
         'Content-Type': 'application/json',
       },
+    }).then(async (response) => {
+      const json = await response.json();
+      if (json.error === 'error') {
+        setToggleErrorModal(true);
+        setErrorMessage(json.message.split(' ').pop().slice(1, -2));
+      } else {
+        const newData = data.filter((item) => item.id !== row.original.id);
+        setData(newData);
+      }
     });
     const json = await response.json();
     if (json.error === 'error') {

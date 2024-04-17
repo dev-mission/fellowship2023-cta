@@ -20,7 +20,7 @@ router.use('/auth', authRoutes);
 router.use('/invites', invitesRoutes);
 router.use('/passwords', passwordsRoutes);
 router.use('/users', usersRoutes);
-router.use('/ticket', interceptors.requireCTA, ticketRoutes);
+router.use('/tickets', interceptors.requireCTA, ticketRoutes);
 //Need to handle interceptor for inventory role
 router.use('/devices', devicesRoutes);
 //Need to handle interceptor for inventory role

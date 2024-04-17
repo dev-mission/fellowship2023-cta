@@ -7,6 +7,8 @@
       "lastName": "User 1",
       "email": "invited.user.1@test.com",
       "message": "This is an invitation to Invited User 1.",
+      "role": "Inventory",
+      "LocationId": 1,
       "createdAt": "2022-01-29T22:58:56+0000",
       "CreatedByUserId": 1
     }
@@ -19,6 +21,8 @@
       "lastName": "User 2",
       "email": "invited.user.2@test.com",
       "message": "This is an invitation to Invited User 2.",
+      "role": "CTA",
+      "LocationId": 1,
       "createdAt": "2022-01-29T22:59:56+0000",
       "CreatedByUserId": 2
     }

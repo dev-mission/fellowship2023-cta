@@ -82,8 +82,10 @@ function AdminUsersList() {
                     <th className="w-20">First name</th>
                     <th className="w-20">Last name</th>
                     <th className="w-20">Email</th>
-                    <th className="w-20">Invited on</th>
-                    <th className="w-20">Actions</th>
+                    <th className="w-10">Role</th>
+                    <th className="w-15">Location</th>
+                    <th className="w-10">Invited on</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -94,6 +96,8 @@ function AdminUsersList() {
                       <td>
                         <a href={`mailto:${invite.email}`}>{invite.email}</a>
                       </td>
+                      <td>{invite.role}</td>
+                      <td>{invite.Location?.name}</td>
                       <td>{DateTime.fromISO(invite.updatedAt).toLocaleString()}</td>
                       <td>
                         <button className="btn btn-link p-0" onClick={() => resend(invite)}>
@@ -119,8 +123,10 @@ function AdminUsersList() {
                 <th className="w-20">First name</th>
                 <th className="w-20">Last name</th>
                 <th className="w-20">Email</th>
-                <th className="w-5">Admin?</th>
-                <th className="w-15">Actions</th>
+                <th className="w-10">Role</th>
+                <th className="w-15">Location</th>
+                <th className="w-10">Admin?</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -131,6 +137,8 @@ function AdminUsersList() {
                   <td>
                     <a href={`mailto:${user.email}`}>{user.email}</a>
                   </td>
+                  <td>{user.role}</td>
+                  <td>{user.Location?.name}</td>
                   <td>{user.isAdmin && 'Admin'}</td>
                   <td>
                     <Link to={`${user.id}`}>Edit&nbsp;Profile</Link>

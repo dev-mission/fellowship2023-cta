@@ -5,37 +5,35 @@ import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
 TimeRange.propTypes = {
-  setData: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
+  change: PropTypes.func,
+  name: PropTypes.string,
+  date: PropTypes.string,
 };
 
-function convertISOTime(time) {
+function convertISOTime(time, date) {
   if (time === null) {
     return '';
   }
-  let dt = DateTime.now();
+  let dt = DateTime.now().setZone('America/Los_Angeles');
   const [hour, minute] = time.split(':');
   dt = dt.set({ hour: parseInt(hour), minute: parseInt(minute) });
-  return dt.toISOTime();
+  let newDate = date + ' ' + dt.toISOTime();
+  return newDate;
 }
 
-export default function TimeRange({ name, data, setData }) {
+export default function TimeRange({ date, change, name }) {
   const [time, setTime] = useState(['']);
 
   return (
     <div>
       <TimePicker
         name={name}
-        minTime={'10:00'}
-        maxTime={'17:00'}
         disableClock={true}
+        value={time}
         onChange={(value) => {
           setTime(value);
-          setData({ ...data, [name]: convertISOTime(value) });
-          console.log(data);
+          change({ target: { name: name, value: convertISOTime(value, date) } });
         }}
-        value={time}
       />
     </div>
   );

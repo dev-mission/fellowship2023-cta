@@ -71,6 +71,8 @@ const Appointments = () => {
     });
   }, [page]);
 
+  console.log(data);
+
   const table = useReactTable({
     data: data || [],
     columns,
