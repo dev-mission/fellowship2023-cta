@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
-import { useState } from 'react';
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+
 import Dropdown from '../Components/DropDown';
 import TimeRange from '../Components/TimeRange';
 
@@ -52,19 +54,19 @@ function ClientDropMenu({ lookUp }) {
 }
 
 Charger.propTypes = {
-  stateChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
-function Charger({ stateChange }) {
+function Charger({ onChange }) {
   const [message, setMessage] = useState('No');
   const handleChange = (e) => {
     e.preventDefault();
     if (e.target.value === 'true') {
       setMessage('Yes');
-      stateChange({ target: { name: 'hasCharger', value: true } });
+      onChange({ target: { name: 'hasCharger', value: true } });
     } else {
       setMessage('No');
-      stateChange({ target: { name: 'hasCharger', value: false } });
+      onChange({ target: { name: 'hasCharger', value: false } });
     }
   };
 
@@ -84,26 +86,78 @@ function Charger({ stateChange }) {
   );
 }
 
-const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleUserModal }) => {
+const TicketModal = ({ onCreate, onUpdate }) => {
+  const navigate = useNavigate();
+  const { ticketId } = useParams();
+  const [data, setData] = useState({
+    ClientId: null,
+    LocationId: null,
+    UserId: null,
+    serialNumber: '',
+    device: '',
+    problem: '',
+    troubleshooting: '',
+    resolution: '',
+    dateOn: DateTime.now().toISODate(),
+    timeInAt: '',
+    timeOutAt: '',
+    hasCharger: false,
+    notes: '',
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`/api/tickets/${ticketId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setData(data);
+      }
+    }
+    if (ticketId) {
+      fetchData();
+    }
+  }, [ticketId]);
+
+  const onChange = (e) => {
+    const newData = { ...data };
+    newData[e.target.name] = e.target.value;
+    setData(newData);
+  };
+
   const submitTicket = async (e) => {
     e.preventDefault();
-    const result = await fetch('/api/tickets', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    result.json().then((ticket) => {
-      ticket['createdAt'] = DateTime.fromISO(ticket['createdAt']).toLocaleString();
-      update(ticket);
-    });
-
-    setToggleUserModal(false);
+    let response;
+    if (data.id) {
+      response = await fetch(`/api/tickets/${data.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    } else {
+      response = await fetch('/api/tickets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    }
+    if (response.ok) {
+      const newData = response.json();
+      newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toLocaleString();
+      if (data.id) {
+        onUpdate(newData);
+      } else {
+        onCreate(newData);
+      }
+      navigate('/tickets');
+    }
   };
 
   return (
-    <Modal show={toggleUserModal} onHide={() => setToggleUserModal(false)}>
+    <Modal show={true} onHide={() => navigate('/tickets')}>
       <Modal.Header closeButton>
         <Modal.Title>New Ticket</Modal.Title>
       </Modal.Header>
@@ -114,14 +168,14 @@ const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleU
               <Col xs={9} md={6}>
                 <Form.Group controlId="clientName">
                   <Form.Label>Client Look Up</Form.Label>
-                  <ClientDropMenu lookUp={stateChange} />
+                  <ClientDropMenu lookUp={onChange} />
                 </Form.Group>
               </Col>
             </Row>
             <Row className="d-flex align-items-end">
               <Col xs={12} md={8}>
                 <Dropdown
-                  lookUp={stateChange}
+                  lookUp={onChange}
                   settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
                   path="/api/locations"
                 />
@@ -129,58 +183,58 @@ const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleU
               <Col xs={12} md={8}>
                 <Form.Group controlId="serialNumber">
                   <Form.Label>Serial Number</Form.Label>
-                  <Form.Control name="serialNumber" value={data.serialNumber} type="text" autoFocus onChange={stateChange} />
+                  <Form.Control name="serialNumber" value={data.serialNumber} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="device">
                   <Form.Label>Device</Form.Label>
-                  <Form.Control name="device" value={data.device} type="text" autoFocus onChange={stateChange} />
+                  <Form.Control name="device" value={data.device} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="problem">
                   <Form.Label>Problem</Form.Label>
-                  <Form.Control name="problem" value={data.problem} type="text" autoFocus onChange={stateChange} />
+                  <Form.Control name="problem" value={data.problem} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="troubleshooting">
                   <Form.Label>Troubleshooting</Form.Label>
-                  <Form.Control name="troubleshooting" value={data.troubleshooting} type="text" autoFocus onChange={stateChange} />
+                  <Form.Control name="troubleshooting" value={data.troubleshooting} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="resolution">
                   <Form.Label>Resolution</Form.Label>
-                  <Form.Control name="resolution" value={data.resolution} type="text" autoFocus onChange={stateChange} />
+                  <Form.Control name="resolution" value={data.resolution} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="Date">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={stateChange} />
+                  <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeInAt">
                   <Form.Label>Time Started</Form.Label>
-                  <TimeRange name="timeInAt" date={data.dateOn} change={stateChange}></TimeRange>
+                  <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeOutAt">
                   <Form.Label>Time Finished</Form.Label>
-                  <TimeRange name="timeOutAt" date={data.dateOn} change={stateChange}></TimeRange>
+                  <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
-                <Charger stateChange={stateChange}></Charger>
+                <Charger onChange={onChange}></Charger>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="notes">
                   <Form.Label>Notes</Form.Label>
-                  <Form.Control name="notes" value={data.notes} type="text" autoFocus onChange={stateChange} />
+                  <Form.Control name="notes" value={data.notes} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
@@ -188,8 +242,8 @@ const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleU
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setToggleUserModal(false)}>
-          Close
+        <Button variant="secondary" onClick={() => navigate('/tickets')}>
+          Cancel
         </Button>
         <Button variant="primary" onClick={submitTicket}>
           Submit
@@ -199,12 +253,9 @@ const AddTicketModel = ({ update, data, stateChange, toggleUserModal, setToggleU
   );
 };
 
-AddTicketModel.propTypes = {
-  toggleUserModal: PropTypes.bool.isRequired,
-  setToggleUserModal: PropTypes.func.isRequired,
-  stateChange: PropTypes.func.isRequired,
-  data: PropTypes.object.isRequired,
-  update: PropTypes.func.isRequired,
+TicketModal.propTypes = {
+  onCreate: PropTypes.func,
+  onUpdate: PropTypes.func,
 };
 
-export default AddTicketModel;
+export default TicketModal;
