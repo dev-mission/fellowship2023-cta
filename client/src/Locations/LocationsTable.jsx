@@ -29,10 +29,10 @@ const LocationsTable = ({ table }) => {
               <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
             ))}
             <td>
-              <i className="bi bi-pencil pointer" onClick={() => navigate(`${row.original.id}`)} />
+              <i className="bi bi-pencil pointer" onClick={() => navigate(`edit/${row.original.id}`)} />
             </td>
             <td>
-              <i className="bi bi-x-lg pointer" onClick={() => navigate(`${row.original.id}`)} />
+              <i className="bi bi-x-lg pointer" onClick={() => navigate(`delete/${row.original.id}`)} />
             </td>
           </tr>
         ))}

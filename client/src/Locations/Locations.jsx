@@ -35,11 +35,13 @@ const columns = [
 ];
 
 const Locations = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
+
+  console.log(data);
 
   useEffect(() => {
     Api.locations.index(page).then((response) => {
@@ -64,8 +66,12 @@ const Locations = () => {
     setData(data.map(l => l.id === location.id ? { ...location } : l));
   }
 
-  const onDelete = (ticketId) => {
-    setData(data.filter((location) => location.id !== ticketId));
+  const onDelete = (locationId) => {
+    setData(data.filter(l => l.id !== locationId));
+  }
+
+  const onChange = () => {
+
   }
 
   const table = useReactTable({
@@ -84,13 +90,26 @@ const Locations = () => {
           New <i className="bi bi-plus-lg" />
         </Link>
         <i className="bi bi-person-fill title-icon">Locations</i>
+        <form className="d-flex" role="search">
+          <div className="input-group">
+            <span className="input-group-text" id="basic-addon1">
+              <i className="bi bi-search" />
+            </span>
+            <input
+              type="search"
+              className="form-control me-2"
+              placeholder="Search Users"
+              onChange={onChange}
+            />
+          </div>
+        </form>
       </div>
-      <LocationsTable table={table} data={data} setData={onDelete} />
+      <LocationsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path='new' element={<LocationsModal onCreate={onCreate}/>} />
-        <Route path=':locationId' element={<LocationsModal onUpdate={onUpdate}/>} />
-        <Route path=':locationId' element={<DeleteModal model='locations' onDelete={onDelete}/>} />
+        <Route path='edit/:locationId/*' element={<LocationsModal onUpdate={onUpdate}/>} />
+        <Route path='delete/:locationId/*' element={<DeleteModal model='locations' onDelete={onDelete}/>} />
       </Routes>
     </main>
   );
