@@ -8,8 +8,18 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   //Need to handle interceptor for inventory role
-  const records = await models.Device.findAll();
-  res.json(records);
+  const page = req.query.page || '1';
+  const {records, pages, total} = await models.Device.paginate({
+    page,
+    include : [
+      {
+        model: models.Location,
+        attributes: ['name'],
+
+      }],
+    });
+    helpers.setPaginationHeaders(req, res, page, pages, total);
+    res.json(records.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
