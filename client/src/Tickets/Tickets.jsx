@@ -82,7 +82,7 @@ const Tickets = () => {
         <i className="bi bi-person-fill">Tickets</i>
         <p>Search Box</p>
       </div>
-      <TicketTable table={table}/>
+      <TicketTable table={table} />
       <p>
         Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </p>
@@ -97,7 +97,7 @@ const Tickets = () => {
       <Routes>
         <Route path="new" element={<TicketModal onCreate={onCreate} />} />
         <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} />} />
-        <Route path="delete/:ticketId" element={<DeleteModal model="tickets" onDelete={onDelete}></DeleteModal>} />
+        <Route path="delete/:id" element={<DeleteModal model="tickets" onDelete={onDelete}></DeleteModal>} />
       </Routes>
     </main>
   );
