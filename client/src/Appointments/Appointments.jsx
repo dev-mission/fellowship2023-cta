@@ -56,6 +56,7 @@ const Appointments = () => {
   const [lastPage, setLastPage] = useState(1);
   const [radioValue, setRadioValue] = useState('Upcoming');
 
+  console.log(data);
   useEffect(() => {
     Api.appointments.index(page).then((response) => {
       setData(response.data);

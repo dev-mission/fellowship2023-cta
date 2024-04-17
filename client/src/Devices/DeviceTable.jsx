@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { DeleteModal } from '../Components';
-import EditDeviceModal from './EditDeviceModal';
+import { useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import { flexRender } from '@tanstack/react-table';
 
 const DeviceTable = ({ table, data, setData }) => {
+  const navigate = useNavigate();
+
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
-  const [toggleEditModal, setToggleEditModal] = useState(false);
-  const [editData, setEditData] = useState({});
   const [propRow, setPropRow] = useState({});
 
   const onDelete = (row) => (e) => {
@@ -51,8 +52,7 @@ const DeviceTable = ({ table, data, setData }) => {
           {table.getHeaderGroups()[0].headers.map((header) => (
             <th scope="col" key={header.id}>
               {header.column.columnDef.header}
-              {/* {header.column.getCanSort() && <i className="ms-2 bi bi-arrow-down-up" onClick={header.column.getToggleSortingHandler()} />} */}
-            </th>
+              </th>
           ))}
           <th scope="col">
             <i className="bi bi-pencil-square" />
@@ -69,7 +69,7 @@ const DeviceTable = ({ table, data, setData }) => {
               <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
             ))}
             <td>
-              <i className="bi bi-pencil pointer" onClick={onEdit(row)} />
+              <i className="bi bi-pencil pointer" onClick={() => navigate(`${row.original.id}`)} />
             </td>
             <td>
               <i className="bi bi-x-lg pointer" onClick={onDelete(row)} />

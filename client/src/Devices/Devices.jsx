@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getCoreRowModel, getFilteredRowModel, useReactTable } from '@tanstack/react-table';
-import PropTypes from 'prop-types';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useLocation , Link} from 'react-router-dom';
+import { useLocation , Link, Routes, Route} from 'react-router-dom';
 import DeviceTable from './DeviceTable';
+import DeviceModal from './DeviceModal';
 
 const columns = [
   
@@ -47,7 +47,7 @@ const columns = [
   },
 
   {
-    accessoryKey: 'Location.name',
+    accessorKey: 'Location.name',
     header: 'Location',
   },
 ];
@@ -62,7 +62,7 @@ const Devices = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-
+  console.log(data);
 
   useEffect(() => {
     Api.devices.index(page).then((response) => {
@@ -89,6 +89,8 @@ const Devices = () => {
     setData(data.map((d) => (d.id == device.id ? { ...device } : d)));
   }
 
+  
+
   const table = useReactTable({
     data: data || [],
     columns,
@@ -97,6 +99,8 @@ const Devices = () => {
     },
     getCoreRowModel: getCoreRowModel(),
   });
+
+  console.log(table.getRowModel().rows);
 
   const onChange = (e) => { };
 
@@ -123,6 +127,10 @@ const Devices = () => {
       </div>
       <DeviceTable table={table} data={data} setData={setData} />
       <Pagination page={page} lastPage={lastPage} />
+      <Routes>
+        <Route path="new" element={<DeviceModal onCreate={onCreate} />} />
+        <Route path=":deviceId" element={<DeviceModal onUpdate={onUpdate} />} />
+      </Routes>
     </main>
   );
 };
