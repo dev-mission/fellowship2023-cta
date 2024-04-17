@@ -11,6 +11,7 @@ const router = express.Router();
 router.get('/', interceptors.requireAdmin, async (req, res) => {
   const page = req.query.page || '1';
   const { records, pages, total } = await models.User.paginate({
+    include: [{ model: models.Location, attributes: ['name'] }],
     page,
     order: [
       ['lastName', 'ASC'],
