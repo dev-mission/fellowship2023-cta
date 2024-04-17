@@ -75,19 +75,19 @@ const AddAppointmentModal = ({ toggleAddModal, setToggleAddModal, data, setData 
             </Row>
             <Row>
               <Col xs={18} md={12}>
-                <Form.Group controlId='problem'>
+                <Form.Group controlId="problem">
                   <Form.Label>Problem</Form.Label>
-                  <Form.Control as='textarea' name='problem' autoFocus value={addData.problem} onChange={onChange} rows={3}/>
+                  <Form.Control as="textarea" name="problem" autoFocus value={addData.problem} onChange={onChange} rows={3} />
                 </Form.Group>
               </Col>
             </Row>
-            <Row className='mt-3'>
-              <DropdownButton id='status' title={status} onSelect={(e) => setStatus(e)}>
-                <Dropdown.Item eventKey='Attended'>Attended</Dropdown.Item>
-                <Dropdown.Item eventKey='No Show'>No Show</Dropdown.Item>
-                <Dropdown.Item eventKey='Cancelled'>Cancelled</Dropdown.Item>
-                <Dropdown.Item eventKey='Scheduled'>Scheduled</Dropdown.Item>
-                <Dropdown.Item eventKey='Rescheduled'>Rescheduled</Dropdown.Item>
+            <Row className="mt-3">
+              <DropdownButton id="status" title={status} onSelect={(e) => setStatus(e)}>
+                <Dropdown.Item eventKey="Attended">Attended</Dropdown.Item>
+                <Dropdown.Item eventKey="No Show">No Show</Dropdown.Item>
+                <Dropdown.Item eventKey="Cancelled">Cancelled</Dropdown.Item>
+                <Dropdown.Item eventKey="Scheduled">Scheduled</Dropdown.Item>
+                <Dropdown.Item eventKey="Rescheduled">Rescheduled</Dropdown.Item>
               </DropdownButton>
             </Row>
           </Form>

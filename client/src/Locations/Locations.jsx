@@ -41,8 +41,6 @@ const Locations = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  console.log(data);
-
   useEffect(() => {
     Api.locations.index(page).then((response) => {
       setData(response.data);
@@ -60,19 +58,17 @@ const Locations = () => {
 
   const onCreate = (location) => {
     setData([...data, location]);
-  }
+  };
 
   const onUpdate = (location) => {
-    setData(data.map(l => l.id === location.id ? { ...location } : l));
-  }
+    setData(data.map((l) => (l.id === location.id ? { ...location } : l)));
+  };
 
   const onDelete = (locationId) => {
-    setData(data.filter(l => l.id !== locationId));
-  }
+    setData(data.filter((l) => l.id != locationId));
+  };
 
-  const onChange = () => {
-
-  }
+  const onChange = () => {};
 
   const table = useReactTable({
     data: data || [],
@@ -86,7 +82,7 @@ const Locations = () => {
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
-        <Link className="btn btn-primary d-flex align-items-center" to='new'>
+        <Link className="btn btn-primary d-flex align-items-center" to="new">
           New <i className="bi bi-plus-lg" />
         </Link>
         <i className="bi bi-person-fill title-icon">Locations</i>
@@ -95,21 +91,16 @@ const Locations = () => {
             <span className="input-group-text" id="basic-addon1">
               <i className="bi bi-search" />
             </span>
-            <input
-              type="search"
-              className="form-control me-2"
-              placeholder="Search Users"
-              onChange={onChange}
-            />
+            <input type="search" className="form-control me-2" placeholder="Search Users" onChange={onChange} />
           </div>
         </form>
       </div>
       <LocationsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path='new' element={<LocationsModal onCreate={onCreate}/>} />
-        <Route path='edit/:locationId/*' element={<LocationsModal onUpdate={onUpdate}/>} />
-        <Route path='delete/:locationId/*' element={<DeleteModal model='locations' onDelete={onDelete}/>} />
+        <Route path="new" element={<LocationsModal onCreate={onCreate} />} />
+        <Route path="edit/:locationId" element={<LocationsModal onUpdate={onUpdate} />} />
+        <Route path="delete/:locationId" element={<DeleteModal model="locations" onDelete={onDelete} />} />
       </Routes>
     </main>
   );

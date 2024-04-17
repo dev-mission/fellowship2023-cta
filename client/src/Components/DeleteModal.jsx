@@ -15,7 +15,7 @@ const DeleteModal = ({ model, onDelete }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
     const json = await response.json();
     if (json.error === 'error') {
       setErrorMessage(json.message.split(' ').pop().slice(1, -2));
@@ -34,7 +34,7 @@ const DeleteModal = ({ model, onDelete }) => {
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this {model.slice(0, -1)}?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => navigate('/locations') }>
+          <Button variant="secondary" onClick={() => navigate('/locations')}>
             No
           </Button>
           <Button variant="danger" onClick={deleteTicket}>

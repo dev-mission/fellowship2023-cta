@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const LocationsModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
   const { locationId } = useParams();
-  const [data, setData ] = useState({
+  const [data, setData] = useState({
     name: '',
     address1: '',
     address2: '',
@@ -22,12 +22,11 @@ const LocationsModal = ({ onCreate, onUpdate }) => {
         const data = await response.json();
         setData(data);
       }
-    }
+    };
 
     if (locationId) {
       fetchData();
     }
-
   }, [locationId]);
 
   const onChange = (e) => {
@@ -134,7 +133,7 @@ const LocationsModal = ({ onCreate, onUpdate }) => {
         </Button>
       </Modal.Footer>
     </Modal>
-  )
+  );
 };
 
 LocationsModal.propTypes = {
