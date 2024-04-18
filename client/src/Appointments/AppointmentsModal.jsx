@@ -49,7 +49,6 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const submitAppointment = async (e) => {
     e.preventDefault();
     let response;
-
     if (data.id) {
       response = await fetch(`/api/appointments/${data.id}`, {
         method: 'PATCH',
@@ -74,6 +73,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
       if (data.id) {
         onUpdate(newData);
       } else {
+        console.log(newData);
         onCreate(newData);
       }
     }
@@ -115,7 +115,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
               <Col xs={6} md={4}>
                 <Form.Group controlId="endTime">
                   <Form.Label>End: {DateTime.fromISO(data.timeOutAt).toISOTime()}</Form.Label>
-                  <TimeRange name="endTime" date={data.dateOn} change={onChange}></TimeRange>
+                  <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
             </Row>
@@ -146,7 +146,13 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
               </Col>
             </Row>
             <Row className="mt-3">
-              <DropdownButton id="status" title={status} onSelect={(e) => setStatus(e)}>
+              <DropdownButton
+                id="status"
+                title={status}
+                onSelect={(e) => {
+                  setStatus(e);
+                  onChange({ target: { name: 'status', value: e } });
+                }}>
                 <Dropdown.Item eventKey="Attended">Attended</Dropdown.Item>
                 <Dropdown.Item eventKey="No Show">No Show</Dropdown.Item>
                 <Dropdown.Item eventKey="Cancelled">Cancelled</Dropdown.Item>

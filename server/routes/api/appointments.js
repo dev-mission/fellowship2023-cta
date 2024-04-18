@@ -52,41 +52,50 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-/*
-      'AppointmentId',
-      'LocationId',
-      'ClientId',
-      'ticketType',
-      'serialNumber',
-      'AppointmentId',
-      'device',
-      'problem',
-      'troubleshooting',
-      'resolution',
-      'dateOn',
-      'timeInAt',
-      'timeOutAt',
-      'totalTime',
-      'hasCharger',
-      'notes',
-
-
-*/
+router.delete('/:id', async (req, res) => {
+  try {
+    const record = await models.Appointment.findByPk(req.params.id);
+    const ticket = await models.Ticket.findOne({ where: { AppointmentId: record.id } });
+    await ticket.destroy();
+    await record.destroy();
+    res.status(StatusCodes.OK).send({ message: 'Appointment deleted' });
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
 
 router.post('/', async (req, res) => {
   try {
     const appointment = await models.Appointment.create(
-      _.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'dateOn', 'startTime', 'endTime', 'problem', 'status']),
+      _.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'dateOn', 'timeInAt', 'timeOutAt', 'problem', 'status']),
     );
-    const ticket = await models.Ticket.create(_.pick(req.body, ['UserId', 'LocationId', 'ClientId', 'dateOn', 'problem']));
+    const ticket = await models.Ticket.create(
+      _.pick(req.body, ['UserId', 'LocationId', 'ClientId', 'dateOn', 'problem', 'timeInAt', 'timeOutAt']),
+    );
     ticket.set({
       AppointmentId: appointment.id,
       ticketType: 'Appointment',
-      timeInAt: appointment.startTime,
-      timeOutAt: appointment.endTime,
     });
     ticket.save();
-    res.status(StatusCodes.CREATED).json(appointment);
+    const currentAppointment = await models.Appointment.findByPk(appointment.id, {
+      include: [
+        {
+          model: models.Client,
+          attributes: ['fullName', 'phone', 'email'],
+          include: {
+            model: models.Device,
+            attributes: ['model'],
+          },
+        },
+        {
+          model: models.User,
+          attributes: ['fullName'],
+        },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
+    res.status(StatusCodes.CREATED).json(currentAppointment);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

@@ -5,12 +5,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const DeleteModal = ({ model, onDelete }) => {
   const navigate = useNavigate();
-  const { locationId } = useParams();
+  const { id } = useParams();
   const [toggleErrorModal, setToggleErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const deleteTicket = async () => {
-    const response = await fetch(`/api/${model}/${locationId}`, {
+    const response = await fetch(`/api/${model}/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const DeleteModal = ({ model, onDelete }) => {
       setErrorMessage(json.message.split(' ').pop().slice(1, -2));
       setToggleErrorModal(true);
     } else {
-      onDelete(locationId);
+      onDelete(id);
       navigate(`/${model}`);
     }
   };
