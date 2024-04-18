@@ -22,7 +22,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
     email: '',
     LocationId: '',
     problem: '',
-    status: '',
+    status: status,
   });
 
   useEffect(() => {
@@ -89,16 +89,30 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
         <Container>
           <Form>
             <Row>
-              <Col xs={9} md={6}>
+              <Col xs={18} md={12}>
                 <Form.Group controlId="clientName">
                   <Form.Label>Client Look Up</Form.Label>
                   <DropMenu lookUp={onChange} settings={{ route: 'clients', id: 'ClientId', labelKey: 'fullName', placeholder: 'Choose a client...'}} />
                 </Form.Group>
               </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="dateTimeAt">
-                  <Form.Label>Date Time</Form.Label>
-                  <Form.Control name="dateTimeAt" autoFocus value={data.} onChange={onChange} />
+            </Row>
+            <Row>
+              <Col xs={6} md={4}>
+                <Form.Group controlId="Date">
+                  <Form.Label>Date</Form.Label>
+                  <Form.Control name="dateOn" value={DateTime.fromISO(data.dateOn).toISODate()} type="date" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={4}>
+                <Form.Group controlId="startTime">
+                  <Form.Label>Start: {DateTime.fromISO(data.timeInAt).toISOTime()}</Form.Label>
+                  <TimeRange name="startTime" date={data.dateOn} change={onChange}></TimeRange>
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={4}>
+                <Form.Group controlId="endTime">
+                  <Form.Label>End: {DateTime.fromISO(data.timeOutAt).toISOTime()}</Form.Label>
+                  <TimeRange name="endTime" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
             </Row>

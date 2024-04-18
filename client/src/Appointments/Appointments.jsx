@@ -17,11 +17,12 @@ const columns = [
   {
     accessorKey: 'dateOn',
     header: 'Date',
+    cell: ({ row }) => <p>{DateTime.fromISO(row.original.dateOn).toISODate()}</p>,
   },
   {
-    accessorKey: 'Time',
+    accessorKey: 'Appointment',
     header: 'Time',
-    cell: ({ row }) => <p>{DateTime.fromISO(row.original.Time.startOn).toLocaleString() + ' '}</p>,
+    cell: ({ row }) => <p>{DateTime.fromISO(row.original.startTime).toISOTime().slice(0, 5) + '-' + DateTime.fromISO(row.original.endTime).toISOTime().slice(0, 5)}</p>,
   },
   {
     accessorKey: 'User.fullName',
@@ -115,7 +116,7 @@ const Appointments = () => {
           </div>
         </form>
       </div>
-      <ButtonGroup>
+      {/* <ButtonGroup>
         <ToggleButton
           className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
           id="radio-upcoming"
@@ -140,7 +141,7 @@ const Appointments = () => {
           size="md">
           Archive
         </ToggleButton>
-      </ButtonGroup>
+      </ButtonGroup> */}
       <AppointmentsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
