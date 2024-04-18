@@ -6,6 +6,7 @@ import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import AppointmentsTable from './AppointmentsTable';
 import AppointmentsModal from './AppointmentsModal';
 import DeleteModal from '../Components/DeleteModal';
+import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const columns = [
   {
@@ -52,6 +53,7 @@ const Appointments = () => {
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
+  const [radioValue, setRadioValue] = useState('Upcoming');
 
   useEffect(() => {
     Api.appointments.index(page).then((response) => {
@@ -97,7 +99,7 @@ const Appointments = () => {
         <Link className="btn btn-primary d-flex align-items-center" to="new">
           New <i className="bi bi-plus-lg" />
         </Link>
-        <i className="bi bi-clock title-icon">Locations</i>
+        <i className="bi bi-clock title-icon">Appointments</i>
         <form className="d-flex" role="search">
           <div className="input-group">
             <span className="input-group-text" id="basic-addon1">
@@ -107,6 +109,32 @@ const Appointments = () => {
           </div>
         </form>
       </div>
+      <ButtonGroup>
+        <ToggleButton
+          className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
+          id="radio-upcoming"
+          type="radio"
+          variant={radioValue === 'Upcoming' ? 'outline-primary' : ''}
+          name="radio"
+          value="Upcoming"
+          checked={radioValue === 'Upcoming'}
+          onChange={(e) => setRadioValue(e.currentTarget.value)}
+          size="md">
+          Upcoming
+        </ToggleButton>
+        <ToggleButton
+          className={`border-primary ${radioValue === 'Archive' ? 'text-white' : 'text-primary'}`}
+          id="radio-archive"
+          type="radio"
+          variant={radioValue === 'Archive' ? 'outline-primary' : ''}
+          name="radio"
+          value="Archive"
+          checked={radioValue === 'Archive'}
+          onChange={(e) => setRadioValue(e.currentTarget.value)}
+          size="md">
+          Archive
+        </ToggleButton>
+      </ButtonGroup>
       <AppointmentsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
