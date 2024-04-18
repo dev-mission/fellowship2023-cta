@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, Routes, Route } from 'react-router-dom';
-import { getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { DateTime } from 'luxon';
 
 import TicketTable from './TicketTable';

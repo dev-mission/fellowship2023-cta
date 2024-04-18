@@ -37,10 +37,10 @@ module.exports = {
       dateOn: {
         type: Sequelize.DATE,
       },
-      startTime: {
+      timeInAt: {
         type: Sequelize.DATE,
       },
-      endTime: {
+      timeOutAt: {
         type: Sequelize.DATE,
       },
       problem: {

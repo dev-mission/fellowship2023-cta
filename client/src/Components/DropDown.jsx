@@ -9,7 +9,7 @@ DropDown.propTypes = {
   lookUp: PropTypes.func.isRequired,
 };
 
-export default function DropDown({lookUp, settings, path }) {
+export default function DropDown({ lookUp, settings, path }) {
   const [singleSelections, setSingleSelections] = useState([]);
   const [options, setOptions] = useState([]);
 
