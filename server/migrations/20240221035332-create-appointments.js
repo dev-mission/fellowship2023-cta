@@ -34,7 +34,13 @@ module.exports = {
           key: 'id',
         },
       },
-      dateTimeAt: {
+      dateOn: {
+        type: Sequelize.DATE,
+      },
+      startTime: {
+        type: Sequelize.DATE,
+      },
+      endTime: {
         type: Sequelize.DATE,
       },
       problem: {
@@ -52,7 +58,6 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addIndex('Appointments', ['dateTimeAt'], { unique: true });
     // set starting id to larger value so it doesn't conflict with test fixtures
     await queryInterface.sequelize.query('ALTER SEQUENCE "Appointments_id_seq" RESTART WITH 100;');
   },

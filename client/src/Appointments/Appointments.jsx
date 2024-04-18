@@ -14,8 +14,7 @@ const columns = [
     header: 'Client',
   },
   {
-    accessorKey: 'dateTimeAt',
-    header: 'Date Time',
+    
   },
   {
     accessorKey: 'User.fullName',
