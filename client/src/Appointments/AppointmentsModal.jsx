@@ -4,8 +4,8 @@ import { Button, Col, Container, Form, Modal, Row, Dropdown, DropdownButton } fr
 import PropTypes from 'prop-types';
 import DropDown from '../Components/DropDown';
 import DropMenu from '../Components/DropMenu';
-import TimeRange from '../Components/TimeRange';
 import { DateTime } from 'luxon';
+import TimeRange from '../Components/TimeRange';
 
 const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
