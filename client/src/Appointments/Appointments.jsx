@@ -6,7 +6,7 @@ import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import AppointmentsTable from './AppointmentsTable';
 import AppointmentsModal from './AppointmentsModal';
 import DeleteModal from '../Components/DeleteModal';
-import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+// import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import { DateTime } from 'luxon';
 
 const columns = [
@@ -17,11 +17,18 @@ const columns = [
   {
     accessorKey: 'dateOn',
     header: 'Date',
+    cell: ({ row }) => <p>{DateTime.fromISO(row.original.dateOn).toISODate()}</p>,
   },
   {
-    accessorKey: 'Time',
+    accessorKey: 'Appointment',
     header: 'Time',
-    cell: ({ row }) => <p>{DateTime.fromISO(row.original.Time.startOn).toLocaleString() + ' '}</p>,
+    cell: ({ row }) => (
+      <p>
+        {DateTime.fromISO(row.original.timeInAt).toISOTime().slice(0, 5) +
+          '-' +
+          DateTime.fromISO(row.original.timeOutAt).toISOTime().slice(0, 5)}
+      </p>
+    ),
   },
   {
     accessorKey: 'User.fullName',
@@ -59,7 +66,7 @@ const Appointments = () => {
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
-  const [radioValue, setRadioValue] = useState('Upcoming');
+  // const [radioValue, setRadioValue] = useState('Upcoming');
 
   useEffect(() => {
     Api.appointments.index(page).then((response) => {
@@ -115,7 +122,7 @@ const Appointments = () => {
           </div>
         </form>
       </div>
-      <ButtonGroup>
+      {/* <ButtonGroup>
         <ToggleButton
           className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
           id="radio-upcoming"
@@ -140,7 +147,7 @@ const Appointments = () => {
           size="md">
           Archive
         </ToggleButton>
-      </ButtonGroup>
+      </ButtonGroup> */}
       <AppointmentsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>

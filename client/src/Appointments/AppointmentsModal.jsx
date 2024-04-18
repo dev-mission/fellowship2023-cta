@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import DropDown from '../Components/DropDown';
 import DropMenu from '../Components/DropMenu';
 import { DateTime } from 'luxon';
+import TimeRange from '../Components/TimeRange';
 
 const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
@@ -14,14 +15,14 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const [data, setData] = useState({
     ClientId: '',
     dateOn: DateTime.now().toISODate(),
-    startTime: '',
-    endTime: '',
+    timeInAt: '',
+    timeOutAt: '',
     UserId: '',
     phone: '',
     email: '',
     LocationId: '',
     problem: '',
-    status: '',
+    status: status,
   });
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
         <Container>
           <Form>
             <Row>
-              <Col xs={9} md={6}>
+              <Col xs={18} md={12}>
                 <Form.Group controlId="clientName">
                   <Form.Label>Client Look Up</Form.Label>
                   <DropMenu
@@ -97,10 +98,24 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
                   />
                 </Form.Group>
               </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="dateTimeAt">
-                  <Form.Label>Date Time</Form.Label>
-                  <Form.Control name="dateTimeAt" autoFocus value={data.dateTimeAt} onChange={onChange} />
+            </Row>
+            <Row>
+              <Col xs={6} md={4}>
+                <Form.Group controlId="Date">
+                  <Form.Label>Date</Form.Label>
+                  <Form.Control name="dateOn" value={DateTime.fromISO(data.dateOn).toISODate()} type="date" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={4}>
+                <Form.Group controlId="timeInAt">
+                  <Form.Label>Start: {DateTime.fromISO(data.timeInAt).toISOTime()}</Form.Label>
+                  <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
+                </Form.Group>
+              </Col>
+              <Col xs={6} md={4}>
+                <Form.Group controlId="endTime">
+                  <Form.Label>End: {DateTime.fromISO(data.timeOutAt).toISOTime()}</Form.Label>
+                  <TimeRange name="endTime" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
             </Row>
