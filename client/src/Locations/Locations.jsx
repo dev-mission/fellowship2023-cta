@@ -36,7 +36,6 @@ const columns = [
 
 const Locations = () => {
   const [data, setData] = useState();
-  const [toggleAddModal, setToggleAddModal] = useState(false);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
@@ -96,7 +95,7 @@ const Locations = () => {
           </div>
         </form>
       </div>
-      <LocationsTable table={table}/>
+      <LocationsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<LocationsModal onCreate={onCreate} />} />

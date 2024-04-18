@@ -10,7 +10,7 @@ import { DateTime } from 'luxon';
 const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
   const { appointmentId } = useParams();
-  const [title, setTitle] = useState('New Appointment')
+  const [title, setTitle] = useState('New Appointment');
   const [status, setStatus] = useState('Status');
   const [data, setData] = useState({
     ClientId: '',
@@ -92,7 +92,10 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
               <Col xs={18} md={12}>
                 <Form.Group controlId="clientName">
                   <Form.Label>Client Look Up</Form.Label>
-                  <DropMenu lookUp={onChange} settings={{ route: 'clients', id: 'ClientId', labelKey: 'fullName', placeholder: 'Choose a client...'}} />
+                  <DropMenu
+                    lookUp={onChange}
+                    settings={{ route: 'clients', id: 'ClientId', labelKey: 'fullName', placeholder: 'Choose a client...' }}
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -118,16 +121,19 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
             </Row>
             <Row>
               <Col xs={9} md={6}>
-                <Form.Group controlId='userName'>
+                <Form.Group controlId="userName">
                   <Form.Label>User Look Up</Form.Label>
-                  <DropMenu lookUp={onChange} settings={{ route: 'users', id: 'UserId', labelKey: 'fullName', placeholder: 'Choose a user...'}} />
+                  <DropMenu
+                    lookUp={onChange}
+                    settings={{ route: 'users', id: 'UserId', labelKey: 'fullName', placeholder: 'Choose a user...' }}
+                  />
                 </Form.Group>
               </Col>
               <Col xs={9} md={6}>
                 <DropDown
                   lookUp={onChange}
-                  settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Select Location'}}
-                  path='/api/locations'
+                  settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Select Location' }}
+                  path="/api/locations"
                 />
               </Col>
             </Row>
@@ -160,7 +166,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
         </Button>
       </Modal.Footer>
     </Modal>
-  )
+  );
 };
 
 AppointmentsModal.propTypes = {
