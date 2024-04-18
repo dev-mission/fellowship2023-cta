@@ -98,7 +98,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
               <Col xs={9} md={6}>
                 <Form.Group controlId="dateTimeAt">
                   <Form.Label>Date Time</Form.Label>
-                  <Form.Control name="dateTimeAt" autoFocus value={data.} onChange={onChange} />
+                  <Form.Control name="dateTimeAt" autoFocus value={data.dateTimeAt} onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>

@@ -75,11 +75,13 @@ router.patch('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const appointment = await models.Appointment.create(_.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'dateOn', 'startTime', 'endTime', 'problem', 'status']));
-    const ticket = await models.Ticket.create(_.pick(req.body, ['UserId', 'LocationId','ClientId','dateOn','problem']));
+    const appointment = await models.Appointment.create(
+      _.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'dateOn', 'startTime', 'endTime', 'problem', 'status']),
+    );
+    const ticket = await models.Ticket.create(_.pick(req.body, ['UserId', 'LocationId', 'ClientId', 'dateOn', 'problem']));
     ticket.set({
       AppointmentId: appointment.id,
-      ticketType: "Appointment",
+      ticketType: 'Appointment',
       timeInAt: appointment.startTime,
       timeOutAt: appointment.endTime,
     });
