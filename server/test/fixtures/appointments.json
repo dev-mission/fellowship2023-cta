@@ -7,8 +7,8 @@
       "UserId": 1,
       "LocationId": 1,
       "dateOn": "2024-03-04T17:23:21.675Z",
-      "startTime": "2024-03-04T17:23:21.675Z",
-      "endTime": "2024-03-04T17:23:21.675Z",
+      "timeInAt": "2024-03-04T17:23:21.675Z",
+      "timeOutAt": "2024-03-04T17:23:21.675Z",
       "problem": "TESTING THE APPOINTMENTS",
       "status": "Confirmed"
     }
@@ -21,8 +21,8 @@
       "UserId": 2,
       "LocationId": 1,
       "dateOn": "2024-03-04T17:23:21.675Z",
-      "startTime": "2024-03-04T17:23:21.675Z",
-      "endTime": "2024-03-04T17:23:21.675Z",
+      "timeInAt": "2024-03-04T17:23:21.675Z",
+      "timeOutAt": "2024-03-04T17:23:21.675Z",
       "problem": "TESTING THE APPOINTMENTS",
       "status": "Cancelled"
     }
@@ -35,8 +35,8 @@
       "UserId": 222220,
       "LocationId": 2,
       "dateOn": "2024-03-04T17:23:21.675Z",
-      "startTime": "2024-03-04T17:23:21.675Z",
-      "endTime": "2024-03-04T17:23:21.675Z",
+      "timeInAt": "2024-03-04T17:23:21.675Z",
+      "timeOutAt": "2024-03-04T17:23:21.675Z",
       "problem": "TESTING THE APPOINTMENTS",
       "status": "Confirmed"
     }

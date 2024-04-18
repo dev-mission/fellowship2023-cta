@@ -15,8 +15,8 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const [data, setData] = useState({
     ClientId: '',
     dateOn: DateTime.now().toISODate(),
-    startTime: '',
-    endTime: '',
+    timeInAt: '',
+    timeOutAt: '',
     UserId: '',
     phone: '',
     email: '',
@@ -104,9 +104,9 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
                 </Form.Group>
               </Col>
               <Col xs={6} md={4}>
-                <Form.Group controlId="startTime">
+                <Form.Group controlId="timeInAt">
                   <Form.Label>Start: {DateTime.fromISO(data.timeInAt).toISOTime()}</Form.Label>
-                  <TimeRange name="startTime" date={data.dateOn} change={onChange}></TimeRange>
+                  <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={6} md={4}>

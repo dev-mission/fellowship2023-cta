@@ -22,7 +22,7 @@ const columns = [
   {
     accessorKey: 'Appointment',
     header: 'Time',
-    cell: ({ row }) => <p>{DateTime.fromISO(row.original.startTime).toISOTime().slice(0, 5) + '-' + DateTime.fromISO(row.original.endTime).toISOTime().slice(0, 5)}</p>,
+    cell: ({ row }) => <p>{DateTime.fromISO(row.original.timeInAt).toISOTime().slice(0, 5) + '-' + DateTime.fromISO(row.original.timeOutAt).toISOTime().slice(0, 5)}</p>,
   },
   {
     accessorKey: 'User.fullName',
