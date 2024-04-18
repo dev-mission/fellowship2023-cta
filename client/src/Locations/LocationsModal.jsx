@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 const LocationsModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
+  const [title, setTitle] = useState('New Location');
   const { locationId } = useParams();
   const [data, setData] = useState({
     name: '',
@@ -26,6 +27,7 @@ const LocationsModal = ({ onCreate, onUpdate }) => {
 
     if (locationId) {
       fetchData();
+      setTitle('Edit Location');
     }
   }, [locationId]);
 
@@ -72,7 +74,7 @@ const LocationsModal = ({ onCreate, onUpdate }) => {
   return (
     <Modal show={true} onHide={() => navigate('/locations')}>
       <Modal.Header closeButton>
-        <Modal.Title>New Location</Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>

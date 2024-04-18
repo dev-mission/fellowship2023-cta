@@ -27,12 +27,10 @@ const columns = [
   {
     accessorKey: 'UserId',
     header: 'User',
-    enableColumnFilter: true, 
+    enableColumnFilter: true,
   },
-  {
-    
-  }
-]
+  {},
+];
 
 const Appointments = () => {
   const [data, setData] = useState();
@@ -40,7 +38,7 @@ const Appointments = () => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
-  const [lastPage, setLastPage] = useState(1); 
+  const [lastPage, setLastPage] = useState(1);
   const [radioValue, setRadioValue] = useState('Upcoming');
 
   useEffect(() => {
@@ -56,7 +54,7 @@ const Appointments = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page])
+  }, [page]);
 
   console.log(data);
 
@@ -70,7 +68,7 @@ const Appointments = () => {
   });
 
   return (
-    <main className='container'>
+    <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
           New <i className="bi bi-plus-lg" />
@@ -81,20 +79,34 @@ const Appointments = () => {
             <span className="input-group-text" id="basic-addon1">
               <i className="bi bi-search" />
             </span>
-            <input
-              type="search"
-              className="form-control me-2"
-              placeholder="Search Locations"
-            />
+            <input type="search" className="form-control me-2" placeholder="Search Locations" />
           </div>
         </form>
       </div>
       <div>
         <ButtonGroup>
-          <ToggleButton className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `} id='radio-upcoming' type='radio' variant={radioValue === 'Upcoming' ? 'outline-primary' : ''} name='radio' value='Upcoming' checked={radioValue === 'Upcoming'} onChange={(e) => setRadioValue(e.currentTarget.value)} size='md'>
+          <ToggleButton
+            className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
+            id="radio-upcoming"
+            type="radio"
+            variant={radioValue === 'Upcoming' ? 'outline-primary' : ''}
+            name="radio"
+            value="Upcoming"
+            checked={radioValue === 'Upcoming'}
+            onChange={(e) => setRadioValue(e.currentTarget.value)}
+            size="md">
             Upcoming
           </ToggleButton>
-          <ToggleButton className={`border-primary ${radioValue === 'Archive' ? 'text-white' : 'text-primary'}`} id='radio-archive' type='radio' variant={radioValue === 'Archive' ? 'outline-primary' : ''} name='radio' value='Archive' checked={radioValue === 'Archive'} onChange={(e) => setRadioValue(e.currentTarget.value)} size='md'>
+          <ToggleButton
+            className={`border-primary ${radioValue === 'Archive' ? 'text-white' : 'text-primary'}`}
+            id="radio-archive"
+            type="radio"
+            variant={radioValue === 'Archive' ? 'outline-primary' : ''}
+            name="radio"
+            value="Archive"
+            checked={radioValue === 'Archive'}
+            onChange={(e) => setRadioValue(e.currentTarget.value)}
+            size="md">
             Archive
           </ToggleButton>
         </ButtonGroup>

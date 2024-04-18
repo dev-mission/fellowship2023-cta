@@ -3,13 +3,13 @@ import { Typeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 
-Dropdown.propTypes = {
+DropDown.propTypes = {
   settings: PropTypes.object.isRequired,
   path: PropTypes.string.isRequired,
   lookUp: PropTypes.func.isRequired,
 };
 
-export default function Dropdown({ lookUp, settings, path }) {
+export default function DropDown({lookUp, settings, path }) {
   const [singleSelections, setSingleSelections] = useState([]);
   const [options, setOptions] = useState([]);
 

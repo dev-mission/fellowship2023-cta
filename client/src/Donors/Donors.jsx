@@ -150,11 +150,7 @@ const Donors = () => {
   const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
-<<<<<<< HEAD:client/src/Pages/Locations.jsx
-    Api.locations.index(page).then((response) => {
-=======
     Api.donors.index(page).then((response) => {
->>>>>>> 60a3b323766f866b333611797fddb1bbb59f8d4f:client/src/Donors/Donors.jsx
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;

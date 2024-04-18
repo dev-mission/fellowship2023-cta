@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
       },
       {
         model: models.User,
-        attributes: ['firstName', 'lastName'],
+        attributes: ['fullName'],
       },
       { model: models.Location, attributes: ['name'] },
     ],
@@ -34,16 +34,6 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const record = await models.Appointment.findByPk(req.params.id);
-    res.json(record);
-  } catch (err) {
-    console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
-  }
-});
-
-router.get('/:appointment', async (req, res) => {
-  try {
-    const record = await models.Appointment.findOne(req.params.appointment);
     res.json(record);
   } catch (err) {
     console.log(err);

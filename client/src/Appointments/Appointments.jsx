@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useLocation } from 'react-router-dom';
-import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import AppointmentsTable from './AppointmentsTable';
-import AddAppointmentModal from './AddAppointmentModal';
+import AppointmentsModal from './AppointmentsModal';
+import DeleteModal from '../Components/DeleteModal';
 
 const columns = [
   {
@@ -17,9 +17,8 @@ const columns = [
     header: 'Date Time',
   },
   {
+    accessorKey: 'User.fullName',
     header: 'User',
-    accessorKey: 'User',
-    cell: ({ row }) => <p>{row.original.User.firstName + ' ' + row.original.User.lastName}</p>,
   },
   {
     accessorKey: 'Client.phone',
@@ -49,12 +48,10 @@ const columns = [
 
 const Appointments = () => {
   const [data, setData] = useState();
-  const [toggleAddModal, setToggleAddModal] = useState(false);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
-  const [radioValue, setRadioValue] = useState('Upcoming');
 
   useEffect(() => {
     Api.appointments.index(page).then((response) => {
@@ -71,7 +68,19 @@ const Appointments = () => {
     });
   }, [page]);
 
-  console.log(data);
+  const onCreate = (appointment) => {
+    setData([...data, appointment]);
+  };
+
+  const onUpdate = (appointment) => {
+    setData(data.map((a) => (a.id === appointment.id ? { ...appointment } : a)));
+  };
+
+  const onDelete = (appointmentId) => {
+    setData(data.filter((a) => a.id != appointmentId));
+  };
+
+  const onChange = () => {};
 
   const table = useReactTable({
     data: data || [],
@@ -85,48 +94,26 @@ const Appointments = () => {
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
-        <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
+        <Link className="btn btn-primary d-flex align-items-center" to="new">
           New <i className="bi bi-plus-lg" />
-        </button>
-        <AddAppointmentModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
-        <i className="bi bi-clock title-icon">Appointments</i>
+        </Link>
+        <i className="bi bi-clock title-icon">Locations</i>
         <form className="d-flex" role="search">
           <div className="input-group">
             <span className="input-group-text" id="basic-addon1">
               <i className="bi bi-search" />
             </span>
-            <input type="search" className="form-control me-2" placeholder="Search Locations" />
+            <input type="search" className="form-control me-2" placeholder="Search Users" onChange={onChange} />
           </div>
         </form>
       </div>
-      <ButtonGroup>
-        <ToggleButton
-          className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
-          id="radio-upcoming"
-          type="radio"
-          variant={radioValue === 'Upcoming' ? 'outline-primary' : ''}
-          name="radio"
-          value="Upcoming"
-          checked={radioValue === 'Upcoming'}
-          onChange={(e) => setRadioValue(e.currentTarget.value)}
-          size="md">
-          Upcoming
-        </ToggleButton>
-        <ToggleButton
-          className={`border-primary ${radioValue === 'Archive' ? 'text-white' : 'text-primary'}`}
-          id="radio-archive"
-          type="radio"
-          variant={radioValue === 'Archive' ? 'outline-primary' : ''}
-          name="radio"
-          value="Archive"
-          checked={radioValue === 'Archive'}
-          onChange={(e) => setRadioValue(e.currentTarget.value)}
-          size="md">
-          Archive
-        </ToggleButton>
-      </ButtonGroup>
-      <AppointmentsTable table={table} data={data} setData={setData} />
+      <AppointmentsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
+      <Routes>
+        <Route path="new" element={<AppointmentsModal onCreate={onCreate} />} />
+        <Route path="edit/:locationId" element={<AppointmentsModal onUpdate={onUpdate} />} />
+        <Route path="delete/:locationId" element={<DeleteModal model="locations" onDelete={onDelete} />} />
+      </Routes>
     </main>
   );
 };

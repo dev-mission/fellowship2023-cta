@@ -1,7 +1,7 @@
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { useParams, useNavigate, Route, Routes } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const DeleteModal = ({ model, onDelete }) => {
   const navigate = useNavigate();
@@ -15,35 +15,27 @@ const DeleteModal = ({ model, onDelete }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(async (response) => {
-      const json = await response.json();
-      if (json.error === 'error') {
-        setToggleErrorModal(true);
-        setErrorMessage(json.message.split(' ').pop().slice(1, -2));
-      } else {
-        const newData = data.filter((item) => item.id !== row.original.id);
-        setData(newData);
-      }
-    });
+    })
+    
     const json = await response.json();
     if (json.error === 'error') {
       setErrorMessage(json.message.split(' ').pop().slice(1, -2));
       setToggleErrorModal(true);
     } else {
       onDelete(locationId);
-      navigate('/locations');
+      navigate(`/${model}`);
     }
   };
 
   return (
     <>
-      <Modal show={true} onHide={() => navigate('/locations')}>
+      <Modal show={true} onHide={() => navigate(`/${model}`)}>
         <Modal.Header closeButton>
           <Modal.Title>Delete {model.slice(0, -1)}</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this {model.slice(0, -1)}?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => navigate('/locations')}>
+          <Button variant="secondary" onClick={() => navigate(`/${model}`)}>
             No
           </Button>
           <Button variant="danger" onClick={deleteTicket}>

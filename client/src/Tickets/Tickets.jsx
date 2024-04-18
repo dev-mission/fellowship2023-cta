@@ -53,7 +53,6 @@ const Tickets = () => {
 
   function onCreate(ticket) {
     setData([...data, ticket]);
-    console.log(data);
   }
 
   function onUpdate(ticket) {
@@ -70,7 +69,6 @@ const Tickets = () => {
       data,
     },
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (

@@ -42,13 +42,6 @@ function ClientDropMenu({ lookUp }) {
         lookUp({ target: { name: 'ClientId', value: value[0]?.id } });
       }}
       placeholder="Search for a clients..."
-      renderMenuItemChildren={(option) => (
-        <>
-          <span name="ClientId" value={option.id}>
-            {option.fullName}
-          </span>
-        </>
-      )}
     />
   );
 }

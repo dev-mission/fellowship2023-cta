@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import AddLocationModal from './AddLocationModal';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import LocationsTable from './LocationsTable';
+import LocationsModal from './LocationsModal';
+import DeleteModal from '../Components/DeleteModal';
 
 const columns = [
   {
@@ -85,10 +86,9 @@ const Locations = () => {
         <Link className="btn btn-primary d-flex align-items-center" to="new">
           New <i className="bi bi-plus-lg" />
         </Link>
-        <AddLocationModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
         <i className="bi bi-person-fill title-icon">Locations</i>
       </div>
-      <LocationsTable table={table} data={data} setData={setData} />
+      <LocationsTable table={table}/>
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<LocationsModal onCreate={onCreate} />} />

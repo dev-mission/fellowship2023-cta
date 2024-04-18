@@ -10,11 +10,7 @@ describe('/api/donors', () => {
   let testSession;
 
   beforeEach(async () => {
-<<<<<<< HEAD
-    await helper.loadFixtures(['locations','users','donors']);
-=======
     await helper.loadFixtures(['locations', 'users', 'donors']);
->>>>>>> 60a3b323766f866b333611797fddb1bbb59f8d4f
     testSession = session(app);
   });
 
@@ -26,12 +22,6 @@ describe('/api/donors', () => {
         .send({ email: 'Inventory1.user@test.com', password: 'abcd1234' })
         .expect(StatusCodes.OK);
     });
-<<<<<<< HEAD
-
-  it('creates a new Donor', async () => {
-    const response = await testSession.post('/api/donors').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
-=======
->>>>>>> 60a3b323766f866b333611797fddb1bbb59f8d4f
 
     it('creates a new Donor', async () => {
       const response = await testSession.post('/api/donors').send({ name: 'Created Name' }).expect(StatusCodes.CREATED);
@@ -62,6 +52,5 @@ describe('/api/donors', () => {
       assert.deepStrictEqual(record, null);
       assert.deepStrictEqual(response.body?.length, 2);
     });
-  });
   });
 });
