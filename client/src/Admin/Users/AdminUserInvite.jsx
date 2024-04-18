@@ -122,7 +122,7 @@ function AdminUserInvite() {
                     <div className="mb-3">
                       <Dropdown
                         lookUp={onChange}
-                        settings={{ title: 'Location', id: 'LocationId', labelK: 'name', placeholder: 'Choose an location...' }}
+                        settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
                         path="/api/locations"
                       />
                     </div>
