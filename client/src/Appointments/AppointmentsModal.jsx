@@ -4,6 +4,8 @@ import { Button, Col, Container, Form, Modal, Row, Dropdown, DropdownButton } fr
 import PropTypes from 'prop-types';
 import DropDown from '../Components/DropDown';
 import DropMenu from '../Components/DropMenu';
+import TimeRange from '../Components/TimeRange';
+import { DateTime } from 'luxon';
 
 const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
@@ -12,7 +14,9 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const [status, setStatus] = useState('Status');
   const [data, setData] = useState({
     ClientId: '',
-    dateTimeAt: '',
+    dateOn: DateTime.now().toISODate(),
+    startTime: '',
+    endTime: '',
     UserId: '',
     phone: '',
     email: '',
@@ -66,7 +70,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
 
     if (response.ok) {
       const newData = await response.json();
-
+      newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toLocaleString();
       if (data.id) {
         onUpdate(newData);
       } else {

@@ -7,6 +7,7 @@ import AppointmentsTable from './AppointmentsTable';
 import AppointmentsModal from './AppointmentsModal';
 import DeleteModal from '../Components/DeleteModal';
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { DateTime } from 'luxon';
 
 const columns = [
   {
@@ -14,7 +15,13 @@ const columns = [
     header: 'Client',
   },
   {
-    
+    accessorKey: 'dateOn',
+    header: 'Date',
+  },
+  {
+    accessorKey: 'Time',
+    header: 'Time',
+    cell: ({ row }) => <p>{DateTime.fromISO(row.original.Time.startOn).toLocaleString() + ' '}</p>,
   },
   {
     accessorKey: 'User.fullName',
