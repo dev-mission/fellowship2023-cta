@@ -113,6 +113,7 @@ describe('/api/invites', () => {
         LocationId: 1,
         firstName: 'Accepting',
         lastName: 'User',
+        fullName: 'Accepting User',
         email: 'accepting.user@test.com',
         isAdmin: false,
         picture: null,

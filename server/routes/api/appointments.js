@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
       },
       {
         model: models.User,
-        attributes: ['firstName', 'lastName'],
+        attributes: ['fullName'],
       },
       { model: models.Location, attributes: ['name'] },
     ],
@@ -41,9 +41,10 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/:appointment', async (req, res) => {
+router.patch('/:id', async (req, res) => {
   try {
-    const record = await models.Appointment.findOne(req.params.appointment);
+    const record = await models.Appointment.findByPk(req.params.id);
+    await record.update(_.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'zipCode']));
     res.json(record);
   } catch (err) {
     console.log(err);
@@ -51,11 +52,41 @@ router.get('/:appointment', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+/*
+      'AppointmentId',
+      'LocationId',
+      'ClientId',
+      'ticketType',
+      'serialNumber',
+      'AppointmentId',
+      'device',
+      'problem',
+      'troubleshooting',
+      'resolution',
+      'dateOn',
+      'timeInAt',
+      'timeOutAt',
+      'totalTime',
+      'hasCharger',
+      'notes',
+
+
+*/
+
+router.post('/', async (req, res) => {
   try {
-    const record = await models.Appointment.findByPk(req.params.id);
-    await record.update(_.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'zipCode']));
-    res.json(record);
+    const appointment = await models.Appointment.create(
+      _.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'dateOn', 'startTime', 'endTime', 'problem', 'status']),
+    );
+    const ticket = await models.Ticket.create(_.pick(req.body, ['UserId', 'LocationId', 'ClientId', 'dateOn', 'problem']));
+    ticket.set({
+      AppointmentId: appointment.id,
+      ticketType: 'Appointment',
+      timeInAt: appointment.startTime,
+      timeOutAt: appointment.endTime,
+    });
+    ticket.save();
+    res.status(StatusCodes.CREATED).json(appointment);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

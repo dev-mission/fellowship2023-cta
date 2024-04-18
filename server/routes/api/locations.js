@@ -59,7 +59,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const record = await models.Location.findByPk(req.params.id);
     await record.destroy();
-    res.status(StatusCodes.OK).end();
+    res.status(StatusCodes.OK).send({ message: 'Location deleted.' }).end();
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: err.original.detail, error: err.original.name }).end();

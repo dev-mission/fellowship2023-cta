@@ -41,6 +41,7 @@ describe('/api/auth', () => {
         firstName: 'Normal',
         lastName: 'Person',
         email: 'normal.person@test.com',
+        fullName: 'Normal Person',
         isAdmin: false,
         picture: null,
         pictureUrl: null,

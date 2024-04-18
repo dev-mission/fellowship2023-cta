@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import AddLocationModal from './AddLocationModal';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import LocationsTable from './LocationsTable';
+import LocationsModal from './LocationsModal';
+import DeleteModal from '../Components/DeleteModal';
 
 const columns = [
   {
@@ -35,7 +36,6 @@ const columns = [
 
 const Locations = () => {
   const [data, setData] = useState();
-  const [toggleAddModal, setToggleAddModal] = useState(false);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const page = parseInt(params.get('page') ?? '1', 10);
@@ -56,6 +56,20 @@ const Locations = () => {
     });
   }, [page]);
 
+  const onCreate = (location) => {
+    setData([...data, location]);
+  };
+
+  const onUpdate = (location) => {
+    setData(data.map((l) => (l.id === location.id ? { ...location } : l)));
+  };
+
+  const onDelete = (locationId) => {
+    setData(data.filter((l) => l.id != locationId));
+  };
+
+  const onChange = () => {};
+
   const table = useReactTable({
     data: data || [],
     columns,
@@ -68,14 +82,26 @@ const Locations = () => {
   return (
     <main className="container">
       <div className="d-flex justify-content-between align-items-center mt-5">
-        <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
+        <Link className="btn btn-primary d-flex align-items-center" to="new">
           New <i className="bi bi-plus-lg" />
-        </button>
-        <AddLocationModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
+        </Link>
         <i className="bi bi-person-fill title-icon">Locations</i>
+        <form className="d-flex" role="search">
+          <div className="input-group">
+            <span className="input-group-text" id="basic-addon1">
+              <i className="bi bi-search" />
+            </span>
+            <input type="search" className="form-control me-2" placeholder="Search Users" onChange={onChange} />
+          </div>
+        </form>
       </div>
-      <LocationsTable table={table} data={data} setData={setData} />
+      <LocationsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
+      <Routes>
+        <Route path="new" element={<LocationsModal onCreate={onCreate} />} />
+        <Route path="edit/:locationId" element={<LocationsModal onUpdate={onUpdate} />} />
+        <Route path="delete/:locationId" element={<DeleteModal model="locations" onDelete={onDelete} />} />
+      </Routes>
     </main>
   );
 };
