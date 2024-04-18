@@ -2,11 +2,6 @@ import { useState } from 'react';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 
-DropMenu.propTypes = {
-  lookUp: PropTypes.func.isRequired,
-  settings: PropTypes.object.isRequired,
-};
-
 const DropMenu = ({ lookUp, settings }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState();
@@ -39,6 +34,11 @@ const DropMenu = ({ lookUp, settings }) => {
       placeholder={settings.placeholder}
     />
   );
+};
+
+DropMenu.propTypes = {
+  lookUp: PropTypes.func.isRequired,
+  settings: PropTypes.object.isRequired,
 };
 
 export default DropMenu;
