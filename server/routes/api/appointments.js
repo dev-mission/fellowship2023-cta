@@ -52,4 +52,43 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
+/*
+      'AppointmentId',
+      'LocationId',
+      'ClientId',
+      'ticketType',
+      'serialNumber',
+      'AppointmentId',
+      'device',
+      'problem',
+      'troubleshooting',
+      'resolution',
+      'dateOn',
+      'timeInAt',
+      'timeOutAt',
+      'totalTime',
+      'hasCharger',
+      'notes',
+
+
+*/
+
+router.post('/', async (req, res) => {
+  try {
+    const appointment = await models.Appointment.create(_.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'dateOn', 'startTime', 'endTime', 'problem', 'status']));
+    const ticket = await models.Ticket.create(_.pick(req.body, ['UserId', 'LocationId','ClientId','dateOn','problem']));
+    ticket.set({
+      AppointmentId: appointment.id,
+      ticketType: "Appointment",
+      timeInAt: appointment.startTime,
+      timeOutAt: appointment.endTime,
+    });
+    ticket.save();
+    res.status(StatusCodes.CREATED).json(appointment);
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
 export default router;
