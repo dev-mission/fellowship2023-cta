@@ -95,8 +95,8 @@ function Header() {
                 {user.role === 'Inventory' && (
                   <>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/inventory" onClick={hideNavbar}>
-                        Inventory
+                      <Link className="nav-link" aria-current="page" to="/devices" onClick={hideNavbar}>
+                        Devices
                       </Link>
                     </li>
                     <li className="nav-item active flex">
