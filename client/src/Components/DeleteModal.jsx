@@ -16,7 +16,6 @@ const DeleteModal = ({ model, onDelete }) => {
         'Content-Type': 'application/json',
       },
     });
-
     const json = await response.json();
     if (json.error === 'error') {
       setErrorMessage(json.message.split(' ').pop().slice(1, -2));
