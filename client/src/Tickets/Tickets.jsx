@@ -35,6 +35,7 @@ const columns = [
   {
     accessorKey: 'createdAt',
     header: 'Date Met',
+    cell: ({ row }) => <p>{DateTime.fromISO(row.original.createdAt).toISODate()}</p>,
   },
 ];
 
@@ -45,9 +46,6 @@ const Tickets = () => {
     fetch('/api/tickets')
       .then((res) => res.json())
       .then((data) => {
-        data.map((ticket) => {
-          ticket['createdAt'] = DateTime.fromISO(ticket['createdAt']).toLocaleString();
-        });
         setData(data);
       });
   }, []);
