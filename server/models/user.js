@@ -27,7 +27,18 @@ export default function (sequelize, DataTypes) {
     }
 
     toJSON() {
-      const data = _.pick(this.get(), ['id', 'firstName', 'lastName', 'email', 'picture', 'pictureUrl', 'isAdmin', 'role', 'LocationId']);
+      const data = _.pick(this.get(), [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'picture',
+        'pictureUrl',
+        'isAdmin',
+        'role',
+        'fullName',
+        'LocationId',
+      ]);
       if (this.Location) {
         data.Location = this.Location.toJSON();
       }
