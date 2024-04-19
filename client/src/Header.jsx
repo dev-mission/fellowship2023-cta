@@ -80,11 +80,13 @@ function Header() {
                         Clients
                       </Link>
                     </li>
-                    <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/locations" onClick={hideNavbar}>
-                        Locations
-                      </Link>
-                    </li>
+                    {user.isAdmin && (
+                      <li className="nav-item active flex">
+                        <Link className="nav-link" aria-current="page" to="/locations" onClick={hideNavbar}>
+                          Locations
+                        </Link>
+                      </li>
+                    )}
                     <li className="nav-item active flex">
                       <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
                         Courses
