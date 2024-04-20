@@ -45,6 +45,7 @@ router.patch('/:id', async (req, res) => {
   try {
     const record = await models.Appointment.findByPk(req.params.id);
     await record.update(_.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'zipCode']));
+    await record.save();
     res.json(record);
   } catch (err) {
     console.log(err);
@@ -56,7 +57,10 @@ router.delete('/:id', async (req, res) => {
   try {
     const record = await models.Appointment.findByPk(req.params.id);
     const ticket = await models.Ticket.findOne({ where: { AppointmentId: record.id } });
-    await ticket.destroy();
+    if (ticket) {
+      await ticket.update({ AppointmentId: null });
+      await ticket.save();
+    }
     await record.destroy();
     res.status(StatusCodes.OK).send({ message: 'Appointment deleted' });
   } catch (err) {
