@@ -88,7 +88,14 @@ const Tickets = () => {
           New <i className="bi bi-plus-lg" />
         </Link>
         <i className="bi bi-person-fill">Tickets</i>
-        <input type="search" className="form-control me-2" placeholder="Search Users" />
+        <form className="d-flex" role="search">
+          <div className="input-group">
+            <span className="input-group-text" id="basic-addon1">
+              <i className="bi bi-search" />
+            </span>
+            <input type="search" className="form-control me-2" placeholder="Search Tickets" />
+          </div>
+        </form>
       </div>
       <TicketTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
