@@ -191,7 +191,15 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={18} md={12}>
                 <Form.Group controlId="problem">
                   <Form.Label>Problem</Form.Label>
-                  <Form.Control as="textarea" name="problem" autoFocus value={data.problem || ''} type="text" onChange={onChange} rows={3} />
+                  <Form.Control
+                    as="textarea"
+                    name="problem"
+                    autoFocus
+                    value={data.problem || ''}
+                    type="text"
+                    onChange={onChange}
+                    rows={3}
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -199,16 +207,32 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={18} md={12}>
                 <Form.Group controlId="troubleshooting">
                   <Form.Label>Troubleshooting</Form.Label>
-                  <Form.Control as="textarea" name="troubleshooting" value={data.troubleshooting || ''} type="text" autoFocus onChange={onChange} rows={3}/>
+                  <Form.Control
+                    as="textarea"
+                    name="troubleshooting"
+                    value={data.troubleshooting || ''}
+                    type="text"
+                    autoFocus
+                    onChange={onChange}
+                    rows={3}
+                  />
                 </Form.Group>
               </Col>
             </Row>
-              <Col xs={18} md={12}>
-                <Form.Group controlId="resolution">
-                  <Form.Label>Resolution</Form.Label>
-                  <Form.Control as="textarea" name="resolution" value={data.resolution || ''} type="text" autoFocus onChange={onChange} rows={3} />
-                </Form.Group>
-              </Col>
+            <Col xs={18} md={12}>
+              <Form.Group controlId="resolution">
+                <Form.Label>Resolution</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="resolution"
+                  value={data.resolution || ''}
+                  type="text"
+                  autoFocus
+                  onChange={onChange}
+                  rows={3}
+                />
+              </Form.Group>
+            </Col>
             <Row>
               <Col xs={9} md={6}>
                 <Form.Group controlId="Date">
@@ -242,7 +266,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={18} md={12}>
                 <Form.Group controlId="notes">
                   <Form.Label>Notes</Form.Label>
-                  <Form.Control as="textarea" name="notes" value={data.notes || ''} type="text" autoFocus onChange={onChange} rows={3}/>
+                  <Form.Control as="textarea" name="notes" value={data.notes || ''} type="text" autoFocus onChange={onChange} rows={3} />
                 </Form.Group>
               </Col>
             </Row>
