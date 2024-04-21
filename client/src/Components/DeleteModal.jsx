@@ -17,7 +17,7 @@ const DeleteModal = ({ model, onDelete }) => {
       },
     });
     const json = await response.json();
-    if (json.error) {
+    if (json.error === 'error') {
       setErrorMessage(json.message.split(' ').pop().slice(1, -2));
       setToggleErrorModal(true);
     } else {
