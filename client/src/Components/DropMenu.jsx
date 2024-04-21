@@ -12,7 +12,6 @@ const DropMenu = ({ lookUp, settings }) => {
     fetch(`/api/${settings.route}/search/${query}`)
       .then((resp) => resp.json())
       .then((items) => {
-        console.log(items);
         setOptions(items);
         setIsLoading(false);
       });
