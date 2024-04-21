@@ -10,17 +10,21 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   //Need to handle interceptor for inventory role
   const page = req.query.page || '1';
-  const {records, pages, total} = await models.Device.paginate({
+  const { records, pages, total } = await models.Device.paginate({
     page,
-    include : [
+    include: [
       {
         model: models.Location,
         attributes: ['name'],
-
-      }],
-    });
-    helpers.setPaginationHeaders(req, res, page, pages, total);
-    res.json(records.map((r) => r.toJSON()));
+      },
+      {
+        model: models.Donor,
+        attributes: ['name'],
+      },
+    ],
+  });
+  helpers.setPaginationHeaders(req, res, page, pages, total);
+  res.json(records.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
@@ -48,6 +52,9 @@ router.patch('/:id', async (req, res) => {
         'model',
         'brand',
         'serialNum',
+        'storage',
+        'batteryLastChecked',
+        'intern',
         'cpu',
         'ram',
         'os',
@@ -87,6 +94,9 @@ router.post('/', async (req, res) => {
       'model',
       'brand',
       'serialNum',
+      'storage',
+      'batteryLastChecked',
+      'intern',
       'cpu',
       'ram',
       'os',

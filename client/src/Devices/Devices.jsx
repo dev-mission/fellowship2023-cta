@@ -50,6 +50,11 @@ const columns = [
     accessorKey: 'Location.name',
     header: 'Location',
   },
+
+  {
+    accessorKey: 'Donor.name',
+    header: 'Donor',
+  },
 ];
 
 
