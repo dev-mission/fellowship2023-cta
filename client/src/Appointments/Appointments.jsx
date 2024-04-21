@@ -17,7 +17,7 @@ const columns = [
   {
     accessorKey: 'dateOn',
     header: 'Date',
-    cell: ({ row }) => <p>{DateTime.fromISO(row.original.dateOn).toISODate()}</p>,
+    cell: ({ row }) => <p>{row.original.dateOn.slice(6, 7) + '/' + row.original.dateOn.slice(8, 10) + '/' + row.original.dateOn.slice(0, 4)}</p>
   },
   {
     accessorKey: 'Appointment',
@@ -47,8 +47,9 @@ const columns = [
     header: 'Location',
   },
   {
-    accessorKey: 'Client.Device.model',
+    accessorKey: 'Client',
     header: 'Device',
+    cell: ({ row }) => (<p>{row.original.Client.Device?.model || 'None'}</p>)
   },
   {
     accessorKey: 'problem',

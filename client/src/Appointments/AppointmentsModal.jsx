@@ -107,13 +107,13 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
               </Col>
               <Col xs={6} md={4}>
                 <Form.Group controlId="timeInAt">
-                  <Form.Label>Start: {DateTime.fromISO(data.timeInAt).toISOTime()}</Form.Label>
+                  <Form.Label>Start: {DateTime.fromISO(data.timeInAt).toISOTime().slice(0, 5)}</Form.Label>
                   <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={6} md={4}>
                 <Form.Group controlId="endTime">
-                  <Form.Label>End: {DateTime.fromISO(data.timeOutAt).toISOTime()}</Form.Label>
+                  <Form.Label>End: {DateTime.fromISO(data.timeOutAt).toISOTime().slice(0, 5)}</Form.Label>
                   <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
