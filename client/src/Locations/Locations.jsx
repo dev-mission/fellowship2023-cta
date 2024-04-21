@@ -100,7 +100,7 @@ const Locations = () => {
       <Routes>
         <Route path="new" element={<LocationsModal onCreate={onCreate} />} />
         <Route path="edit/:locationId" element={<LocationsModal onUpdate={onUpdate} />} />
-        <Route path="delete/:locationId" element={<DeleteModal model="locations" onDelete={onDelete} />} />
+        <Route path="delete/:id" element={<DeleteModal model="locations" onDelete={onDelete} />} />
       </Routes>
     </main>
   );
