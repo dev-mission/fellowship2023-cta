@@ -87,7 +87,7 @@ const Tickets = () => {
         <Link className="btn btn-primary d-flex align-items-center" to="new">
           New <i className="bi bi-plus-lg" />
         </Link>
-        <i className="bi bi-person-fill">Tickets</i>
+        <i className="bi bi-person-fill title-icon">Tickets</i>
         <form className="d-flex" role="search">
           <div className="input-group">
             <span className="input-group-text" id="basic-addon1">
