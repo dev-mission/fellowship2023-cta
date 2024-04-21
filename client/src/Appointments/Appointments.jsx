@@ -17,7 +17,9 @@ const columns = [
   {
     accessorKey: 'dateOn',
     header: 'Date',
-    cell: ({ row }) => <p>{row.original.dateOn.slice(6, 7) + '/' + row.original.dateOn.slice(8, 10) + '/' + row.original.dateOn.slice(0, 4)}</p>
+    cell: ({ row }) => (
+      <p>{row.original.dateOn.slice(6, 7) + '/' + row.original.dateOn.slice(8, 10) + '/' + row.original.dateOn.slice(0, 4)}</p>
+    ),
   },
   {
     accessorKey: 'Appointment',
@@ -49,7 +51,7 @@ const columns = [
   {
     accessorKey: 'Client',
     header: 'Device',
-    cell: ({ row }) => (<p>{row.original.Client.Device?.model || 'None'}</p>)
+    cell: ({ row }) => <p>{row.original.Client.Device?.model || 'None'}</p>,
   },
   {
     accessorKey: 'problem',
