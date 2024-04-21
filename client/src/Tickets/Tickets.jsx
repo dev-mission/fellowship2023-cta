@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
-import { getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import { Link, Routes, Route, useLocation } from 'react-router-dom';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import Api from '../Api';
 import { DateTime } from 'luxon';
-
+import Pagination from '../Components/Pagination';
+import DeleteModal from '../Components/DeleteModal';
 import TicketTable from './TicketTable';
 import TicketModal from './TicketModal';
-
 const columns = [
   {
     accessorKey: 'id',
@@ -34,35 +35,43 @@ const columns = [
   {
     accessorKey: 'createdAt',
     header: 'Date Met',
+    cell: ({ row }) => <p>{DateTime.fromISO(row.original.createdAt).toISODate()}</p>,
   },
 ];
 
 const Tickets = () => {
   const [data, setData] = useState([]);
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const page = parseInt(params.get('page') ?? '1', 10);
+  const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
-    fetch('/api/tickets')
-      .then((res) => res.json())
-      .then((data) => {
-        data.map((ticket) => {
-          ticket['createdAt'] = DateTime.fromISO(ticket['createdAt']).toLocaleString();
-        });
-        setData(data);
-      });
-  }, []);
+    Api.tickets.index(page).then((response) => {
+      setData(response.data);
+      const linkHeader = Api.parseLinkHeader(response);
+      let newLastPage = page;
+      if (linkHeader?.last) {
+        const match = linkHeader.last.match(/page=(\d+)/);
+        newLastPage = parseInt(match[1], 10);
+      } else if (linkHeader?.next) {
+        newLastPage = page + 1;
+      }
+      setLastPage(newLastPage);
+    });
+  }, [page]);
 
   function onCreate(ticket) {
     setData([...data, ticket]);
-    console.log(data);
   }
 
   function onUpdate(ticket) {
     setData(data.map((t) => (t.id == ticket.id ? { ...ticket } : t)));
   }
 
-  function removeData(ticket) {
-    setData(ticket);
-  }
+  const onDelete = (ticketId) => {
+    setData(data.filter((t) => t.id != ticketId));
+  };
   const table = useReactTable({
     data: data || [],
     columns,
@@ -70,7 +79,6 @@ const Tickets = () => {
       data,
     },
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -80,23 +88,14 @@ const Tickets = () => {
           New <i className="bi bi-plus-lg" />
         </Link>
         <i className="bi bi-person-fill">Tickets</i>
-        <p>Search Box</p>
+        <input type="search" className="form-control me-2" placeholder="Search Users" />
       </div>
-      <TicketTable table={table} data={data} setData={removeData} />
-      <p>
-        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-      </p>
-      <div className="btn-group" role="group">
-        <button type="button" className="btn btn-primary" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          {'<'}
-        </button>
-        <button type="button" className="btn btn-primary" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          {'>'}
-        </button>
-      </div>
+      <TicketTable table={table} />
+      <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<TicketModal onCreate={onCreate} />} />
-        <Route path=":ticketId" element={<TicketModal onUpdate={onUpdate} />} />
+        <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} />} />
+        <Route path="delete/:id" element={<DeleteModal model="tickets" onDelete={onDelete}></DeleteModal>} />
       </Routes>
     </main>
   );

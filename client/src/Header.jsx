@@ -49,7 +49,7 @@ function Header() {
     <nav className="header navbar navbar-expand-md navbar-light bg-light fixed-top">
       <div className="container">
         <Link className="navbar-brand" to="/" onClick={hideNavbar}>
-          <img width={200} height={50} src={logo} alt="Logo" />
+          <img width={193} height={30} src={logo} alt="Logo" />
         </Link>
         <button onClick={toggleNavbar} className="navbar-toggler" type="button" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -80,11 +80,13 @@ function Header() {
                         Clients
                       </Link>
                     </li>
-                    <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/locations" onClick={hideNavbar}>
-                        Locations
-                      </Link>
-                    </li>
+                    {user.isAdmin && (
+                      <li className="nav-item active flex">
+                        <Link className="nav-link" aria-current="page" to="/locations" onClick={hideNavbar}>
+                          Locations
+                        </Link>
+                      </li>
+                    )}
                     <li className="nav-item active flex">
                       <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
                         Courses
@@ -96,7 +98,7 @@ function Header() {
                   <>
                     <li className="nav-item active flex">
                       <Link className="nav-link" aria-current="page" to="/devices" onClick={hideNavbar}>
-                        Inventory
+                        Devices
                       </Link>
                     </li>
                     <li className="nav-item active flex">

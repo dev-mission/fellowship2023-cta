@@ -34,7 +34,7 @@ describe('/api/invites', () => {
       const response = await testSession
         .post('/api/invites')
         .set('Accept', 'application/json')
-        .send({ firstName: 'Invitee', lastName: 'Name', email: 'invitee.name@test.com', message: 'Welcome!' })
+        .send({ firstName: 'Invitee', lastName: 'Name', email: 'invitee.name@test.com', message: 'Welcome!', role: 'CTA', LocationId: 1 })
         .expect(StatusCodes.CREATED);
 
       assert(response.body?.id);
@@ -44,6 +44,7 @@ describe('/api/invites', () => {
       assert.deepStrictEqual(invite.lastName, 'Name');
       assert.deepStrictEqual(invite.email, 'invitee.name@test.com');
       assert.deepStrictEqual(invite.message, 'Welcome!');
+      assert.deepStrictEqual(invite.role, 'CTA');
       assert.deepStrictEqual(invite.CreatedByUserId, 1);
 
       const emails = nodemailerMock.mock.getSentMail();
@@ -67,6 +68,8 @@ describe('/api/invites', () => {
         lastName: 'User 1',
         email: 'invited.user.1@test.com',
         message: 'This is an invitation to Invited User 1.',
+        role: 'Inventory',
+        LocationId: 1,
         createdAt: '2022-01-29T22:58:56.000Z',
         CreatedByUserId: 1,
         acceptedAt: null,
@@ -95,14 +98,12 @@ describe('/api/invites', () => {
         .post('/api/invites/14a500b7-f14c-48cd-b815-3685a8b54370/accept')
         .set('Accept', 'application/json')
         .send({
-          LocationId: 1,
           firstName: 'Accepting',
           lastName: 'User',
           username: 'acceptinguser',
           email: 'accepting.user@test.com',
           password: 'abcd1234',
           confirmPassword: 'abcd1234',
-          role: 'Inventory',
         })
         .expect(StatusCodes.CREATED);
       const { id } = response.body;
@@ -112,6 +113,7 @@ describe('/api/invites', () => {
         LocationId: 1,
         firstName: 'Accepting',
         lastName: 'User',
+        fullName: 'Accepting User',
         email: 'accepting.user@test.com',
         isAdmin: false,
         picture: null,

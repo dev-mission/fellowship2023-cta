@@ -5,12 +5,14 @@ import _ from 'lodash';
 import models from '../../models/index.js';
 import interceptors from '../interceptors.js';
 import helpers from '../helpers.js';
+import { Op } from 'sequelize';
 
 const router = express.Router();
 
 router.get('/', interceptors.requireAdmin, async (req, res) => {
   const page = req.query.page || '1';
   const { records, pages, total } = await models.User.paginate({
+    include: [{ model: models.Location, attributes: ['name'] }],
     page,
     order: [
       ['lastName', 'ASC'],
@@ -44,6 +46,31 @@ router.get('/:id', interceptors.requireLogin, async (req, res) => {
       res.status(StatusCodes.NOT_FOUND).end();
     }
   } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
+router.get('/search/:name', async (req, res) => {
+  try {
+    const record = await models.User.findAll({
+      where: {
+        [Op.or]: [
+          {
+            firstName: {
+              [Op.like]: `%${req.params.name}%`,
+            },
+          },
+          {
+            lastName: {
+              [Op.like]: `%${req.params.name}%`,
+            },
+          },
+        ],
+      },
+    });
+    res.json(record);
+  } catch (err) {
+    console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });

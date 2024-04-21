@@ -42,13 +42,6 @@ function ClientDropMenu({ lookUp }) {
         lookUp({ target: { name: 'ClientId', value: value[0]?.id } });
       }}
       placeholder="Search for a clients..."
-      renderMenuItemChildren={(option) => (
-        <>
-          <span name="ClientId" value={option.id}>
-            {option.fullName}
-          </span>
-        </>
-      )}
     />
   );
 }
@@ -76,7 +69,7 @@ function Charger({ onChange }) {
         <Form.Label>Charger: </Form.Label>
         <Form.Label>{message}</Form.Label>
       </Form.Group>
-      <Button name="hasCharger" value={true} onSubmit={(e) => e.preventDefault()} onClick={handleChange}>
+      <Button name="hasCharger" value={true} onClick={handleChange}>
         Yes
       </Button>
       <Button name="hasCharger" value={false} onClick={handleChange}>
@@ -148,7 +141,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
     }
     if (response.ok) {
       const newData = await response.json();
-      newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toLocaleString();
+      newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toISODate();
       if (data.id) {
         onUpdate(newData);
       } else {
@@ -197,19 +190,19 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="problem">
                   <Form.Label>Problem</Form.Label>
-                  <Form.Control name="problem" value={data.problem} type="text" autoFocus onChange={onChange} />
+                  <Form.Control name="problem" value={data.problem || ''} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="troubleshooting">
                   <Form.Label>Troubleshooting</Form.Label>
-                  <Form.Control name="troubleshooting" value={data.troubleshooting} type="text" autoFocus onChange={onChange} />
+                  <Form.Control name="troubleshooting" value={data.troubleshooting || ''} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="resolution">
                   <Form.Label>Resolution</Form.Label>
-                  <Form.Control name="resolution" value={data.resolution} type="text" autoFocus onChange={onChange} />
+                  <Form.Control name="resolution" value={data.resolution || ''} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
@@ -220,13 +213,17 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeInAt">
-                  <Form.Label>Time Started: {DateTime.fromISO(data.timeInAt).toISOTime()}</Form.Label>
+                  <Form.Label>
+                    Time Started: {data.timeOutAt ? DateTime.fromISO(data.timeInAt).toLocaleString(DateTime.TIME_SIMPLE) : ' '}
+                  </Form.Label>
                   <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
               <Col xs={12} md={8}>
                 <Form.Group controlId="timeOutAt">
-                  <Form.Label>Time Finished: {DateTime.fromISO(data.timeOutAt).toISOTime()}</Form.Label>
+                  <Form.Label>
+                    Time Finished: {data.timeOutAt ? DateTime.fromISO(data.timeOutAt).toLocaleString(DateTime.TIME_SIMPLE) : ' '}
+                  </Form.Label>
                   <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
@@ -236,7 +233,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="notes">
                   <Form.Label>Notes</Form.Label>
-                  <Form.Control name="notes" value={data.notes} type="text" autoFocus onChange={onChange} />
+                  <Form.Control name="notes" value={data.notes || ''} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
             </Row>
