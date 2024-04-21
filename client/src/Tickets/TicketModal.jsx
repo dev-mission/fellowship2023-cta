@@ -66,13 +66,12 @@ function Charger({ onChange }) {
   return (
     <>
       <Form.Group>
-        <Form.Label>Charger: </Form.Label>
-        <Form.Label>{message}</Form.Label>
+        <Form.Label>Charger: {message}</Form.Label>
       </Form.Group>
-      <Button name="hasCharger" value={true} onClick={handleChange}>
+      <Button variant="primary" name="hasCharger" value={true} onClick={handleChange}>
         Yes
-      </Button>
-      <Button name="hasCharger" value={false} onClick={handleChange}>
+      </Button>{' '}
+      <Button variant="primary" name="hasCharger" value={false} onClick={handleChange}>
         No
       </Button>
     </>
@@ -166,52 +165,63 @@ const TicketModal = ({ onCreate, onUpdate }) => {
                   <ClientDropMenu lookUp={onChange} />
                 </Form.Group>
               </Col>
-            </Row>
-            <Row className="d-flex align-items-end">
-              <Col xs={12} md={8}>
+              <Col xs={9} md={6}>
                 <Dropdown
                   lookUp={onChange}
                   settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
                   path="/api/locations"
                 />
               </Col>
-              <Col xs={12} md={8}>
-                <Form.Group controlId="serialNumber">
-                  <Form.Label>Serial Number</Form.Label>
-                  <Form.Control name="serialNumber" value={data.serialNumber || ''} type="text" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={12} md={8}>
+            </Row>
+            <Row>
+              <Col xs={9} md={6}>
                 <Form.Group controlId="device">
                   <Form.Label>Device</Form.Label>
                   <Form.Control name="device" value={data.device || ''} type="text" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
-              <Col xs={12} md={8}>
+              <Col xs={9} md={6}>
+                <Form.Group controlId="serialNumber">
+                  <Form.Label>Serial Number</Form.Label>
+                  <Form.Control name="serialNumber" value={data.serialNumber || ''} type="text" autoFocus onChange={onChange} />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={18} md={12}>
                 <Form.Group controlId="problem">
                   <Form.Label>Problem</Form.Label>
-                  <Form.Control name="problem" value={data.problem || ''} type="text" autoFocus onChange={onChange} />
+                  <Form.Control as="textarea" name="problem" autoFocus value={data.problem || ''} type="text" onChange={onChange} rows={3} />
                 </Form.Group>
               </Col>
-              <Col xs={12} md={8}>
+            </Row>
+            <Row>
+              <Col xs={18} md={12}>
                 <Form.Group controlId="troubleshooting">
                   <Form.Label>Troubleshooting</Form.Label>
-                  <Form.Control name="troubleshooting" value={data.troubleshooting || ''} type="text" autoFocus onChange={onChange} />
+                  <Form.Control as="textarea" name="troubleshooting" value={data.troubleshooting || ''} type="text" autoFocus onChange={onChange} rows={3}/>
                 </Form.Group>
               </Col>
-              <Col xs={12} md={8}>
+            </Row>
+              <Col xs={18} md={12}>
                 <Form.Group controlId="resolution">
                   <Form.Label>Resolution</Form.Label>
-                  <Form.Control name="resolution" value={data.resolution || ''} type="text" autoFocus onChange={onChange} />
+                  <Form.Control as="textarea" name="resolution" value={data.resolution || ''} type="text" autoFocus onChange={onChange} rows={3} />
                 </Form.Group>
               </Col>
-              <Col xs={12} md={8}>
+            <Row>
+              <Col xs={9} md={6}>
                 <Form.Group controlId="Date">
                   <Form.Label>Date</Form.Label>
                   <Form.Control name="dateOn" value={DateTime.fromISO(data.dateOn).toISODate()} type="date" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
-              <Col xs={12} md={8}>
+              <Col xs={9} md={6}>
+                <Charger onChange={onChange}></Charger>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={9} md={6}>
                 <Form.Group controlId="timeInAt">
                   <Form.Label>
                     Time Started: {data.timeOutAt ? DateTime.fromISO(data.timeInAt).toLocaleString(DateTime.TIME_SIMPLE) : ' '}
@@ -219,7 +229,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
                   <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
-              <Col xs={12} md={8}>
+              <Col xs={9} md={6}>
                 <Form.Group controlId="timeOutAt">
                   <Form.Label>
                     Time Finished: {data.timeOutAt ? DateTime.fromISO(data.timeOutAt).toLocaleString(DateTime.TIME_SIMPLE) : ' '}
@@ -227,13 +237,12 @@ const TicketModal = ({ onCreate, onUpdate }) => {
                   <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
                 </Form.Group>
               </Col>
-              <Col xs={12} md={8}>
-                <Charger onChange={onChange}></Charger>
-              </Col>
-              <Col xs={12} md={8}>
+            </Row>
+            <Row>
+              <Col xs={18} md={12}>
                 <Form.Group controlId="notes">
                   <Form.Label>Notes</Form.Label>
-                  <Form.Control name="notes" value={data.notes || ''} type="text" autoFocus onChange={onChange} />
+                  <Form.Control as="textarea" name="notes" value={data.notes || ''} type="text" autoFocus onChange={onChange} rows={3}/>
                 </Form.Group>
               </Col>
             </Row>
