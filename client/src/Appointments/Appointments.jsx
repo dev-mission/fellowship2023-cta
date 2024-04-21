@@ -24,9 +24,9 @@ const columns = [
     header: 'Time',
     cell: ({ row }) => (
       <p>
-        {DateTime.fromISO(row.original.timeInAt).toISOTime().slice(0, 5) +
+        {DateTime.fromISO(row.original.timeInAt).toISOTime()?.slice(0, 5) +
           '-' +
-          DateTime.fromISO(row.original.timeOutAt).toISOTime().slice(0, 5)}
+          DateTime.fromISO(row.original.timeOutAt).toISOTime()?.slice(0, 5)}
       </p>
     ),
   },
@@ -152,8 +152,8 @@ const Appointments = () => {
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<AppointmentsModal onCreate={onCreate} />} />
-        <Route path="edit/:locationId" element={<AppointmentsModal onUpdate={onUpdate} />} />
-        <Route path="delete/:locationId" element={<DeleteModal model="locations" onDelete={onDelete} />} />
+        <Route path="edit/:appointmentId" element={<AppointmentsModal onUpdate={onUpdate} />} />
+        <Route path="delete/:id" element={<DeleteModal model="appointments" onDelete={onDelete} />} />
       </Routes>
     </main>
   );
