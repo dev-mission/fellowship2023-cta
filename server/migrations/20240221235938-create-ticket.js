@@ -47,7 +47,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       serialNumber: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
       },
       device: {
         type: Sequelize.TEXT,

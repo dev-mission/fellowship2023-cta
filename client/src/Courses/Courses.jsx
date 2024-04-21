@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
-import {
-  getCoreRowModel,
-  getFilteredRowModel,
-  // getSortedRowModel,
-  useReactTable,
-  flexRender,
-} from '@tanstack/react-table';
+import { getCoreRowModel, useReactTable, flexRender } from '@tanstack/react-table';
 import PropTypes from 'prop-types';
-import { AddLocationModal, EditLocationModal, DeleteModal } from '../Components';
+import { DeleteModal } from '../Components';
+import AddCourseModal from './AddCourseModal';
+import EditCourseModal from './EditCourseModal';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
@@ -15,61 +11,11 @@ import { useLocation } from 'react-router-dom';
 const columns = [
   {
     accessorKey: 'name',
-    header: 'Location Name',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'address1',
-    header: 'Address 1',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'address2',
-    header: 'Address 2',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'city',
-    header: 'City',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'state',
-    header: 'State',
-    enableColumnFilter: true,
-  },
-  {
-    accessorKey: 'zipCode',
-    header: 'Zip Code',
-    enableColumnFilter: true,
+    header: 'Course Name',
   },
 ];
 
-const Filters = ({ setColumnFilters }) => {
-  const onFilterChange = (id, value) => setColumnFilters((prev) => prev.filter((f) => f.id !== id).concat({ id, value }));
-
-  return (
-    <form className="d-flex" role="search">
-      <div className="input-group">
-        <span className="input-group-text" id="basic-addon1">
-          <i className="bi bi-search" />
-        </span>
-        <input
-          type="search"
-          className="form-control me-2"
-          placeholder="Search Locations"
-          onChange={(e) => onFilterChange('name', e.target.value)}
-        />
-      </div>
-    </form>
-  );
-};
-
-Filters.propTypes = {
-  setColumnFilters: PropTypes.func,
-};
-
-const LocationTable = ({ table, data, setData }) => {
+const CourseTable = ({ table, data, setData }) => {
   const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
   const [toggleEditModal, setToggleEditModal] = useState(false);
   const [editData, setEditData] = useState({});
@@ -92,11 +38,6 @@ const LocationTable = ({ table, data, setData }) => {
       setEditData({
         id: row.original.id,
         name: row.original.name,
-        address1: row.original.address1,
-        address2: row.original.address2,
-        city: row.original.city,
-        state: row.original.state,
-        zipCode: row.original.zipCode,
       });
     } catch (err) {
       console.log(err);
@@ -144,9 +85,9 @@ const LocationTable = ({ table, data, setData }) => {
           row={propRow}
           data={data}
           setData={setData}
-          model="locations"
+          model="courses"
         />
-        <EditLocationModal
+        <EditCourseModal
           toggleEditModal={toggleEditModal}
           setToggleEditModal={setToggleEditModal}
           row={propRow}
@@ -160,15 +101,14 @@ const LocationTable = ({ table, data, setData }) => {
   );
 };
 
-LocationTable.propTypes = {
+CourseTable.propTypes = {
   table: PropTypes.object,
   data: PropTypes.array,
   setData: PropTypes.func,
 };
 
-const Locations = () => {
+const Courses = () => {
   const [data, setData] = useState();
-  const [columnFilters, setColumnFilters] = useState([]);
   const [toggleAddModal, setToggleAddModal] = useState(false);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
@@ -176,7 +116,7 @@ const Locations = () => {
   const [lastPage, setLastPage] = useState(1);
 
   useEffect(() => {
-    Api.locations.index(page).then((response) => {
+    Api.courses.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -194,12 +134,9 @@ const Locations = () => {
     data: data || [],
     columns,
     state: {
-      columnFilters,
       data,
     },
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    // getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -208,14 +145,13 @@ const Locations = () => {
         <button type="button" className="btn btn-primary d-flex align-items-center" onClick={() => setToggleAddModal(true)}>
           New <i className="bi bi-plus-lg" />
         </button>
-        <AddLocationModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
-        <i className="bi bi-person-fill">Locations</i>
-        <Filters setColumnFilters={setColumnFilters} />
+        <AddCourseModal toggleAddModal={toggleAddModal} setToggleAddModal={setToggleAddModal} data={data} setData={setData} />
+        <i className="bi bi-person-fill">Courses</i>
       </div>
-      <LocationTable table={table} data={data} setData={setData} />
+      <CourseTable table={table} data={data} setData={setData} />
       <Pagination page={page} lastPage={lastPage} />
     </main>
   );
 };
 
-export default Locations;
+export default Courses;

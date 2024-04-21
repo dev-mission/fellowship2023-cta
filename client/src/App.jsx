@@ -8,12 +8,18 @@ import AppRedirects from './AppRedirects';
 import Header from './Header';
 import Home from './Home';
 import Login from './Login';
-import { Appointments, Clients, Donors, Inventory, Locations, Tickets } from './Pages';
 import AdminRoutes from './Admin/AdminRoutes';
 import InvitesRoutes from './Invites/InvitesRoutes';
 import PasswordsRoutes from './Passwords/PasswordsRoutes';
 import Register from './Register';
 import UsersRoutes from './Users/UsersRoutes';
+import Locations from './Locations/Locations';
+import Donors from './Donors/Donors';
+import Courses from './Courses/Courses';
+import Appointments from './Appointments/Appointments';
+import Tickets from './Tickets/Tickets';
+import Clients from './Clients/Clients';
+import Devices from './Devices/Devices';
 
 function App() {
   const staticContext = useStaticContext();
@@ -34,12 +40,13 @@ function App() {
                 {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && <Route path="/register" element={<Register />} />}
                 <Route path="/account/*" element={<UsersRoutes />} />
                 <Route path="/admin/*" element={<AdminRoutes />} />
-                <Route path="/Appointments" element={<Appointments />} />
-                <Route path="/Tickets" element={<Tickets />} />
-                <Route path="/Clients" element={<Clients />} />
-                <Route path="/Inventory" element={<Inventory />} />
-                <Route path="/Locations" element={<Locations />} />
-                <Route path="/Donors" element={<Donors />} />
+                <Route path="/appointments/*" element={<Appointments />} />
+                <Route path="/tickets/*" element={<Tickets />} />
+                <Route path="/clients" element={<Clients />} />
+                <Route path="/devices" element={<Devices />} />
+                <Route path="/locations/*" element={<Locations />} />
+                <Route path="/donors" element={<Donors />} />
+                <Route path="/dourses" element={<Courses />} />
               </Routes>
             </AppRedirects>
           }

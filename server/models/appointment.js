@@ -10,13 +10,16 @@ export default function (sequelize, DataTypes) {
     static associate(models) {
       Appointment.belongsTo(models.Client);
       Appointment.belongsTo(models.Location);
+      Appointment.belongsTo(models.User);
     }
   }
   Appointment.init(
     {
-      dateTimeAt: DataTypes.DATE,
-      notes: DataTypes.TEXT,
-      isConfirmed: DataTypes.BOOLEAN,
+      dateOn: DataTypes.DATE,
+      timeInAt: DataTypes.DATE,
+      timeOutAt: DataTypes.DATE,
+      problem: DataTypes.TEXT,
+      status: DataTypes.TEXT,
     },
     {
       sequelize,

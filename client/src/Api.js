@@ -108,6 +108,50 @@ const Api = {
       return instance.patch(`/api/locations/${id}`, data);
     },
   },
+  donors: {
+    index(page = 1) {
+      return instance.get('/api/donors', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/donors/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/donors/${id}`, data);
+    },
+  },
+  courses: {
+    index(page = 1) {
+      return instance.get('/api/courses', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/courses/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/courses/${id}`, data);
+    },
+  },
+  appointments: {
+    index(page = 1) {
+      return instance.get('/api/appointments', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/appointments/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/appointments/${id}`, data);
+    },
+  },
+  tickets: {
+    index(page = 1) {
+      return instance.get('/api/tickets', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/tickets/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/tickets/${id}`, data);
+    },
+  },
 };
 
 export default Api;

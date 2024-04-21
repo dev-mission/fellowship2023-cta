@@ -49,7 +49,7 @@ function Header() {
     <nav className="header navbar navbar-expand-md navbar-light bg-light fixed-top">
       <div className="container">
         <Link className="navbar-brand" to="/" onClick={hideNavbar}>
-          <img width={200} height={50} src={logo} alt="Logo" />
+          <img width={193} height={30} src={logo} alt="Logo" />
         </Link>
         <button onClick={toggleNavbar} className="navbar-toggler" type="button" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -66,23 +66,30 @@ function Header() {
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Appointments" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/appointments" onClick={hideNavbar}>
                         Appointments
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Tickets" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/tickets" onClick={hideNavbar}>
                         Tickets
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Clients" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/clients" onClick={hideNavbar}>
                         Clients
                       </Link>
                     </li>
+                    {user.isAdmin && (
+                      <li className="nav-item active flex">
+                        <Link className="nav-link" aria-current="page" to="/locations" onClick={hideNavbar}>
+                          Locations
+                        </Link>
+                      </li>
+                    )}
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Locations" onClick={hideNavbar}>
-                        Locations
+                      <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
+                        Courses
                       </Link>
                     </li>
                   </>
@@ -90,12 +97,12 @@ function Header() {
                 {user.role === 'Inventory' && (
                   <>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Inventory" onClick={hideNavbar}>
-                        Inventory
+                      <Link className="nav-link" aria-current="page" to="/devices" onClick={hideNavbar}>
+                        Devices
                       </Link>
                     </li>
                     <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/Donors" onClick={hideNavbar}>
+                      <Link className="nav-link" aria-current="page" to="/donors" onClick={hideNavbar}>
                         Donors
                       </Link>
                     </li>

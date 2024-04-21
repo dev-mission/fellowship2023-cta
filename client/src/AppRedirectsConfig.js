@@ -2,6 +2,8 @@ import { matchPath } from 'react-router-dom';
 
 export const ADMIN_AUTH_PROTECTED_PATHS = ['/admin/*'];
 export const AUTH_PROTECTED_PATHS = ['/account/*'];
+export const CTA_PATHS = ['/tickets', '/appointments', '/clients', '/courses', 'locations'];
+export const INVENTORY_PATHS = ['/devices', '/donors'];
 export const REDIRECTS = [
   ['/admin', '/admin/users'],
   ['/passwords', '/passwords/forgot'],
@@ -31,6 +33,33 @@ export function handleRedirects(authContext, location, pathname, callback) {
       }
     }
   }
+  if (!match) {
+    for (const pattern of CTA_PATHS) {
+      match = matchPath(pattern, pathname);
+      if (match) {
+        if (!authContext.user) {
+          return callback('/login', { from: location });
+        } else if (authContext.user.role !== 'CTA') {
+          return callback('/');
+        }
+        break;
+      }
+    }
+  }
+  if (!match) {
+    for (const pattern of INVENTORY_PATHS) {
+      match = matchPath(pattern, pathname);
+      if (match) {
+        if (!authContext.user) {
+          return callback('/login', { from: location });
+        } else if (authContext.user.role !== 'Inventory') {
+          return callback('/');
+        }
+        break;
+      }
+    }
+  }
+
   for (const redirect of REDIRECTS) {
     let [src, dest] = redirect;
     match = matchPath(src, pathname);
