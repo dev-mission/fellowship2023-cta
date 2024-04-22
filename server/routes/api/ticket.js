@@ -98,6 +98,10 @@ router.delete('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
     if (req.user.isAdmin || ticket.UserId === req.user.id) {
+      const user = await models.User.findByPk(req.user.id);
+      const newTime = parseFloat(user.totalTime) - ticket.totalTime;
+      user.update({totalTime: newTime });
+      user.save();
       await ticket.destroy();
       res.status(StatusCodes.OK).send({ message: 'Ticket deleted' }).end();
     } else {
@@ -138,6 +142,12 @@ router.post('/', interceptors.requireCTA, async (req, res) => {
         { model: models.Location, attributes: ['name'] },
       ],
     });
+    const user = await models.User.findByPk(req.user.id);
+    const newTime = parseFloat(user.totalTime) + ticket.totalTime;
+    console.log(newTime);
+
+    user.update({totalTime: newTime });
+    user.save();
     res.status(StatusCodes.CREATED).json(ticket);
   } catch (err) {
     console.log(err);

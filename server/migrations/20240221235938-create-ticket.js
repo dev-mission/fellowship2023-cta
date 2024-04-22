@@ -70,9 +70,6 @@ module.exports = {
       timeOutAt: {
         type: Sequelize.DATE,
       },
-      totalTime: {
-        type: Sequelize.INTEGER,
-      },
       hasCharger: {
         type: Sequelize.BOOLEAN,
       },

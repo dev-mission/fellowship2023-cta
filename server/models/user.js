@@ -164,6 +164,10 @@ export default function (sequelize, DataTypes) {
           },
         },
       },
+      totalTime: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0.0,
+      },
       hashedPassword: {
         type: DataTypes.STRING,
       },
