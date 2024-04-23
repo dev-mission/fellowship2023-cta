@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { useStaticContext } from './StaticContext';
 import { useAuthContext } from './AuthContext';
 import Api from './Api';
+import UserStats from './Components/UserStats';
 
 function Home() {
   const staticContext = useStaticContext();
@@ -34,6 +35,7 @@ function Home() {
               </button>
             </>
           )}
+          {user?.isAdmin && user.role == 'CTA' && <UserStats></UserStats>}
         </div>
       </main>
     </>

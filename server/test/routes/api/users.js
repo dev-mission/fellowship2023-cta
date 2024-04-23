@@ -57,6 +57,20 @@ describe('/api/users', () => {
       });
     });
 
+    describe('GET /stats', () => {
+      it('Find total time of all users', async () => {
+        const response = await testSession.get('/api/users/stats').set('Accept', 'application/json').expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.body, 80);
+      });
+    });
+
+    describe('GET /stats/:id', () => {
+      it('Find total time of a single users', async () => {
+        const response = await testSession.get('/api/users/stats/1').set('Accept', 'application/json').expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.body, 10);
+      });
+    });
+
     describe('GET /:id where id=3', () => {
       it('returns a User by its id and checking its role', async () => {
         /// request user list

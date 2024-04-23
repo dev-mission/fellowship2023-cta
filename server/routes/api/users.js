@@ -25,6 +25,32 @@ router.get('/', interceptors.requireAdmin, async (req, res) => {
   res.json(records.map((r) => r.toJSON()));
 });
 
+/*
+ * Find totalTime of all users.
+ */
+
+router.get('/stats', interceptors.requireAdmin, async (req, res) => {
+  const records = await models.User.findAll({
+    attributes: ['totalTime'],
+  });
+  let totalTime = 0;
+  records.map((record) => {
+    totalTime = totalTime + parseFloat(record.totalTime);
+  });
+  res.json(totalTime);
+});
+
+/*
+ * Find totalTime of specific users.
+ */
+
+router.get('/stats/:id', interceptors.requireAdmin, async (req, res) => {
+  const records = await models.User.findByPk(req.params.id, {
+    attributes: ['totalTime'],
+  });
+  res.json(parseFloat(records.totalTime));
+});
+
 router.get('/me', (req, res) => {
   if (req.user) {
     res.json(req.user.toJSON());

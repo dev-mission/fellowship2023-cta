@@ -31,8 +31,7 @@ export default function (sequelize, DataTypes) {
           let end = DateTime.fromJSDate(this.timeOutAt);
           let start = DateTime.fromJSDate(this.timeInAt);
           return parseFloat(end.diff(start, 'hours').toObject().hours.toFixed(2));
-        },  
-
+        },
       },
       hasCharger: DataTypes.BOOLEAN,
       notes: DataTypes.TEXT,

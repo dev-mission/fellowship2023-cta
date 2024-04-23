@@ -8,6 +8,7 @@
       "lastName": "User",
       "email": "admin.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 10,
       "isAdmin": true
     }
   },
@@ -20,6 +21,7 @@
       "lastName": "User",
       "email": "Inventory1.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 10,
       "role": "Inventory"
     }
   },
@@ -32,6 +34,7 @@
       "lastName": "User",
       "email": "admin1.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 10,
       "isAdmin": true
     }
   },
@@ -44,7 +47,8 @@
       "lastName": "User",
       "email": "cta.user@test.com",
       "role": "CTA",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS"
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 10
     }
   },
   {
@@ -56,6 +60,7 @@
       "lastName": "User",
       "email": "inventory2.user@test.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 10,
       "role": "Inventory"
     }
   },
@@ -68,7 +73,8 @@
       "lastName": "Li",
       "role": "CTA",
       "email": "KevinLi@gmail.com",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS"
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 30
     }
   }
 ]
