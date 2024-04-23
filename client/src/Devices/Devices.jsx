@@ -1,49 +1,41 @@
 import { useState, useEffect } from 'react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
-import { useLocation , Link, Routes, Route} from 'react-router-dom';
+import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import DeviceTable from './DeviceTable';
 import DeviceModal from './DeviceModal';
+import DeleteModal from '../Components/DeleteModal';
 
 const columns = [
-  
   {
     accessorKey: 'id',
     header: 'Device#',
-
   },
   {
     accessorKey: 'deviceType',
     header: 'Device Type',
-    
   },
   {
     accessorKey: 'model',
     header: 'model',
-   
   },
   {
     accessorKey: 'brand',
     header: 'Brand',
-    
   },
   {
     accessorKey: 'serialNum',
     header: 'S/N',
-    
   },
-  
+
   {
     accessorKey: 'condition',
     header: 'Condition',
-    
   },
   {
     accessorKey: 'value',
     header: 'Value',
-    
   },
 
   {
@@ -56,9 +48,6 @@ const columns = [
     header: 'Donor',
   },
 ];
-
-
-
 
 const Devices = () => {
   const [data, setData] = useState();
@@ -84,17 +73,18 @@ const Devices = () => {
     });
   }, [page]);
 
-
-  function onCreate(device) {
+  const onCreate = (device) => {
     setData([...data, device]);
     console.log(data);
-  }
+  };
 
-  function onUpdate(device) {
+  const onUpdate = (device) => {
     setData(data.map((d) => (d.id == device.id ? { ...device } : d)));
-  }
+  };
 
-  
+  const onDelete = (deviceId) => {
+    setData(data.filter((d) => d.id != deviceId));
+  };
 
   const table = useReactTable({
     data: data || [],
@@ -107,7 +97,7 @@ const Devices = () => {
 
   console.log(table.getRowModel().rows);
 
-  const onChange = (e) => { };
+  const onChange = () => {};
 
   return (
     <main className="container">
@@ -121,20 +111,16 @@ const Devices = () => {
             <span className="input-group-text" id="basic-addon1">
               <i className="bi bi-search" />
             </span>
-            <input
-              type="search"
-              className="form-control me-2"
-              placeholder="Search Devices"
-              onChange={onChange}
-            />
+            <input type="search" className="form-control me-2" placeholder="Search Devices" onChange={onChange} />
           </div>
         </form>
       </div>
-      <DeviceTable table={table} data={data} setData={setData} />
+      <DeviceTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<DeviceModal onCreate={onCreate} />} />
-        <Route path=":deviceId" element={<DeviceModal onUpdate={onUpdate} />} />
+        <Route path="edit/:deviceId" element={<DeviceModal onUpdate={onUpdate} />} />
+        <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} />} />
       </Routes>
     </main>
   );

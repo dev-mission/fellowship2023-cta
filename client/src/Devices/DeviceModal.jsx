@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-
 const DeviceModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('New Device');
@@ -74,8 +73,8 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
       } else {
         onCreate(newData);
       }
-      navigate('/devices');
     }
+    navigate('/devices');
   };
 
   return (
@@ -84,9 +83,8 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      <Container>
+        <Container>
           <Form>
-            
             <h5>Specs</h5>
             <Row>
               <Col xs={18} md={4}>
@@ -101,7 +99,6 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
                   <Form.Control name="locationName" autoFocus value={data.locationName} onChange={onChange} />
                 </Form.Group>
               </Col>
-              
             </Row>
 
             <Row>
@@ -118,7 +115,7 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
                 </Form.Group>
               </Col>
             </Row>
-            
+
             <Row>
               <Col xs={18} md={12}>
                 <Form.Group controlId="serialNum">
@@ -127,7 +124,7 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
                 </Form.Group>
               </Col>
             </Row>
-            
+
             <Row>
               <Col xs={18} md={6}>
                 <Form.Group controlId="cpu">
@@ -142,7 +139,7 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
                 </Form.Group>
               </Col>
             </Row>
-            
+
             <Row>
               <Col xs={18} md={6}>
                 <Form.Group controlId="storage">
@@ -173,7 +170,7 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
                 </Form.Group>
               </Col>
             </Row>
-          
+
             <hr></hr>
             <h5>Additional Information</h5>
             <Row>
@@ -190,7 +187,7 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
                 </Form.Group>
               </Col>
             </Row>
-            
+
             <Row>
               <Col xs={18} md={6}>
                 <Form.Group controlId="intern">
@@ -213,13 +210,12 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
                 </Form.Group>
               </Col>
             </Row>
-
           </Form>
         </Container>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => navigate('/devices')}>
-          Cancel
+          Close
         </Button>
         <Button variant="primary" onClick={submitDevice}>
           Submit
