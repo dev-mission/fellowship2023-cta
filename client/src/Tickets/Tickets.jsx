@@ -33,9 +33,8 @@ const columns = [
     header: 'Problem',
   },
   {
-    accessorKey: 'createdAt',
+    accessorKey: 'dateOn',
     header: 'Date Met',
-    cell: ({ row }) => <p>{DateTime.fromISO(row.original.createdAt).toISODate()}</p>,
   },
 ];
 

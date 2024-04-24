@@ -234,7 +234,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={9} md={6}>
                 <Form.Group controlId="Date">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control name="dateOn" value={DateTime.fromISO(data.dateOn).toISODate()} type="date" autoFocus onChange={onChange} />
+                  <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={9} md={6}>
