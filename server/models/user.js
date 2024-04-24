@@ -38,6 +38,7 @@ export default function (sequelize, DataTypes) {
         'role',
         'fullName',
         'LocationId',
+        'totalTime',
       ]);
       if (this.Location) {
         data.Location = this.Location.toJSON();
