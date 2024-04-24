@@ -63,7 +63,7 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Client.findByPk(req.params.id);
     await record.destroy();
-    res.status(StatusCodes.OK).end();
+    res.status(StatusCodes.OK).send({});
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

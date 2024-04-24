@@ -42,11 +42,11 @@ function App() {
                 <Route path="/admin/*" element={<AdminRoutes />} />
                 <Route path="/appointments/*" element={<Appointments />} />
                 <Route path="/tickets/*" element={<Tickets />} />
-                <Route path="/clients" element={<Clients />} />
+                <Route path="/clients/*" element={<Clients />} />
                 <Route path="/devices/*" element={<Devices />} />
                 <Route path="/locations/*" element={<Locations />} />
                 <Route path="/donors" element={<Donors />} />
-                <Route path="/dourses" element={<Courses />} />
+                <Route path="/courses" element={<Courses />} />
               </Routes>
             </AppRedirects>
           }
