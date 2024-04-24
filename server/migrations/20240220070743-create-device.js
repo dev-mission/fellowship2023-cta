@@ -57,6 +57,9 @@ module.exports = {
       serialNum: {
         type: Sequelize.TEXT,
       },
+      storage: {
+        type: Sequelize.TEXT,
+      },
       cpu: {
         type: Sequelize.TEXT,
       },
@@ -73,6 +76,12 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       condition: {
+        type: Sequelize.TEXT,
+      },
+      batteryLastChecked: {
+        type: Sequelize.TEXT,
+      },
+      intern: {
         type: Sequelize.TEXT,
       },
       value: {

@@ -1,6 +1,7 @@
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
+import helpers from '../helpers.js';
 
 import models from '../../models/index.js';
 
@@ -8,8 +9,22 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   //Need to handle interceptor for inventory role
-  const records = await models.Device.findAll();
-  res.json(records);
+  const page = req.query.page || '1';
+  const { records, pages, total } = await models.Device.paginate({
+    page,
+    include: [
+      {
+        model: models.Location,
+        attributes: ['name'],
+      },
+      {
+        model: models.Donor,
+        attributes: ['name'],
+      },
+    ],
+  });
+  helpers.setPaginationHeaders(req, res, page, pages, total);
+  res.json(records.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
@@ -37,6 +52,9 @@ router.patch('/:id', async (req, res) => {
         'model',
         'brand',
         'serialNum',
+        'storage',
+        'batteryLastChecked',
+        'intern',
         'cpu',
         'ram',
         'os',
@@ -76,6 +94,9 @@ router.post('/', async (req, res) => {
       'model',
       'brand',
       'serialNum',
+      'storage',
+      'batteryLastChecked',
+      'intern',
       'cpu',
       'ram',
       'os',
