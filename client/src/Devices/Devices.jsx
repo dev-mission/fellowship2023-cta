@@ -3,8 +3,8 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
 import { useLocation, Link, Routes, Route } from 'react-router-dom';
-import DeviceTable from './DeviceTable';
-import DeviceModal from './DeviceModal';
+import DevicesTable from './DevicesTable';
+import DevicesModal from './DevicesModal';
 import DeleteModal from '../Components/DeleteModal';
 
 const columns = [
@@ -75,11 +75,10 @@ const Devices = () => {
 
   const onCreate = (device) => {
     setData([...data, device]);
-    console.log(data);
   };
 
   const onUpdate = (device) => {
-    setData(data.map((d) => (d.id == device.id ? { ...device } : d)));
+    setData(data.map((d) => (d.id === device.id ? { ...device } : d)));
   };
 
   const onDelete = (deviceId) => {
@@ -94,8 +93,6 @@ const Devices = () => {
     },
     getCoreRowModel: getCoreRowModel(),
   });
-
-  console.log(table.getRowModel().rows);
 
   const onChange = () => {};
 
@@ -115,11 +112,11 @@ const Devices = () => {
           </div>
         </form>
       </div>
-      <DeviceTable table={table} />
+      <DevicesTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path="new" element={<DeviceModal onCreate={onCreate} />} />
-        <Route path="edit/:deviceId" element={<DeviceModal onUpdate={onUpdate} />} />
+        <Route path="new" element={<DevicesModal onCreate={onCreate} />} />
+        <Route path="edit/:deviceId" element={<DevicesModal onUpdate={onUpdate} />} />
         <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} />} />
       </Routes>
     </main>

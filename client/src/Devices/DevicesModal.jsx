@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Modal, Row, Dropdown, DropdownButton } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import DropDown from '../Components/DropDown';
+import DropMenu from '../Components/DropMenu';
 
-const DeviceModal = ({ onCreate, onUpdate }) => {
+const DevicesModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState('New Device');
   const { deviceId } = useParams();
+  const [title, setTitle] = useState('New Device');
+  const [deviceTypeVal, setDeviceTypeVal] = useState('Type');
   const [data, setData] = useState({
-    deviceType: '',
+    deviceType: deviceTypeVal,
     model: '',
     brand: '',
     serialNum: '',
@@ -19,6 +22,7 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
     storage: '',
     batteryLastChecked: '',
     intern: '',
+    donor: '',
     username: '',
     password: '',
     condition: '',
@@ -27,7 +31,7 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
   });
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const response = await fetch(`/api/devices/${deviceId}`);
       if (response.ok) {
         const data = await response.json();
@@ -88,16 +92,28 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
             <h5>Specs</h5>
             <Row>
               <Col xs={18} md={4}>
-                <Form.Group controlId="devieType">
+              <Form.Group controlId="clientName">
                   <Form.Label>Device Type</Form.Label>
-                  <Form.Control name="deviceType" autoFocus value={data.deviceType} onChange={onChange} />
+                    <DropdownButton
+                      id="deviceType"
+                      title={deviceTypeVal}
+                      onSelect={(e) => {
+                        setDeviceTypeVal(e);
+                        onChange({ target: { name: 'deviceType', value: e } });
+                      }}>
+                      <Dropdown.Item eventKey="Laptop">Laptop</Dropdown.Item>
+                      <Dropdown.Item eventKey="Desktop">Desktop</Dropdown.Item>
+                      <Dropdown.Item eventKey="Tablet">Tablet</Dropdown.Item>
+                      <Dropdown.Item eventKey="Mobile">Mobile</Dropdown.Item>
+                    </DropdownButton>
                 </Form.Group>
               </Col>
               <Col xs={18} md={8}>
-                <Form.Group controlId="locationName">
-                  <Form.Label>Location Name</Form.Label>
-                  <Form.Control name="locationName" autoFocus value={data.locationName} onChange={onChange} />
-                </Form.Group>
+                <DropDown
+                  lookUp={onChange}
+                  settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Select Location' }}
+                  path="/api/locations"
+                />
               </Col>
             </Row>
 
@@ -174,6 +190,19 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
             <hr></hr>
             <h5>Additional Information</h5>
             <Row>
+              <Col xs={18} md={12}>
+              <Form.Group controlId="donor">
+                  <Form.Label>Donor</Form.Label>
+                  <DropMenu
+                    lookUp={onChange}
+                    settings={{ route: 'donors', id: 'DonorId', labelKey: 'name', placeholder: 'Name of Donor' }}
+                  />
+                </Form.Group>
+              </Col>
+
+            </Row>
+
+            <Row>
               <Col xs={18} md={6}>
                 <Form.Group controlId="condition">
                   <Form.Label>Condition</Form.Label>
@@ -190,9 +219,12 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
 
             <Row>
               <Col xs={18} md={6}>
-                <Form.Group controlId="intern">
+              <Form.Group controlId="intern">
                   <Form.Label>Intern</Form.Label>
-                  <Form.Control name="intern" autoFocus value={data.intern} onChange={onChange} />
+                  <DropMenu
+                    lookUp={onChange}
+                    settings={{ route: 'users', id: 'UserId', labelKey: 'fullName', placeholder: 'Select the Intern...' }}
+                  />
                 </Form.Group>
               </Col>
               <Col xs={18} md={6}>
@@ -225,9 +257,9 @@ const DeviceModal = ({ onCreate, onUpdate }) => {
   );
 };
 
-DeviceModal.propTypes = {
+DevicesModal.propTypes = {
   onCreate: PropTypes.func,
   onUpdate: PropTypes.func,
 };
 
-export default DeviceModal;
+export default DevicesModal;

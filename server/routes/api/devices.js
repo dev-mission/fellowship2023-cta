@@ -41,30 +41,9 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   //Need to handle interceptor for inventory role
   try {
-    const deviceId = req.params.id;
-    const record = await models.Device.findByPk(deviceId);
-    if (!record) {
-      return res.status(StatusCodes.NOT_FOUND).json({ error: 'Device not found' });
-    }
-    await record.update(
-      _.pick(req.body, [
-        'deviceType',
-        'model',
-        'brand',
-        'serialNum',
-        'storage',
-        'batteryLastChecked',
-        'intern',
-        'cpu',
-        'ram',
-        'os',
-        'username',
-        'password',
-        'condition',
-        'value',
-        'notes',
-      ]),
-    );
+    const record = await models.Device.findByPk(req.params.id);
+    await record.update(_.pick(req.body, ['LocationId', 'DonorId', 'UserId']));
+    await record.save();
     res.json(record);
   } catch (err) {
     console.log(err);
@@ -77,7 +56,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const record = await models.Device.findByPk(req.params.id);
     await record.destroy();
-    res.status(StatusCodes.OK).end();
+    res.status(StatusCodes.OK).send({});
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
@@ -85,40 +64,50 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  //Need to handle interceptor for inventory role
-  try {
-    let device = {};
-    let deviceInfo;
-    (deviceInfo = _.pick(req.body, [
-      'deviceType',
-      'model',
-      'brand',
-      'serialNum',
-      'storage',
-      'batteryLastChecked',
-      'intern',
-      'cpu',
-      'ram',
-      'os',
-      'username',
-      'password',
-      'condition',
-      'value',
-      'notes',
-    ])),
-      (device = {
-        ...deviceInfo,
-        DonorId: req.body.DonorId,
-        LocationId: req.body.LocationId,
-        UserId: req.body.UserId,
-        ClientId: req.body.ClientId,
+ 
+    try {
+      const device = await models.Device.create(
+        _.pick(req.body, [
+          'LocationId',
+          'DonorId',
+          'UserId',
+          'deviceType',
+          'model',
+          'brand',
+          'serialNum',
+          'storage',
+          'batteryLastChecked',
+          'intern',
+          'cpu',
+          'ram',
+          'os',
+          'username',
+          'password',
+          'condition',
+          'value',
+          'notes',
+          ]));
+      
+      const currentDevice = await models.Device.findByPk(device.id, {
+        include: [
+          {
+            model: models.Donor,
+            attributes: ['name'],
+          },
+          {
+            model: models.User,
+            attributes: ['fullName'],
+          },
+          { model: models.Location,
+             attributes: ['name'], 
+          },
+        ],
       });
-    const record = await models.Device.create(device);
-    res.status(StatusCodes.CREATED).json(record);
-  } catch (err) {
-    console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
-  }
-});
+      res.status(StatusCodes.CREATED).json(currentDevice);
+    } catch (err) {
+      console.log(err);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    }
+  });
 
 export default router;
