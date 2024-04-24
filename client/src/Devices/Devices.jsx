@@ -99,11 +99,6 @@ const Devices = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-<<<<<<< HEAD
-=======
-  console.log(table.getRowModel().rows);
-
->>>>>>> main
   const onChange = () => {};
 
   return (
@@ -122,19 +117,11 @@ const Devices = () => {
           </div>
         </form>
       </div>
-<<<<<<< HEAD
       <DevicesTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<DevicesModal onCreate={onCreate} />} />
         <Route path="edit/:deviceId" element={<DevicesModal onUpdate={onUpdate} />} />
-=======
-      <DeviceTable table={table} />
-      <Pagination page={page} lastPage={lastPage} />
-      <Routes>
-        <Route path="new" element={<DeviceModal onCreate={onCreate} />} />
-        <Route path="edit/:deviceId" element={<DeviceModal onUpdate={onUpdate} />} />
->>>>>>> main
         <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} />} />
       </Routes>
     </main>
