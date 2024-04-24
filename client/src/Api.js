@@ -163,6 +163,17 @@ const Api = {
       return instance.patch(`/api/tickets/${id}`, data);
     },
   },
+  clients: {
+    index(page = 1) {
+      return instance.get('/api/clients', { params: { page } });
+    },
+    get(id) {
+      return instance.get(`/api/clients/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/clients/${id}`, data);
+    },
+  },
 };
 
 export default Api;
