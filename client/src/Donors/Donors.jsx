@@ -42,7 +42,6 @@ const columns = [
   },
 ];
 
-
 const Donors = () => {
   const [data, setData] = useState();
   const { search } = useLocation();
