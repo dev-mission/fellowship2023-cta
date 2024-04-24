@@ -244,11 +244,13 @@ const TicketModal = ({ onCreate, onUpdate }) => {
             <Row>
               <Col xs={9} md={6}>
                 <Form.Group controlId="timeInAt">
-                  <FormControl name="timeInAt" value={data.timeInAt} type="time" onChange={onChange} ></FormControl>
+                  <Form.Label>Time Started: </Form.Label>
+                  <FormControl name="timeInAt" value={data.timeInAt} type="time" onChange={onChange}></FormControl>
                 </Form.Group>
               </Col>
               <Col xs={9} md={6}>
                 <Form.Group controlId="timeOutAt">
+                  <Form.Label>Time Finished: </Form.Label>
                   <FormControl name="timeOutAt" value={data.timeOutAt} type="time" onChange={onChange}></FormControl>
                 </Form.Group>
               </Col>
