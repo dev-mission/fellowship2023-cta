@@ -4,7 +4,6 @@ import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
-
 const ClientModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('New Client');
@@ -141,7 +140,13 @@ const ClientModal = ({ onCreate, onUpdate }) => {
               <Col xs={12} md={8}>
                 <Form.Group controlId="updatedAt">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control name="updatedAt" value={DateTime.fromISO(data.updatedAt).toISODate()} type="date" autoFocus onChange={onChange} />
+                  <Form.Control
+                    name="updatedAt"
+                    value={DateTime.fromISO(data.updatedAt).toISODate()}
+                    type="date"
+                    autoFocus
+                    onChange={onChange}
+                  />
                 </Form.Group>
               </Col>
             </Row>

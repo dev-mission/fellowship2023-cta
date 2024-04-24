@@ -1,13 +1,9 @@
-
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { flexRender } from '@tanstack/react-table';
 
-const ClientTable = ({ table}) => {
+const ClientTable = ({ table }) => {
   const navigate = useNavigate();
-
-
-
 
   return (
     <table className="table mt-5">
