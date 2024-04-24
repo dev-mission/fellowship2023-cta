@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-
+import { DateTime } from 'luxon';
 export default function (sequelize, DataTypes) {
   class Ticket extends Model {
     /**
@@ -25,7 +25,14 @@ export default function (sequelize, DataTypes) {
       dateOn: DataTypes.DATE,
       timeInAt: DataTypes.DATE,
       timeOutAt: DataTypes.DATE,
-      totalTime: DataTypes.INTEGER,
+      totalTime: {
+        type: DataTypes.VIRTUAL(DataTypes.DECIMAL, ['timeInAt', 'timeOutAt']),
+        get() {
+          let end = DateTime.fromJSDate(this.timeOutAt);
+          let start = DateTime.fromJSDate(this.timeInAt);
+          return parseFloat(end.diff(start, 'hours').toObject().hours.toFixed(2));
+        },
+      },
       hasCharger: DataTypes.BOOLEAN,
       notes: DataTypes.TEXT,
     },

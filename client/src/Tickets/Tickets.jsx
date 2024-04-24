@@ -93,7 +93,7 @@ const Tickets = () => {
             <span className="input-group-text" id="basic-addon1">
               <i className="bi bi-search" />
             </span>
-            <input type="search" className="form-control me-2" placeholder="Search Users" />
+            <input type="search" className="form-control me-2" placeholder="Search Tickets" />
           </div>
         </form>
       </div>
