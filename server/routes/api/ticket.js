@@ -60,7 +60,6 @@ router.patch('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
     // const oldTotalTime = ticket.totalTime;
-    console.log(req.body);
     await ticket.update(
       _.pick(req.body, [
         'AppointmentId',

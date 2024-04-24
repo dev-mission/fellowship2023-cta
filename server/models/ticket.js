@@ -22,14 +22,14 @@ export default function (sequelize, DataTypes) {
       problem: DataTypes.TEXT,
       troubleshooting: DataTypes.TEXT,
       resolution: DataTypes.TEXT,
-      dateOn: DataTypes.DATE,
-      timeInAt: DataTypes.DATE,
-      timeOutAt: DataTypes.DATE,
+      dateOn: DataTypes.DATEONLY,
+      timeInAt: DataTypes.TIME,
+      timeOutAt: DataTypes.TIME,
       totalTime: {
         type: DataTypes.VIRTUAL(DataTypes.DECIMAL, ['timeInAt', 'timeOutAt']),
         get() {
-          let end = DateTime.fromJSDate(this.timeOutAt);
-          let start = DateTime.fromJSDate(this.timeInAt);
+          let end = DateTime.fromISO(this.timeOutAt);
+          let start = DateTime.fromISO(this.timeInAt);
           return parseFloat(end.diff(start, 'hours').toObject().hours.toFixed(2));
         },
       },
