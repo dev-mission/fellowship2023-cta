@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
-import { DateTime } from 'luxon';
 import Pagination from '../Components/Pagination';
 import DeleteModal from '../Components/DeleteModal';
 import TicketTable from './TicketTable';

@@ -43,9 +43,31 @@ router.get('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   try {
-    const record = await models.Appointment.findByPk(req.params.id);
-    await record.update(_.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'zipCode']));
+    const record = await models.Appointment.findByPk(req.params.id, {
+      include: [
+        {
+          model: models.Client,
+          attributes: ['fullName', 'phone', 'email'],
+          include: {
+            model: models.Device,
+            attributes: ['model'],
+          },
+        },
+        {
+          model: models.User,
+          attributes: ['fullName'],
+        },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
+
+    await record.update(
+      _.pick(req.body, ['ClientId', 'UserId', 'LocationId', 'state', 'dateOn', 'timeInAt', 'timeOutAt', 'problem', 'status']),
+    );
     await record.save();
+    const ticket = await models.Ticket.findOne({ where: { AppointmentId: record.id } });
+    ticket.update(_.pick(req.body, ['UserId', 'LocationId', 'ClientId', 'dateOn', 'problem', 'timeInAt', 'timeOutAt']));
+    ticket.save();
     res.json(record);
   } catch (err) {
     console.log(err);
@@ -77,10 +99,15 @@ router.post('/', async (req, res) => {
     const ticket = await models.Ticket.create(
       _.pick(req.body, ['UserId', 'LocationId', 'ClientId', 'dateOn', 'problem', 'timeInAt', 'timeOutAt']),
     );
+    //Ticket creation will need us to updateTime.
+    const user = await models.User.findByPk(req.user.id);
+    const newTime = parseFloat(user.totalTime) + ticket.totalTime;
     ticket.set({
       AppointmentId: appointment.id,
       ticketType: 'Appointment',
     });
+    user.update({ totalTime: newTime });
+    user.save();
     ticket.save();
     const currentAppointment = await models.Appointment.findByPk(appointment.id, {
       include: [

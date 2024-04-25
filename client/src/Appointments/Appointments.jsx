@@ -26,9 +26,9 @@ const columns = [
     header: 'Time',
     cell: ({ row }) => (
       <p>
-        {DateTime.fromISO(row.original.timeInAt).toISOTime()?.slice(0, 5) +
+        {DateTime.fromISO(row.original.timeInAt).toLocaleString(DateTime.TIME_SIMPLE) +
           '-' +
-          DateTime.fromISO(row.original.timeOutAt).toISOTime()?.slice(0, 5)}
+          DateTime.fromISO(row.original.timeOutAt).toLocaleString(DateTime.TIME_SIMPLE)}
       </p>
     ),
   },
@@ -71,7 +71,6 @@ const Appointments = () => {
   const [lastPage, setLastPage] = useState(1);
   // const [radioValue, setRadioValue] = useState('Upcoming');
 
-  console.log(data);
   useEffect(() => {
     Api.appointments.index(page).then((response) => {
       setData(response.data);
