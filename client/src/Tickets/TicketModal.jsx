@@ -93,6 +93,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
     timeOutAt: '',
     hasCharger: false,
     notes: '',
+    timeZone: DateTime.local().zoneName,
   });
 
   useEffect(() => {

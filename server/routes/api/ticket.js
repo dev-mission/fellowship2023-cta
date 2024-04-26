@@ -137,6 +137,7 @@ router.post('/', interceptors.requireCTA, async (req, res) => {
       'totalTime',
       'hasCharger',
       'notes',
+      'timeZone',
     ]);
     ticketInfo.UserId = req.user.id;
     const record = await models.Ticket.create(ticketInfo);
@@ -149,7 +150,7 @@ router.post('/', interceptors.requireCTA, async (req, res) => {
     });
     const user = await models.User.findByPk(req.user.id);
     const newTime = parseFloat(user.totalTime) + ticket.totalTime;
-    user.update({ totalTime: newTime });
+    user.update({ totalTime: newTime, timeZone: req.body.timeZone });
     user.save();
     res.status(StatusCodes.CREATED).json(ticket);
   } catch (err) {

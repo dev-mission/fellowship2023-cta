@@ -201,9 +201,6 @@ export default function (sequelize, DataTypes) {
           return `${this.firstName} ${this.lastName}`;
         },
       },
-      timeZone: {
-        type: DataTypes.TEXT,
-      },
     },
     {
       sequelize,

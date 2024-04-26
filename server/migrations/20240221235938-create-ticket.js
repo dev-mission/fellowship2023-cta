@@ -70,6 +70,9 @@ module.exports = {
       timeOutAt: {
         type: Sequelize.TIME,
       },
+      timeZone: {
+        type: Sequelize.TEXT,
+      },
       hasCharger: {
         type: Sequelize.BOOLEAN,
       },
