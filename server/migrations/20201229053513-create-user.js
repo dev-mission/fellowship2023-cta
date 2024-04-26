@@ -34,6 +34,9 @@ module.exports = {
         defaultValue: 0,
         type: Sequelize.DECIMAL,
       },
+      timeZone: {
+        type: Sequelize.TEXT,
+      },
       email: {
         allowNull: false,
         type: Sequelize.CITEXT,
