@@ -16,6 +16,7 @@
       "timeOutAt": "12:00",
       "totalTime": 2.0,
       "hasCharger": true,
+      "timeZone": "America/Los_Angeles",
       "notes": "TESTING TICKETS"
     }
   },
@@ -36,6 +37,7 @@
       "timeOutAt": "14:00",
       "totalTime": 2.0,
       "hasCharger": true,
+      "timeZone": "America/Los_Angeles",
       "notes": "TESTING TICKETS"
     }
   }

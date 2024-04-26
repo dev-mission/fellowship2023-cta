@@ -25,11 +25,12 @@ export default function (sequelize, DataTypes) {
       dateOn: DataTypes.DATEONLY,
       timeInAt: DataTypes.TIME,
       timeOutAt: DataTypes.TIME,
+      timeZone: DataTypes.TEXT,
       totalTime: {
-        type: DataTypes.VIRTUAL(DataTypes.DECIMAL, ['timeInAt', 'timeOutAt']),
+        type: DataTypes.VIRTUAL(DataTypes.DECIMAL, ['timeInAt', 'timeOutAt', 'timeZone']),
         get() {
-          let end = DateTime.fromISO(this.timeOutAt);
-          let start = DateTime.fromISO(this.timeInAt);
+          let end = DateTime.fromISO(this.timeOutAt).setZone(this.timeZone);
+          let start = DateTime.fromISO(this.timeInAt).setZone(this.timeZone);
           return parseFloat(end.diff(start, 'hours').toObject().hours.toFixed(2));
         },
       },
