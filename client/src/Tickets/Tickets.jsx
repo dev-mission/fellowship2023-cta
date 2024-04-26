@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
-import { DateTime } from 'luxon';
 import Pagination from '../Components/Pagination';
 import DeleteModal from '../Components/DeleteModal';
 import TicketTable from './TicketTable';
@@ -33,9 +32,8 @@ const columns = [
     header: 'Problem',
   },
   {
-    accessorKey: 'createdAt',
+    accessorKey: 'dateOn',
     header: 'Date Met',
-    cell: ({ row }) => <p>{DateTime.fromISO(row.original.createdAt).toISODate()}</p>,
   },
 ];
 
@@ -93,7 +91,7 @@ const Tickets = () => {
             <span className="input-group-text" id="basic-addon1">
               <i className="bi bi-search" />
             </span>
-            <input type="search" className="form-control me-2" placeholder="Search Users" />
+            <input type="search" className="form-control me-2" placeholder="Search Tickets" />
           </div>
         </form>
       </div>

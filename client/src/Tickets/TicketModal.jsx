@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, FormControl, Modal, Row } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
-
 import Dropdown from '../Components/DropDown';
-import TimeRange from '../Components/TimeRange';
 
 ClientDropMenu.propTypes = {
   lookUp: PropTypes.func.isRequired,
@@ -85,7 +83,6 @@ const TicketModal = ({ onCreate, onUpdate }) => {
   const [data, setData] = useState({
     ClientId: null,
     LocationId: null,
-    UserId: null,
     serialNumber: ' ',
     device: ' ',
     problem: '',
@@ -108,7 +105,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
     }
     if (ticketId) {
       fetchData();
-      setTitle('Edit Ticket');
+      setTitle(`Edit Ticket ${ticketId}`);
     }
   }, [ticketId]);
 
@@ -121,6 +118,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
   const submitTicket = async (e) => {
     e.preventDefault();
     let response;
+    console.log(data);
     if (data.id) {
       response = await fetch(`/api/tickets/${data.id}`, {
         method: 'PATCH',
@@ -140,7 +138,6 @@ const TicketModal = ({ onCreate, onUpdate }) => {
     }
     if (response.ok) {
       const newData = await response.json();
-      newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toISODate();
       if (data.id) {
         onUpdate(newData);
       } else {
@@ -237,7 +234,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
               <Col xs={9} md={6}>
                 <Form.Group controlId="Date">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control name="dateOn" value={DateTime.fromISO(data.dateOn).toISODate()} type="date" autoFocus onChange={onChange} />
+                  <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={9} md={6}>
@@ -247,18 +244,14 @@ const TicketModal = ({ onCreate, onUpdate }) => {
             <Row>
               <Col xs={9} md={6}>
                 <Form.Group controlId="timeInAt">
-                  <Form.Label>
-                    Time Started: {data.timeOutAt ? DateTime.fromISO(data.timeInAt).toLocaleString(DateTime.TIME_SIMPLE) : ' '}
-                  </Form.Label>
-                  <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
+                  <Form.Label>Time Started: </Form.Label>
+                  <FormControl name="timeInAt" value={data.timeInAt} type="time" onChange={onChange}></FormControl>
                 </Form.Group>
               </Col>
               <Col xs={9} md={6}>
                 <Form.Group controlId="timeOutAt">
-                  <Form.Label>
-                    Time Finished: {data.timeOutAt ? DateTime.fromISO(data.timeOutAt).toLocaleString(DateTime.TIME_SIMPLE) : ' '}
-                  </Form.Label>
-                  <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
+                  <Form.Label>Time Finished: </Form.Label>
+                  <FormControl name="timeOutAt" value={data.timeOutAt} type="time" onChange={onChange}></FormControl>
                 </Form.Group>
               </Col>
             </Row>

@@ -35,13 +35,13 @@ module.exports = {
         },
       },
       dateOn: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       },
       timeInAt: {
-        type: Sequelize.DATE,
+        type: Sequelize.TIME,
       },
       timeOutAt: {
-        type: Sequelize.DATE,
+        type: Sequelize.TIME,
       },
       problem: {
         type: Sequelize.TEXT,
