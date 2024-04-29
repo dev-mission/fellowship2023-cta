@@ -56,6 +56,10 @@ router.get('/:id', interceptors.requireCTA, async (req, res) => {
   }
 });
 
+/*
+Need to figure out how to update time based on patching.
+*/
+
 router.patch('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
@@ -137,6 +141,7 @@ router.post('/', interceptors.requireCTA, async (req, res) => {
       'totalTime',
       'hasCharger',
       'notes',
+      'timeZone',
     ]);
     ticketInfo.UserId = req.user.id;
     const record = await models.Ticket.create(ticketInfo);
