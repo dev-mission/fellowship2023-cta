@@ -47,6 +47,10 @@ const columns = [
     accessorKey: 'Donor.name',
     header: 'Donor',
   },
+  {
+    accessorKey: 'User.fullName',
+    header: 'Intern',
+  },
 ];
 
 const Devices = () => {

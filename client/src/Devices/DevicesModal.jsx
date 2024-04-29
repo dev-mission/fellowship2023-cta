@@ -15,14 +15,15 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
     model: '',
     brand: '',
     serialNum: '',
-    locationName: '',
+    location: '',
     cpu: '',
     ram: '',
     os: '',
     storage: '',
     batteryLastChecked: '',
     intern: '',
-    donor: '',
+    DonorId: '',
+    UserId: '',
     username: '',
     password: '',
     condition: '',
@@ -37,7 +38,7 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
         const data = await response.json();
         setData(data);
       }
-    }
+    };
     if (deviceId) {
       fetchData();
       setTitle('Edit Device ' + deviceId);
@@ -92,20 +93,20 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
             <h5>Specs</h5>
             <Row>
               <Col xs={18} md={4}>
-              <Form.Group controlId="clientName">
+                <Form.Group>
                   <Form.Label>Device Type</Form.Label>
-                    <DropdownButton
-                      id="deviceType"
-                      title={deviceTypeVal}
-                      onSelect={(e) => {
-                        setDeviceTypeVal(e);
-                        onChange({ target: { name: 'deviceType', value: e } });
-                      }}>
-                      <Dropdown.Item eventKey="Laptop">Laptop</Dropdown.Item>
-                      <Dropdown.Item eventKey="Desktop">Desktop</Dropdown.Item>
-                      <Dropdown.Item eventKey="Tablet">Tablet</Dropdown.Item>
-                      <Dropdown.Item eventKey="Mobile">Mobile</Dropdown.Item>
-                    </DropdownButton>
+                  <DropdownButton
+                    id="deviceType"
+                    title={deviceTypeVal}
+                    onSelect={(e) => {
+                      setDeviceTypeVal(e);
+                      onChange({ target: { name: 'deviceType', value: e } });
+                    }}>
+                    <Dropdown.Item eventKey="Laptop">Laptop</Dropdown.Item>
+                    <Dropdown.Item eventKey="Desktop">Desktop</Dropdown.Item>
+                    <Dropdown.Item eventKey="Tablet">Tablet</Dropdown.Item>
+                    <Dropdown.Item eventKey="Mobile">Mobile</Dropdown.Item>
+                  </DropdownButton>
                 </Form.Group>
               </Col>
               <Col xs={18} md={8}>
@@ -191,15 +192,14 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
             <h5>Additional Information</h5>
             <Row>
               <Col xs={18} md={12}>
-              <Form.Group controlId="donor">
-                  <Form.Label>Donor</Form.Label>
-                  <DropMenu
+                <Form.Group>
+                  <DropDown
                     lookUp={onChange}
-                    settings={{ route: 'donors', id: 'DonorId', labelKey: 'name', placeholder: 'Name of Donor' }}
+                    settings={{ title: 'Donor', id: 'DonorId', labelKey: 'name', placeholder: 'Select donor' }}
+                    path="/api/donors"
                   />
                 </Form.Group>
               </Col>
-
             </Row>
 
             <Row>
@@ -219,7 +219,7 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
 
             <Row>
               <Col xs={18} md={6}>
-              <Form.Group controlId="intern">
+                <Form.Group controlId="intern">
                   <Form.Label>Intern</Form.Label>
                   <DropMenu
                     lookUp={onChange}
