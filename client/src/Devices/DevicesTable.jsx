@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-
 import PropTypes from 'prop-types';
 import { flexRender } from '@tanstack/react-table';
 
-const DeviceTable = ({ table }) => {
+const DevicesTable = ({ table }) => {
   const navigate = useNavigate();
 
   return (
@@ -42,8 +41,8 @@ const DeviceTable = ({ table }) => {
   );
 };
 
-DeviceTable.propTypes = {
+DevicesTable.propTypes = {
   table: PropTypes.object,
 };
 
-export default DeviceTable;
+export default DevicesTable;
