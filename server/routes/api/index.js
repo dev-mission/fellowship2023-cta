@@ -22,8 +22,7 @@ router.use('/passwords', passwordsRoutes);
 router.use('/users', usersRoutes);
 router.use('/tickets', interceptors.requireCTA, ticketRoutes);
 //Need to handle interceptor for inventory role
-router.use('/devices', devicesRoutes);
-//Need to handle interceptor for inventory role
+router.use('/devices', interceptors.requireInventory, devicesRoutes);
 router.use('/donors', interceptors.requireInventory, donorsRoutes);
 router.use('/locations', interceptors.requireAdmin, locationsRoutes);
 router.use('/courses', interceptors.requireAdmin, coursesRoutes);
