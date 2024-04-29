@@ -3,13 +3,8 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
 import { useLocation, Link, Routes, Route } from 'react-router-dom';
-<<<<<<< HEAD
 import DevicesTable from './DevicesTable';
 import DevicesModal from './DevicesModal';
-=======
-import DeviceTable from './DeviceTable';
-import DeviceModal from './DeviceModal';
->>>>>>> main
 import DeleteModal from '../Components/DeleteModal';
 
 const columns = [
