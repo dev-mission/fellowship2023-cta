@@ -1,30 +1,40 @@
+import { Table } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
+import { DateTime } from 'luxon';
 
 export default function UserStats() {
-  const [time, setTime] = useState(0);
-
+  const [totalTime, setTotalTime] = useState([]);
+  const [month, setMonth] = useState('');
   useEffect(() => {
-    async function fetchTime() {
-      const response = await fetch('/api/users/stats');
+    async function fetchLocation() {
+      const date = DateTime.now();
+      setMonth(date.monthLong);
+      const response = await fetch(`/api/locations/totalTime/${date.month}`);
       const data = await response.json();
-      setTime(data);
+      setTotalTime(data);
     }
-    fetchTime();
+    fetchLocation();
   }, []);
 
   return (
-    <Card style={{ width: 18 + 'rem' }}>
-      <Card.Body>
-        <Card.Title>Hours Worked</Card.Title>
-        <Card.Text>All CTA have worked: {time}</Card.Text>
-      </Card.Body>
-      <Card.Footer>
-        <Link to={'admin/users'} className="btn btn-primary">
-          Detailed View
-        </Link>
-      </Card.Footer>
-    </Card>
+    <div>
+      <h3>{month}: Total Time At All Sites</h3>
+      <Table striped="true" border="true" size="sm" responsive="true">
+        <thead>
+          <tr>
+            <th>Location</th>
+            <th>Time in hours</th>
+          </tr>
+        </thead>
+        <tbody>
+          {totalTime.map((row) => (
+            <tr key={row.id}>
+              <td>{row.name}</td>
+              <td>{row.totalTime}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 }
