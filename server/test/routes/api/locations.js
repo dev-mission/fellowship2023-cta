@@ -63,6 +63,12 @@ describe('/api/locations', () => {
       assert.deepStrictEqual(record, null);
     });
 
+    it('Find totalTime spent from march', async () => {
+      const response = await testSession.get('/api/locations/totalTime/3');
+      assert.deepStrictEqual(response.body[0].name, 'Dev/Mission');
+      assert.deepStrictEqual(response.body[0].totalTime, 2);
+    });
+
     it('Fetch all locations vist from march', async () => {
       const response = await testSession.get('/api/locations/vists/3');
       assert.deepStrictEqual(response.body[0].name, 'Dev/Mission');

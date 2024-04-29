@@ -25,6 +25,31 @@ router.get('/', async (req, res) => {
   res.json(records.map((r) => r.toJSON()));
 });
 
+router.get('/totalTime/:month', async (req, res) => {
+  const month = req.params.month;
+  const dateFrom = DateTime.fromObject({ month: month, day: 1 }).toISODate();
+  const dateTo = DateTime.fromObject({ month: month, day: 1 }).plus({ months: 1 }).toISODate();
+  const locations = await models.Location.findAll({ attributes: ['id', 'name'], raw: true });
+  const updatedLocations = await Promise.all(
+    locations.map(async (item) => {
+      const tickets = await models.Ticket.findAll({
+        where: {
+          LocationId: item.id,
+          dateOn: {
+            [Op.between]: [dateFrom, dateTo],
+          },
+        },
+      });
+      let totalTime = 0;
+      tickets.forEach((ticket) => {
+        totalTime += ticket.totalTime;
+      });
+      return { ...item, totalTime };
+    }),
+  );
+  res.json(updatedLocations);
+});
+
 router.get('/vists/:month', async (req, res) => {
   const month = req.params.month;
   const dateFrom = DateTime.fromObject({ month: month, day: 1 }).toISODate();
