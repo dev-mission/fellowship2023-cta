@@ -25,6 +25,21 @@ router.get('/', interceptors.requireAdmin, async (req, res) => {
   res.json(records.map((r) => r.toJSON()));
 });
 
+/*
+ * Find totalTime of all users.
+ */
+
+router.get('/stats', interceptors.requireAdmin, async (req, res) => {
+  const records = await models.User.findAll({
+    attributes: ['totalTime'],
+  });
+  let totalTime = 0;
+  records.map((record) => {
+    totalTime = totalTime + parseFloat(record.totalTime);
+  });
+  res.json(totalTime);
+});
+
 router.get('/me', (req, res) => {
   if (req.user) {
     res.json(req.user.toJSON());

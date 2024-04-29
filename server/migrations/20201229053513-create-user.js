@@ -30,6 +30,10 @@ module.exports = {
         defaultValue: null,
         type: Sequelize.STRING,
       },
+      totalTime: {
+        defaultValue: 0,
+        type: Sequelize.DECIMAL,
+      },
       email: {
         allowNull: false,
         type: Sequelize.CITEXT,

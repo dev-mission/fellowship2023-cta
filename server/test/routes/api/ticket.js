@@ -73,9 +73,8 @@ describe('/api/ticket', () => {
           troubleshooting: 'TESTING TICKETS 3',
           resolution: 'TESTING TICKETS 3',
           dateOn: '2024-03-04',
-          timeInAt: '2024-03-04',
-          timeOutAt: '2024-03-04',
-          totalTime: 8,
+          timeInAt: '10:00',
+          timeOutAt: '12:00',
           hasCharger: true,
           notes: 'TESTING TICKETS',
         })
@@ -101,9 +100,8 @@ describe('/api/ticket', () => {
           troubleshooting: 'TESTING TICKETS 4',
           resolution: 'TESTING TICKETS 4',
           dateOn: '2024-03-05',
-          timeInAt: '2024-03-05',
-          timeOutAt: '2024-03-05',
-          totalTime: 3,
+          timeInAt: '10:00',
+          timeOutAt: '12:00',
           hasCharger: true,
           notes: 'TESTING TICKETS',
         })

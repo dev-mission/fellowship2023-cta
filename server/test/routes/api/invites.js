@@ -119,6 +119,7 @@ describe('/api/invites', () => {
         picture: null,
         pictureUrl: null,
         role: 'Inventory',
+        totalTime: '0',
       });
 
       const invite = await models.Invite.findByPk('14a500b7-f14c-48cd-b815-3685a8b54370');

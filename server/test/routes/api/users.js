@@ -53,7 +53,15 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          totalTime: '10',
         });
+      });
+    });
+
+    describe('GET /stats', () => {
+      it('Find total time of all users', async () => {
+        const response = await testSession.get('/api/users/stats').set('Accept', 'application/json').expect(StatusCodes.OK);
+        assert.deepStrictEqual(response.body, 80);
       });
     });
 
@@ -72,6 +80,7 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          totalTime: '30',
         });
       });
     });
@@ -101,6 +110,7 @@ describe('/api/users', () => {
           picture: null,
           pictureUrl: null,
           role: 'CTA',
+          totalTime: '10',
         });
       });
 

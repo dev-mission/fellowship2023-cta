@@ -11,10 +11,10 @@
       "problem": "Broken screen",
       "troubleshooting": "Told him to get it replace by apple",
       "resolution": "He got it replaced",
-      "dateOn": "2024-03-04T17:23:21.675Z",
-      "timeInAt": "2024-03-04T17:23:21.675Z",
-      "timeOutAt": "2024-03-04T17:23:21.675Z",
-      "totalTime": 10,
+      "dateOn": "2024-03-04",
+      "timeInAt": "10:00",
+      "timeOutAt": "12:00",
+      "totalTime": 2.0,
       "hasCharger": true,
       "notes": "TESTING TICKETS"
     }
@@ -31,10 +31,10 @@
       "problem": "Broken screen",
       "troubleshooting": "Told him to get it replace by apple",
       "resolution": "He got it replaced",
-      "dateOn": "2024-03-04T17:23:21.675Z",
-      "timeInAt": "2024-03-04T17:23:21.675Z",
-      "timeOutAt": "2024-03-04T17:23:21.675Z",
-      "totalTime": 10,
+      "dateOn": "2024-03-20",
+      "timeInAt": "12:00",
+      "timeOutAt": "14:00",
+      "totalTime": 2.0,
       "hasCharger": true,
       "notes": "TESTING TICKETS"
     }

@@ -15,9 +15,9 @@ export default function (sequelize, DataTypes) {
   }
   Appointment.init(
     {
-      dateOn: DataTypes.DATE,
-      timeInAt: DataTypes.DATE,
-      timeOutAt: DataTypes.DATE,
+      dateOn: DataTypes.DATEONLY,
+      timeInAt: DataTypes.TIME,
+      timeOutAt: DataTypes.TIME,
       problem: DataTypes.TEXT,
       status: DataTypes.TEXT,
     },

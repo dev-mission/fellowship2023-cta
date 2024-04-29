@@ -46,6 +46,7 @@ describe('/api/auth', () => {
         picture: null,
         pictureUrl: null,
         role: 'CTA',
+        totalTime: '0',
       });
     });
 
