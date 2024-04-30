@@ -45,7 +45,7 @@ const Tickets = () => {
   const [lastPage, setLastPage] = useState(1);
 
   const fetchData = useCallback(() => {
-    Api.locations.index(page).then((response) => {
+    Api.tickets.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;

@@ -72,7 +72,7 @@ const Appointments = () => {
   // const [radioValue, setRadioValue] = useState('Upcoming');
 
   const fetchData = useCallback(() => {
-    Api.locations.index(page).then((response) => {
+    Api.appointments.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
