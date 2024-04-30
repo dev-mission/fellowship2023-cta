@@ -43,12 +43,7 @@ const ClientTable = ({ table }) => {
 };
 
 ClientTable.propTypes = {
-  table: PropTypes.shape({
-    getHeaderGroups: PropTypes.func.isRequired,
-    getRowModel: PropTypes.func.isRequired,
-  }).isRequired,
-  data: PropTypes.array.isRequired,
-  setData: PropTypes.func.isRequired,
+  table: PropTypes.object,
 };
 
 export default ClientTable;
