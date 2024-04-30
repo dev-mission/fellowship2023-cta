@@ -71,8 +71,8 @@ const Appointments = () => {
   const [lastPage, setLastPage] = useState(1);
   // const [radioValue, setRadioValue] = useState('Upcoming');
 
-  useEffect(() => {
-    Api.appointments.index(page).then((response) => {
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -84,10 +84,18 @@ const Appointments = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   const onCreate = (appointment) => {
     setData([...data, appointment]);
+    fetchData();
   };
 
   const onUpdate = (appointment) => {
@@ -96,6 +104,7 @@ const Appointments = () => {
 
   const onDelete = (appointmentId) => {
     setData(data.filter((a) => a.id != appointmentId));
+    fetchData();
   };
 
   const table = useReactTable({

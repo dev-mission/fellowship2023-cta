@@ -41,7 +41,7 @@ const Locations = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  useEffect(() => {
+  const fetchData = () => {
     Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
@@ -54,10 +54,18 @@ const Locations = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   const onCreate = (location) => {
     setData([...data, location]);
+    fetchData();
   };
 
   const onUpdate = (location) => {
@@ -66,6 +74,7 @@ const Locations = () => {
 
   const onDelete = (locationId) => {
     setData(data.filter((l) => l.id != locationId));
+    fetchData();
   };
 
   const table = useReactTable({

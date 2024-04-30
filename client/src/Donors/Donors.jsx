@@ -49,8 +49,8 @@ const Donors = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  useEffect(() => {
-    Api.donors.index(page).then((response) => {
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -62,10 +62,18 @@ const Donors = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   const onCreate = (donor) => {
     setData([...data, donor]);
+    fetchData();
   };
 
   const onUpdate = (donor) => {
@@ -74,6 +82,7 @@ const Donors = () => {
 
   const onDelete = (donorId) => {
     setData(data.filter((d) => d.id != donorId));
+    fetchData();
   };
 
   const table = useReactTable({
