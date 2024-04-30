@@ -6,7 +6,7 @@ import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import AppointmentsTable from './AppointmentsTable';
 import AppointmentsModal from './AppointmentsModal';
 import DeleteModal from '../Components/DeleteModal';
-// import { ButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Helmet } from 'react-helmet-async';
 import { DateTime } from 'luxon';
 
 const columns = [
@@ -112,31 +112,35 @@ const Appointments = () => {
   });
 
   return (
-    <main className="container">
-      <div className="row align-items-start mt-5">
-        <div className="col-3">
-          <Link className="btn btn-primary" to={`new?page=${page}`}>
-            <div className="d-flex align-items-center justify-content-center">
-              New Appointments
-              <i className="bi bi-plus-lg" />
-            </div>
-          </Link>
+    <>
+      <Helmet>
+        <title>Appointments</title>
+      </Helmet>
+      <main className="container">
+        <div className="row align-items-start mt-5">
+          <div className="col-3">
+            <Link className="btn btn-primary" to={`new?page=${page}`}>
+              <div className="d-flex align-items-center justify-content-center">
+                New Appointments
+                <i className="bi bi-plus-lg" />
+              </div>
+            </Link>
+          </div>
+          <div className="col-6 text-center">
+            <h1>Appointments</h1>
+          </div>
+          <div className="col-3">
+            <form className="d-flex" role="search">
+              <div className="input-group">
+                <span className="input-group-text" id="basic-addon1">
+                  <i className="bi bi-search" />
+                </span>
+                <input type="search" className="form-control me-2" placeholder="Search Appointments" />
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="col-6 text-center">
-          <h1>Appointments</h1>
-        </div>
-        <div className="col-3">
-          <form className="d-flex" role="search">
-            <div className="input-group">
-              <span className="input-group-text" id="basic-addon1">
-                <i className="bi bi-search" />
-              </span>
-              <input type="search" className="form-control me-2" placeholder="Search Appointments" />
-            </div>
-          </form>
-        </div>
-      </div>
-      {/* <ButtonGroup>
+        {/* <ButtonGroup>
         <ToggleButton
           className={`border-primary ${radioValue === 'Upcoming' ? 'text-white' : 'text-primary'} `}
           id="radio-upcoming"
@@ -162,14 +166,15 @@ const Appointments = () => {
           Archive
         </ToggleButton>
       </ButtonGroup> */}
-      <AppointmentsTable table={table} page={page} />
-      <Pagination page={page} lastPage={lastPage} />
-      <Routes>
-        <Route path="new" element={<AppointmentsModal onCreate={onCreate} page={page} />} />
-        <Route path="edit/:appointmentId" element={<AppointmentsModal onUpdate={onUpdate} page={page} />} />
-        <Route path="delete/:id" element={<DeleteModal model="appointments" onDelete={onDelete} page={page} />} />
-      </Routes>
-    </main>
+        <AppointmentsTable table={table} page={page} />
+        <Pagination page={page} lastPage={lastPage} />
+        <Routes>
+          <Route path="new" element={<AppointmentsModal onCreate={onCreate} page={page} />} />
+          <Route path="edit/:appointmentId" element={<AppointmentsModal onUpdate={onUpdate} page={page} />} />
+          <Route path="delete/:id" element={<DeleteModal model="appointments" onDelete={onDelete} page={page} />} />
+        </Routes>
+      </main>
+    </>
   );
 };
 
