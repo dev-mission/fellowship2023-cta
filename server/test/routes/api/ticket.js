@@ -116,10 +116,10 @@ describe('/api/ticket', () => {
 
     it('fetch all items from the ticket table', async () => {
       const response = await testSession.get('/api/tickets').expect(StatusCodes.OK);
-      assert.deepStrictEqual(response.body[0].id, 2);
-      assert.deepStrictEqual(response.body[0].Client.fullName, 'Apple Bees');
-      assert.deepStrictEqual(response.body[0].User.fullName, 'Inventory User');
-      assert.deepStrictEqual(response.body[0].Location.name, 'Hayes Valley');
+      assert.deepStrictEqual(response.body[0].id, 1);
+      assert.deepStrictEqual(response.body[0].Client.fullName, 'John Doe');
+      assert.deepStrictEqual(response.body[0].User.fullName, 'Admin User');
+      assert.deepStrictEqual(response.body[0].Location.name, 'Dev/Mission');
     });
 
     it('fetch a single item from the ticket table', async () => {
