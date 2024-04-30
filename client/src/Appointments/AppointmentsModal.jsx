@@ -39,7 +39,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
         status: status,
       });
     }
-  }, [appointmentId]);
+  }, [status, appointmentId]);
 
   const onChange = (e) => {
     const newData = { ...data };
