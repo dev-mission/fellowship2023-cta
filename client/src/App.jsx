@@ -46,7 +46,7 @@ function App() {
                 <Route path="/devices/*" element={<Devices />} />
                 <Route path="/locations/*" element={<Locations />} />
                 <Route path="/donors" element={<Donors />} />
-                <Route path="/courses" element={<Courses />} />
+                <Route path="/courses/*" element={<Courses />} />
               </Routes>
             </AppRedirects>
           }
