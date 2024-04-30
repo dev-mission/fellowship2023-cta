@@ -39,7 +39,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addIndex('Locations', ['name', 'address1', 'address2'], { unique: true });
+    await queryInterface.addIndex('Locations', ['name', 'address1'], { unique: true });
     // set starting id to larger value so it doesn't conflict with test fixtures
     await queryInterface.sequelize.query('ALTER SEQUENCE "Locations_id_seq" RESTART WITH 100;');
   },

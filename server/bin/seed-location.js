@@ -23,7 +23,7 @@ const getTickets = async () => {
 
 const tickets = await getTickets();
 if (tickets.length == 0) {
-  await loadFixtures(['locations', 'users', 'donors', 'clients', 'devices', 'appointments', 'tickets']);
+  await loadFixtures(['locations', 'users', 'donors', 'clients', 'devices', 'appointments', 'tickets', 'courses']);
 } else {
   console.log('Test Tickets have been made!');
 }

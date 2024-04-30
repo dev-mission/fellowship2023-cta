@@ -2,79 +2,261 @@
   {
     "model": "User",
     "data": {
-      "id": 1,
-      "LocationId": 1,
-      "firstName": "Admin",
-      "lastName": "User",
-      "email": "admin.user@test.com",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "totalTime": 10,
-      "isAdmin": true
-    }
-  },
-  {
-    "model": "User",
-    "data": {
-      "id": 2,
-      "LocationId": 1,
-      "firstName": "Inventory",
-      "lastName": "User",
-      "email": "Inventory1.user@test.com",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "totalTime": 10,
-      "role": "Inventory"
-    }
-  },
-  {
-    "model": "User",
-    "data": {
-      "id": 222220,
-      "LocationId": 1,
-      "firstName": "Admin",
-      "lastName": "User",
-      "email": "admin1.user@test.com",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "totalTime": 10,
-      "isAdmin": true
-    }
-  },
-  {
-    "model": "User",
-    "data": {
-      "id": 222221,
-      "LocationId": 2,
-      "firstName": "CTA",
-      "lastName": "User",
-      "email": "cta.user@test.com",
-      "role": "CTA",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "totalTime": 10
-    }
-  },
-  {
-    "model": "User",
-    "data": {
-      "id": 222222,
-      "LocationId": 1,
-      "firstName": "Inventory",
-      "lastName": "User",
-      "email": "inventory2.user@test.com",
-      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "totalTime": 10,
-      "role": "Inventory"
-    }
-  },
-  {
-    "model": "User",
-    "data": {
-      "id": 3,
-      "LocationId": 2,
+      "id": 4001,
+      "LocationId": 3001,
       "firstName": "Kevin",
       "lastName": "Li",
-      "role": "CTA",
-      "email": "KevinLi@gmail.com",
+      "email": "kevinli@gmail.com",
       "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
-      "totalTime": 30
+      "totalTime": 10,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4002,
+      "LocationId": 3002,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "johndoe@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 20,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4003,
+      "LocationId": 3003,
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "janesmith@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 30,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4004,
+      "LocationId": 3004,
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "email": "alicejohnson@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 40,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4005,
+      "LocationId": 3005,
+      "firstName": "Bob",
+      "lastName": "Williams",
+      "email": "bobwilliams@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 50,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4006,
+      "LocationId": 3006,
+      "firstName": "Charlie",
+      "lastName": "Brown",
+      "email": "charliebrown@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 60,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4007,
+      "LocationId": 3007,
+      "firstName": "David",
+      "lastName": "Davis",
+      "email": "daviddavis@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 70,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4008,
+      "LocationId": 3008,
+      "firstName": "Emily",
+      "lastName": "Miller",
+      "email": "emilymiller@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 80,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4009,
+      "LocationId": 3009,
+      "firstName": "Frank",
+      "lastName": "Wilson",
+      "email": "frankwilson@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 90,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4010,
+      "LocationId": 3010,
+      "firstName": "Grace",
+      "lastName": "Moore",
+      "email": "gracemoore@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 100,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4011,
+      "LocationId": 3011,
+      "firstName": "Harry",
+      "lastName": "Taylor",
+      "email": "harrytaylor@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 110,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4012,
+      "LocationId": 3012,
+      "firstName": "Ivy",
+      "lastName": "Anderson",
+      "email": "ivyanderson@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 120,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4013,
+      "LocationId": 3013,
+      "firstName": "Jack",
+      "lastName": "Thomas",
+      "email": "jackthomas@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 130,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4014,
+      "LocationId": 3014,
+      "firstName": "Kate",
+      "lastName": "Jackson",
+      "email": "katejackson@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 140,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4015,
+      "LocationId": 3015,
+      "firstName": "Luke",
+      "lastName": "White",
+      "email": "lukewhite@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 150,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4016,
+      "LocationId": 3016,
+      "firstName": "Mia",
+      "lastName": "Harris",
+      "email": "miaHarris@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 160,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4017,
+      "LocationId": 3017,
+      "firstName": "Noah",
+      "lastName": "Martin",
+      "email": "noahmartin@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 170,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4018,
+      "LocationId": 3018,
+      "firstName": "Olivia",
+      "lastName": "Thompson",
+      "email": "oliviathompson@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 180,
+      "isAdmin": false
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4019,
+      "LocationId": 3019,
+      "firstName": "Peter",
+      "lastName": "Garcia",
+      "email": "petergarcia@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 190,
+      "isAdmin": true
+    }
+  },
+  {
+    "model": "User",
+    "data": {
+      "id": 4020,
+      "LocationId": 3020,
+      "firstName": "Quincy",
+      "lastName": "Martinez",
+      "email": "quincymartinez@gmail.com",
+      "hashedPassword": "$2b$10$s2eQxhoZ2Khb4KrbOaAl/ekpWKiGmyX1HFICIVl3ZX3NnL191fPuS",
+      "totalTime": 200,
+      "isAdmin": false
     }
   }
 ]
