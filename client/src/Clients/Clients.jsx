@@ -94,8 +94,6 @@ const Clients = () => {
     setData(data.filter((c) => c.id != clientId));
   };
 
-  const onChange = () => {};
-
   const table = useReactTable({
     data: data || [],
     columns,
