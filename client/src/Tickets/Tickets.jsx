@@ -81,19 +81,28 @@ const Tickets = () => {
 
   return (
     <main className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <Link className="btn btn-primary d-flex align-items-center" to="new">
-          New <i className="bi bi-plus-lg" />
-        </Link>
-        <i className="bi bi-person-fill title-icon">Tickets</i>
-        <form className="d-flex" role="search">
-          <div className="input-group">
-            <span className="input-group-text" id="basic-addon1">
-              <i className="bi bi-search" />
-            </span>
-            <input type="search" className="form-control me-2" placeholder="Search Tickets" />
-          </div>
-        </form>
+      <div className="row align-items-start mt-5">
+        <div className="col-3">
+          <Link className="btn btn-primary" to="new">
+            <div className="d-flex align-items-center justify-content-center">
+              New Tickets
+              <i className="bi bi-plus-lg" />
+            </div>
+          </Link>
+        </div>
+        <div className="col-6 text-center">
+          <h1>Tickets</h1>
+        </div>
+        <div className="col-3">
+          <form className="d-flex" role="search">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon1">
+                <i className="bi bi-search" />
+              </span>
+              <input type="search" className="form-control me-2" placeholder="Search Tickets" />
+            </div>
+          </form>
+        </div>
       </div>
       <TicketTable table={table} />
       <Pagination page={page} lastPage={lastPage} />

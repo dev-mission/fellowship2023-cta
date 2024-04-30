@@ -98,8 +98,6 @@ const Appointments = () => {
     setData(data.filter((a) => a.id != appointmentId));
   };
 
-  const onChange = () => {};
-
   const table = useReactTable({
     data: data || [],
     columns,
@@ -111,19 +109,28 @@ const Appointments = () => {
 
   return (
     <main className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <Link className="btn btn-primary d-flex align-items-center" to="new">
-          New <i className="bi bi-plus-lg" />
-        </Link>
-        <i className="bi bi-clock title-icon">Appointments</i>
-        <form className="d-flex" role="search">
-          <div className="input-group">
-            <span className="input-group-text" id="basic-addon1">
-              <i className="bi bi-search" />
-            </span>
-            <input type="search" className="form-control me-2" placeholder="Search Users" onChange={onChange} />
-          </div>
-        </form>
+      <div className="row align-items-start mt-5">
+        <div className="col-3">
+          <Link className="btn btn-primary" to="new">
+            <div className="d-flex align-items-center justify-content-center">
+              New Appointments
+              <i className="bi bi-plus-lg" />
+            </div>
+          </Link>
+        </div>
+        <div className="col-6 text-center">
+          <h1>Appointments</h1>
+        </div>
+        <div className="col-3">
+          <form className="d-flex" role="search">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon1">
+                <i className="bi bi-search" />
+              </span>
+              <input type="search" className="form-control me-2" placeholder="Search Appointments" />
+            </div>
+          </form>
+        </div>
       </div>
       {/* <ButtonGroup>
         <ToggleButton
