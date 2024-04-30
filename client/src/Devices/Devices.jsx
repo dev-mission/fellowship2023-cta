@@ -6,6 +6,7 @@ import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import DevicesTable from './DevicesTable';
 import DevicesModal from './DevicesModal';
 import DeleteModal from '../Components/DeleteModal';
+import { Helmet } from 'react-helmet-async';
 
 const columns = [
   {
@@ -101,38 +102,43 @@ const Devices = () => {
   });
 
   return (
-    <main className="container">
-      <div className="row align-items-start mt-5">
-        <div className="col-3">
-          <Link className="btn btn-primary" to={`new?page=${page}`}>
-            <div className="d-flex align-items-center justify-content-center">
-              New Devices
-              <i className="bi bi-plus-lg" />
-            </div>
-          </Link>
+    <>
+      <Helmet>
+        <title>Devices</title>
+      </Helmet>
+      <main className="container">
+        <div className="row align-items-start mt-5">
+          <div className="col-3">
+            <Link className="btn btn-primary" to={`new?page=${page}`}>
+              <div className="d-flex align-items-center justify-content-center">
+                New Devices
+                <i className="bi bi-plus-lg" />
+              </div>
+            </Link>
+          </div>
+          <div className="col-6 text-center">
+            <h1>Devices</h1>
+          </div>
+          <div className="col-3">
+            <form className="d-flex" role="search">
+              <div className="input-group">
+                <span className="input-group-text" id="basic-addon1">
+                  <i className="bi bi-search" />
+                </span>
+                <input type="search" className="form-control me-2" placeholder="Search Devices" />
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="col-6 text-center">
-          <h1>Devices</h1>
-        </div>
-        <div className="col-3">
-          <form className="d-flex" role="search">
-            <div className="input-group">
-              <span className="input-group-text" id="basic-addon1">
-                <i className="bi bi-search" />
-              </span>
-              <input type="search" className="form-control me-2" placeholder="Search Devices" />
-            </div>
-          </form>
-        </div>
-      </div>
-      <DevicesTable table={table} page={page} />
-      <Pagination page={page} lastPage={lastPage} />
-      <Routes>
-        <Route path="new" element={<DevicesModal onCreate={onCreate} page={page} />} />
-        <Route path="edit/:deviceId" element={<DevicesModal onUpdate={onUpdate} page={page} />} />
-        <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} page={page} />} />
-      </Routes>
-    </main>
+        <DevicesTable table={table} page={page} />
+        <Pagination page={page} lastPage={lastPage} />
+        <Routes>
+          <Route path="new" element={<DevicesModal onCreate={onCreate} page={page} />} />
+          <Route path="edit/:deviceId" element={<DevicesModal onUpdate={onUpdate} page={page} />} />
+          <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} page={page} />} />
+        </Routes>
+      </main>
+    </>
   );
 };
 

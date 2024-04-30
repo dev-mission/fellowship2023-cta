@@ -6,6 +6,7 @@ import Pagination from '../Components/Pagination';
 import DeleteModal from '../Components/DeleteModal';
 import TicketTable from './TicketTable';
 import TicketModal from './TicketModal';
+import { Helmet } from 'react-helmet-async';
 const columns = [
   {
     accessorKey: 'id',
@@ -84,38 +85,43 @@ const Tickets = () => {
   });
 
   return (
-    <main className="container">
-      <div className="row align-items-start mt-5">
-        <div className="col-3">
-          <Link className="btn btn-primary" to={`new?page=${page}`}>
-            <div className="d-flex align-items-center justify-content-center">
-              New Tickets
-              <i className="bi bi-plus-lg" />
-            </div>
-          </Link>
+    <>
+      <Helmet>
+        <title>Tickets</title>
+      </Helmet>
+      <main className="container">
+        <div className="row align-items-start mt-5">
+          <div className="col-3">
+            <Link className="btn btn-primary" to={`new?page=${page}`}>
+              <div className="d-flex align-items-center justify-content-center">
+                New Tickets
+                <i className="bi bi-plus-lg" />
+              </div>
+            </Link>
+          </div>
+          <div className="col-6 text-center">
+            <h1>Tickets</h1>
+          </div>
+          <div className="col-3">
+            <form className="d-flex" role="search">
+              <div className="input-group">
+                <span className="input-group-text" id="basic-addon1">
+                  <i className="bi bi-search" />
+                </span>
+                <input type="search" className="form-control me-2" placeholder="Search Tickets" />
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="col-6 text-center">
-          <h1>Tickets</h1>
-        </div>
-        <div className="col-3">
-          <form className="d-flex" role="search">
-            <div className="input-group">
-              <span className="input-group-text" id="basic-addon1">
-                <i className="bi bi-search" />
-              </span>
-              <input type="search" className="form-control me-2" placeholder="Search Tickets" />
-            </div>
-          </form>
-        </div>
-      </div>
-      <TicketTable table={table} page={page} />
-      <Pagination page={page} lastPage={lastPage} />
-      <Routes>
-        <Route path="new" element={<TicketModal onCreate={onCreate} page={page} />} />
-        <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} page={page} />} />
-        <Route path="delete/:id" element={<DeleteModal model="tickets" onDelete={onDelete} page={page} />} />
-      </Routes>
-    </main>
+        <TicketTable table={table} page={page} />
+        <Pagination page={page} lastPage={lastPage} />
+        <Routes>
+          <Route path="new" element={<TicketModal onCreate={onCreate} page={page} />} />
+          <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} page={page} />} />
+          <Route path="delete/:id" element={<DeleteModal model="tickets" onDelete={onDelete} page={page} />} />
+        </Routes>
+      </main>
+    </>
   );
 };
 

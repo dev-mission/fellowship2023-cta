@@ -6,7 +6,7 @@ import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import DonorsTable from './DonorsTable';
 import DonorsModal from './DonorsModal';
 import DeleteModal from '../Components/DeleteModal';
-
+import { Helmet } from 'react-helmet-async';
 const columns = [
   {
     accessorKey: 'name',
@@ -90,38 +90,43 @@ const Donors = () => {
   });
 
   return (
-    <main className="container">
-      <div className="row align-items-start mt-5">
-        <div className="col-3">
-          <Link className="btn btn-primary" to={`new?page=${page}`}>
-            <div className="d-flex align-items-center justify-content-center">
-              New Donors
-              <i className="bi bi-plus-lg" />
-            </div>
-          </Link>
+    <>
+      <Helmet>
+        <title>Donors</title>
+      </Helmet>
+      <main className="container">
+        <div className="row align-items-start mt-5">
+          <div className="col-3">
+            <Link className="btn btn-primary" to={`new?page=${page}`}>
+              <div className="d-flex align-items-center justify-content-center">
+                New Donors
+                <i className="bi bi-plus-lg" />
+              </div>
+            </Link>
+          </div>
+          <div className="col-6 text-center">
+            <h1>Donors</h1>
+          </div>
+          <div className="col-3">
+            <form className="d-flex" role="search">
+              <div className="input-group">
+                <span className="input-group-text" id="basic-addon1">
+                  <i className="bi bi-search" />
+                </span>
+                <input type="search" className="form-control me-2" placeholder="Search Donors" />
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="col-6 text-center">
-          <h1>Donors</h1>
-        </div>
-        <div className="col-3">
-          <form className="d-flex" role="search">
-            <div className="input-group">
-              <span className="input-group-text" id="basic-addon1">
-                <i className="bi bi-search" />
-              </span>
-              <input type="search" className="form-control me-2" placeholder="Search Donors" />
-            </div>
-          </form>
-        </div>
-      </div>
-      <DonorsTable table={table} page={page} />
-      <Pagination page={page} lastPage={lastPage} />
-      <Routes>
-        <Route path="new" element={<DonorsModal onCreate={onCreate} page={page} />} />
-        <Route path="edit/:donorId" element={<DonorsModal onUpdate={onUpdate} page={page} />} />
-        <Route path="delete/:id" element={<DeleteModal model="donors" onDelete={onDelete} page={page} />} />
-      </Routes>
-    </main>
+        <DonorsTable table={table} page={page} />
+        <Pagination page={page} lastPage={lastPage} />
+        <Routes>
+          <Route path="new" element={<DonorsModal onCreate={onCreate} page={page} />} />
+          <Route path="edit/:donorId" element={<DonorsModal onUpdate={onUpdate} page={page} />} />
+          <Route path="delete/:id" element={<DeleteModal model="donors" onDelete={onDelete} page={page} />} />
+        </Routes>
+      </main>
+    </>
   );
 };
 
