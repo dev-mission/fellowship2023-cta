@@ -41,7 +41,7 @@ const Locations = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  useEffect(() => {
+  const fetchData = () => {
     Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
@@ -54,10 +54,18 @@ const Locations = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   const onCreate = (location) => {
     setData([...data, location]);
+    fetchData();
   };
 
   const onUpdate = (location) => {
@@ -66,9 +74,8 @@ const Locations = () => {
 
   const onDelete = (locationId) => {
     setData(data.filter((l) => l.id != locationId));
+    fetchData();
   };
-
-  const onChange = () => {};
 
   const table = useReactTable({
     data: data || [],
@@ -81,19 +88,28 @@ const Locations = () => {
 
   return (
     <main className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <Link className="btn btn-primary d-flex align-items-center" to="new">
-          New <i className="bi bi-plus-lg" />
-        </Link>
-        <i className="bi bi-person-fill title-icon">Locations</i>
-        <form className="d-flex" role="search">
-          <div className="input-group">
-            <span className="input-group-text" id="basic-addon1">
-              <i className="bi bi-search" />
-            </span>
-            <input type="search" className="form-control me-2" placeholder="Search Users" onChange={onChange} />
-          </div>
-        </form>
+      <div className="row align-items-start mt-5">
+        <div className="col-3">
+          <Link className="btn btn-primary" to="new">
+            <div className="d-flex align-items-center justify-content-center">
+              New Locations
+              <i className="bi bi-plus-lg" />
+            </div>
+          </Link>
+        </div>
+        <div className="col-6 text-center">
+          <h1>Locations</h1>
+        </div>
+        <div className="col-3">
+          <form className="d-flex" role="search">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon1">
+                <i className="bi bi-search" />
+              </span>
+              <input type="search" className="form-control me-2" placeholder="Search Locations" />
+            </div>
+          </form>
+        </div>
       </div>
       <LocationsTable table={table} />
       <Pagination page={page} lastPage={lastPage} />

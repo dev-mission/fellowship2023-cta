@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import { flexRender } from '@tanstack/react-table';
 
-const ClientTable = ({ table }) => {
+const CourseTable = ({ table }) => {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +13,6 @@ const ClientTable = ({ table }) => {
           {table.getHeaderGroups()[0].headers.map((header) => (
             <th scope="col" key={header.id}>
               {header.column.columnDef.header}
-              {/* {header.column.getCanSort() && <i className="ms-2 bi bi-arrow-down-up" onClick={header.column.getToggleSortingHandler()} />} */}
             </th>
           ))}
           <th scope="col">
@@ -42,8 +42,8 @@ const ClientTable = ({ table }) => {
   );
 };
 
-ClientTable.propTypes = {
+CourseTable.propTypes = {
   table: PropTypes.object,
 };
 
-export default ClientTable;
+export default CourseTable;

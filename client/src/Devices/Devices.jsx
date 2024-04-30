@@ -60,10 +60,8 @@ const Devices = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  console.log(data);
-
-  useEffect(() => {
-    Api.devices.index(page).then((response) => {
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -75,10 +73,18 @@ const Devices = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   const onCreate = (device) => {
     setData([...data, device]);
+    fetchData();
   };
 
   const onUpdate = (device) => {
@@ -87,6 +93,7 @@ const Devices = () => {
 
   const onDelete = (deviceId) => {
     setData(data.filter((d) => d.id != deviceId));
+    fetchData();
   };
 
   const table = useReactTable({
@@ -98,23 +105,30 @@ const Devices = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const onChange = () => {};
-
   return (
     <main className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <Link className="btn btn-primary d-flex align-items-center" to="new">
-          New <i className="bi bi-plus-lg" />
-        </Link>
-        <i className="bi title-icon bi-card-checklist">Devices</i>
-        <form className="d-flex" role="search">
-          <div className="input-group">
-            <span className="input-group-text" id="basic-addon1">
-              <i className="bi bi-search" />
-            </span>
-            <input type="search" className="form-control me-2" placeholder="Search Devices" onChange={onChange} />
-          </div>
-        </form>
+      <div className="row align-items-start mt-5">
+        <div className="col-3">
+          <Link className="btn btn-primary" to="new">
+            <div className="d-flex align-items-center justify-content-center">
+              New Devices
+              <i className="bi bi-plus-lg" />
+            </div>
+          </Link>
+        </div>
+        <div className="col-6 text-center">
+          <h1>Devices</h1>
+        </div>
+        <div className="col-3">
+          <form className="d-flex" role="search">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon1">
+                <i className="bi bi-search" />
+              </span>
+              <input type="search" className="form-control me-2" placeholder="Search Devices" />
+            </div>
+          </form>
+        </div>
       </div>
       <DevicesTable table={table} />
       <Pagination page={page} lastPage={lastPage} />

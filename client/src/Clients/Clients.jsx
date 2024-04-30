@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link, Routes, Route } from 'react-router-dom';
-import { getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
-import { DateTime } from 'luxon';
-
+import { useLocation, Link, Routes, Route } from 'react-router-dom';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import Api from '../Api';
+import Pagination from '../Components/Pagination';
 import ClientTable from './ClientTable';
 import ClientModal from './ClientModal';
 import DeleteModal from '../Components/DeleteModal';
@@ -59,37 +59,48 @@ const columns = [
 ];
 
 const Clients = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const page = parseInt(params.get('page') ?? '1', 10);
+  const [lastPage, setLastPage] = useState(1);
 
-  useEffect(() => {
-    fetch('/api/clients')
-      .then((res) => res.json())
-      .then((data) => {
-        data.map((client) => {
-          client['createdAt'] = DateTime.fromISO(client['createdAt']).toLocaleString();
-          client['updatedAt'] = DateTime.fromISO(client['updatedAt']).toLocaleString();
-        });
-        setData(data);
-      });
-  }, []);
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
+      setData(response.data);
+      const linkHeader = Api.parseLinkHeader(response);
+      let newLastPage = page;
+      if (linkHeader?.last) {
+        const match = linkHeader.last.match(/page=(\d+)/);
+        newLastPage = parseInt(match[1], 10);
+      } else if (linkHeader?.next) {
+        newLastPage = page + 1;
+      }
+      setLastPage(newLastPage);
+    });
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   function onCreate(client) {
     setData([...data, client]);
-    console.log(data);
+    fetchData();
   }
 
   function onUpdate(client) {
-    setData(data.map((t) => (t.id == client.id ? { ...client } : t)));
-    console.log(client);
+    setData(data.map((c) => (c.id == client.id ? { ...client } : c)));
   }
 
   const onDelete = (clientId) => {
-    setData(data.filter((l) => l.id != clientId));
+    setData(data.filter((c) => c.id != clientId));
+    fetchData();
   };
 
-  function removeData(client) {
-    setData(client);
-  }
   const table = useReactTable({
     data: data || [],
     columns,
@@ -97,34 +108,39 @@ const Clients = () => {
       data,
     },
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
     <main className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <Link className="btn btn-primary d-flex align-items-center" to="new">
-          New <i className="bi bi-plus-lg" />
-        </Link>
-        <i className="bi bi-person-fill">Clients</i>
-        <p>Search Box</p>
+      <div className="row align-items-start mt-5">
+        <div className="col-3">
+          <Link className="btn btn-primary" to="new">
+            <div className="d-flex align-items-center justify-content-center">
+              New Clients
+              <i className="bi bi-plus-lg" />
+            </div>
+          </Link>
+        </div>
+        <div className="col-6 text-center">
+          <h1>Clients</h1>
+        </div>
+        <div className="col-3">
+          <form className="d-flex" role="search">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon1">
+                <i className="bi bi-search" />
+              </span>
+              <input type="search" className="form-control me-2" placeholder="Search Clients" />
+            </div>
+          </form>
+        </div>
       </div>
-      <ClientTable table={table} data={data} setData={removeData} />
-      <p>
-        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-      </p>
-      <div className="btn-group" role="group">
-        <button type="button" className="btn btn-primary" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          {'<'}
-        </button>
-        <button type="button" className="btn btn-primary" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          {'>'}
-        </button>
-      </div>
+      <ClientTable table={table} />
+      <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<ClientModal onCreate={onCreate} />} />
         <Route path="edit/:clientId" element={<ClientModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="clients" onDelete={onDelete} />} />
+        <Route path="delete/:id" element={<DeleteModal model="clients" onDelete={onDelete}></DeleteModal>} />
       </Routes>
     </main>
   );
