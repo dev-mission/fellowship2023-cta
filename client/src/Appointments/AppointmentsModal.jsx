@@ -6,7 +6,7 @@ import DropDown from '../Components/DropDown';
 import DropMenu from '../Components/DropMenu';
 import { DateTime } from 'luxon';
 
-const AppointmentsModal = ({ onCreate, onUpdate }) => {
+const AppointmentsModal = ({ onCreate, onUpdate, page }) => {
   const navigate = useNavigate();
   const { appointmentId } = useParams();
   const [title, setTitle] = useState('New Appointment');
@@ -72,17 +72,16 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
       const newData = await response.json();
       newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toLocaleString();
       if (data.id) {
-        console.log(newData);
         onUpdate(newData);
       } else {
-        onCreate(newData);
+        onCreate();
       }
     }
-    navigate('/appointments');
+    navigate(`/appointments?page=${page}`);
   };
 
   return (
-    <Modal show={true} onHide={() => navigate('/appointments')}>
+    <Modal show={true} onHide={() => navigate(`/appointments?page=${page}`)}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -192,7 +191,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => navigate('/appointments')}>
+        <Button variant="secondary" onClick={() => navigate(`/appointments?page=${page}`)}>
           Close
         </Button>
         <Button variant="primary" onClick={submitAppointment}>
@@ -206,6 +205,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
 AppointmentsModal.propTypes = {
   onCreate: PropTypes.func,
   onUpdate: PropTypes.func,
+  page: PropTypes.number,
 };
 
 export default AppointmentsModal;

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DropDown from '../Components/DropDown';
 import DropMenu from '../Components/DropMenu';
 
-const DevicesModal = ({ onCreate, onUpdate }) => {
+const DevicesModal = ({ onCreate, onUpdate, page }) => {
   const navigate = useNavigate();
   const { deviceId } = useParams();
   const [title, setTitle] = useState('New Device');
@@ -78,14 +78,14 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
       if (data.id) {
         onUpdate(newData);
       } else {
-        onCreate(newData);
+        onCreate();
       }
     }
-    navigate('/devices');
+    navigate(`/devices?page=${page}`);
   };
 
   return (
-    <Modal show={true} onHide={() => navigate('/devices')}>
+    <Modal show={true} onHide={() => navigate(`/devices?page=${page}`)}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -269,7 +269,7 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => navigate('/devices')}>
+        <Button variant="secondary" onClick={() => navigate(`/devices?page=${page}`)}>
           Close
         </Button>
         <Button variant="primary" onClick={submitDevice}>
@@ -283,6 +283,7 @@ const DevicesModal = ({ onCreate, onUpdate }) => {
 DevicesModal.propTypes = {
   onCreate: PropTypes.func,
   onUpdate: PropTypes.func,
+  page: PropTypes.number,
 };
 
 export default DevicesModal;

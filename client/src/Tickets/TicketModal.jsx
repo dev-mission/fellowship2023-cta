@@ -38,7 +38,7 @@ function Charger({ onChange }) {
   );
 }
 
-const TicketModal = ({ onCreate, onUpdate }) => {
+const TicketModal = ({ onCreate, onUpdate, page }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('New Ticket');
   const { ticketId } = useParams();
@@ -49,6 +49,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
       const response = await fetch(`/api/tickets/${ticketId}`);
       if (response.ok) {
         const data = await response.json();
+        console.log(data.Client.fullName);
         setData(data);
       }
     }
@@ -106,14 +107,14 @@ const TicketModal = ({ onCreate, onUpdate }) => {
       if (data.id) {
         onUpdate(newData);
       } else {
-        onCreate(newData);
+        onCreate();
       }
-      navigate('/tickets');
+      navigate(`/tickets?page=${page}`);
     }
   };
 
   return (
-    <Modal show={true} onHide={() => navigate('/tickets')}>
+    <Modal show={true} onHide={() => navigate(`/tickets?page=${page}`)}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -264,7 +265,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => navigate('/tickets')}>
+        <Button variant="secondary" onClick={() => navigate(`/tickets?page=${page}`)}>
           Cancel
         </Button>
         <Button variant="primary" onClick={submitTicket}>
@@ -278,6 +279,7 @@ const TicketModal = ({ onCreate, onUpdate }) => {
 TicketModal.propTypes = {
   onCreate: PropTypes.func,
   onUpdate: PropTypes.func,
+  page: PropTypes.number,
 };
 
 export default TicketModal;

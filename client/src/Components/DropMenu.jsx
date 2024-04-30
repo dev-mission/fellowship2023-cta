@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 
 const DropMenu = ({ lookUp, settings }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState();
+
+  useEffect(() => {});
 
   const handleSearch = (query) => {
     setIsLoading(true);
