@@ -45,7 +45,7 @@ const DevicesModal = ({ onCreate, onUpdate, page }) => {
         notes: '',
       });
     }
-  }, [deviceTypeVal, deviceId]);
+  }, [deviceId]);
 
   const onChange = (e) => {
     const newData = { ...data };
