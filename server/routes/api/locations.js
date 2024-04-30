@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import models from '../../models/index.js';
 import helpers from '../helpers.js';
 import { Op } from 'sequelize';
+import interceptors from '../interceptors.js';
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.get('/', async (req, res) => {
   res.json(records.map((r) => r.toJSON()));
 });
 
-router.get('/totalTime/:month', async (req, res) => {
+router.get('/totalTime/:month', interceptors.requireAdmin, async (req, res) => {
   const month = req.params.month;
   const dateFrom = DateTime.fromObject({ month: month, day: 1 }).toISODate();
   const dateTo = DateTime.fromObject({ month: month, day: 1 }).plus({ months: 1 }).toISODate();
@@ -50,7 +51,7 @@ router.get('/totalTime/:month', async (req, res) => {
   res.json(updatedLocations);
 });
 
-router.get('/vists/:month', async (req, res) => {
+router.get('/vists/:month', interceptors.requireAdmin, async (req, res) => {
   const month = req.params.month;
   const dateFrom = DateTime.fromObject({ month: month, day: 1 }).toISODate();
   const dateTo = DateTime.fromObject({ month: month, day: 1 }).plus({ months: 1 }).toISODate();
@@ -81,17 +82,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.get('/:location', async (req, res) => {
-  try {
-    const record = await models.Location.findOne(req.params.location);
-    res.json(record);
-  } catch (err) {
-    console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
-  }
-});
-
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Location.findByPk(req.params.id);
     await record.update(_.pick(req.body, ['name', 'address1', 'address2', 'city', 'state', 'zipCode']));
@@ -102,7 +93,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Location.findByPk(req.params.id);
     await record.destroy();
@@ -113,7 +104,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Location.create(_.pick(req.body, ['name', 'address1', 'address2', 'city', 'state', 'zipCode']));
     res.status(StatusCodes.CREATED).json(record);
