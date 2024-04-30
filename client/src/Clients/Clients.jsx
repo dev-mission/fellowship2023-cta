@@ -128,18 +128,6 @@ const Clients = () => {
           </form>
         </div>
       </div>
-      <ClientTable table={table} data={data} setData={removeData} />
-      <p>
-        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-      </p>
-      <div className="btn-group" role="group">
-        <button type="button" className="btn btn-primary" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-          {'<'}
-        </button>
-        <button type="button" className="btn btn-primary" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          {'>'}
-        </button>
-      </div>
       <ClientTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
