@@ -1,10 +1,47 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Container, Form, FormControl, Modal, Row } from 'react-bootstrap';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 import Dropdown from '../Components/DropDown';
-import DropMenu from '../Components/DropMenu';
+
+ClientDropMenu.propTypes = {
+  lookUp: PropTypes.func,
+  client: PropTypes.string,
+};
+
+function ClientDropMenu({ lookUp, client }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState();
+
+  const handleSearch = (query) => {
+    setIsLoading(true);
+
+    fetch(`/api/clients/search/${query}`)
+      .then((resp) => resp.json())
+      .then((items) => {
+        setOptions(items);
+        setIsLoading(false);
+      });
+  };
+  const filterBy = () => true;
+
+  return (
+    <AsyncTypeahead
+      filterBy={filterBy}
+      id="search-clients"
+      isLoading={isLoading}
+      labelKey="fullName"
+      onSearch={handleSearch}
+      options={options}
+      onChange={(value) => {
+        lookUp({ target: { name: 'ClientId', value: value[0]?.id } });
+      }}
+      defaultInputValue={client}
+    />
+  );
+}
 
 Charger.propTypes = {
   onChange: PropTypes.func.isRequired,
@@ -132,28 +169,13 @@ const TicketModal = ({ onCreate, onUpdate, page }) => {
                   <Col xs={9} md={6}>
                     <Form.Group controlId="clientName">
                       <Form.Label>Client Look Up</Form.Label>
-                      <DropMenu
-                        lookUp={onChange}
-                        settings={{
-                          route: 'clients',
-                          id: 'ClientId',
-                          labelKey: 'fullName',
-                          placeholder: 'Choose a client...',
-                          name: data.Client?.fullName,
-                        }}
-                      />
+                      <ClientDropMenu client={data.Client?.fullName} lookUp={onChange} />
                     </Form.Group>
                   </Col>
                   <Col xs={9} md={6}>
                     <Dropdown
                       lookUp={onChange}
-                      settings={{
-                        title: 'Location',
-                        id: 'LocationId',
-                        labelKey: 'name',
-                        placeholder: 'Choose an location...',
-                        name: data.Location?.name,
-                      }}
+                      settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
                       path="/api/locations"
                     />
                   </Col>

@@ -28,13 +28,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', interceptors.requireInventory, async (req, res) => {
   try {
-    const record = await models.Device.findByPk(req.params.id, {
-      include: [
-        { model: models.Location, attributes: ['name'] },
-        { model: models.Donor, attributes: ['name'] },
-        { model: models.User, attributes: ['fullName'] },
-      ],
-    });
+    const record = await models.Device.findByPk(req.params.id);
     res.json(record);
   } catch (err) {
     console.log(err);

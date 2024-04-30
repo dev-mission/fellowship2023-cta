@@ -35,7 +35,6 @@ export default function DropDown({ lookUp, settings, path }) {
           options={options}
           placeholder={settings.placeholder}
           selected={singleSelections}
-          defaultInputValue={settings.name}
         />
       </Form.Group>
     </>
