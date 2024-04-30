@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import DropDown from '../Components/DropDown';
 import DropMenu from '../Components/DropMenu';
 import { DateTime } from 'luxon';
-import TimeRange from '../Components/TimeRange';
 
 const AppointmentsModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
@@ -71,6 +70,7 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
       const newData = await response.json();
       newData['createdAt'] = DateTime.fromISO(newData['createdAt']).toLocaleString();
       if (data.id) {
+        console.log(newData);
         onUpdate(newData);
       } else {
         onCreate(newData);
@@ -102,19 +102,19 @@ const AppointmentsModal = ({ onCreate, onUpdate }) => {
               <Col xs={6} md={4}>
                 <Form.Group controlId="Date">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control name="dateOn" value={DateTime.fromISO(data.dateOn).toISODate()} type="date" autoFocus onChange={onChange} />
+                  <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={onChange} />
                 </Form.Group>
               </Col>
               <Col xs={6} md={4}>
                 <Form.Group controlId="timeInAt">
-                  <Form.Label>Start: {DateTime.fromISO(data.timeInAt).toISOTime()?.slice(0, 5)}</Form.Label>
-                  <TimeRange name="timeInAt" date={data.dateOn} change={onChange}></TimeRange>
+                  <Form.Label>Start: </Form.Label>
+                  <Form.Control name="timeInAt" type="time" value={data.timeInAt} onChange={onChange}></Form.Control>
                 </Form.Group>
               </Col>
               <Col xs={6} md={4}>
                 <Form.Group controlId="endTime">
-                  <Form.Label>End: {DateTime.fromISO(data.timeOutAt).toISOTime()?.slice(0, 5)}</Form.Label>
-                  <TimeRange name="timeOutAt" date={data.dateOn} change={onChange}></TimeRange>
+                  <Form.Label>End: </Form.Label>
+                  <Form.Control name="timeOutAt" type="time" value={data.timeOutAt} onChange={onChange}></Form.Control>
                 </Form.Group>
               </Col>
             </Row>

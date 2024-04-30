@@ -62,16 +62,16 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       dateOn: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
       },
       timeInAt: {
-        type: Sequelize.DATE,
+        type: Sequelize.TIME,
       },
       timeOutAt: {
-        type: Sequelize.DATE,
+        type: Sequelize.TIME,
       },
-      totalTime: {
-        type: Sequelize.INTEGER,
+      timeZone: {
+        type: Sequelize.TEXT,
       },
       hasCharger: {
         type: Sequelize.BOOLEAN,

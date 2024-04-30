@@ -125,6 +125,7 @@ function AdminUsersList() {
                 <th className="w-20">Email</th>
                 <th className="w-10">Role</th>
                 <th className="w-15">Location</th>
+                <th className="w-10">Total Time</th>
                 <th className="w-10">Admin?</th>
                 <th>Actions</th>
               </tr>
@@ -139,6 +140,7 @@ function AdminUsersList() {
                   </td>
                   <td>{user.role}</td>
                   <td>{user.Location?.name}</td>
+                  <td>{user.totalTime}</td>
                   <td>{user.isAdmin && 'Admin'}</td>
                   <td>
                     <Link to={`${user.id}`}>Edit&nbsp;Profile</Link>

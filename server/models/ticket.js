@@ -1,5 +1,5 @@
 import { Model } from 'sequelize';
-
+import { DateTime } from 'luxon';
 export default function (sequelize, DataTypes) {
   class Ticket extends Model {
     /**
@@ -22,10 +22,18 @@ export default function (sequelize, DataTypes) {
       problem: DataTypes.TEXT,
       troubleshooting: DataTypes.TEXT,
       resolution: DataTypes.TEXT,
-      dateOn: DataTypes.DATE,
-      timeInAt: DataTypes.DATE,
-      timeOutAt: DataTypes.DATE,
-      totalTime: DataTypes.INTEGER,
+      dateOn: DataTypes.DATEONLY,
+      timeInAt: DataTypes.TIME,
+      timeOutAt: DataTypes.TIME,
+      timeZone: DataTypes.TEXT,
+      totalTime: {
+        type: DataTypes.VIRTUAL(DataTypes.DECIMAL, ['timeInAt', 'timeOutAt', 'timeZone']),
+        get() {
+          let end = DateTime.fromISO(this.timeOutAt).setZone(this.timeZone);
+          let start = DateTime.fromISO(this.timeInAt).setZone(this.timeZone);
+          return parseFloat(end.diff(start, 'hours').toObject().hours.toFixed(2));
+        },
+      },
       hasCharger: DataTypes.BOOLEAN,
       notes: DataTypes.TEXT,
     },

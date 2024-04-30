@@ -3,17 +3,42 @@ import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 
 import models from '../../models/index.js';
+import helpers from '../helpers.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const records = await models.Donor.findAll();
-  res.json(records);
+  const page = req.query.page || '1';
+  const { records, pages, total } = await models.Donor.paginate({
+    page,
+    order: [
+      ['name', 'ASC'],
+      ['phone', 'ASC'],
+      ['email', 'ASC'],
+      ['address1', 'ASC'],
+      ['address2', 'ASC'],
+      ['city', 'ASC'],
+      ['state', 'ASC'],
+      ['zip', 'ASC'],
+    ],
+  });
+  helpers.setPaginationHeaders(req, res, page, pages, total);
+  res.json(records.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
   try {
     const record = await models.Donor.findByPk(req.params.id);
+
+    res.json(record);
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+router.get('/:donor', async (req, res) => {
+  try {
+    const record = await models.Donor.findOne(req.params.donor);
     res.json(record);
   } catch (err) {
     console.log(err);
@@ -36,7 +61,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const record = await models.Donor.findByPk(req.params.id);
     await record.destroy();
-    res.status(StatusCodes.OK).end();
+    res.status(StatusCodes.OK).send({});
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

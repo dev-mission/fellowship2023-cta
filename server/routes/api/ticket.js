@@ -56,9 +56,14 @@ router.get('/:id', interceptors.requireCTA, async (req, res) => {
   }
 });
 
+/*
+Need to figure out how to update time based on patching.
+*/
+
 router.patch('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
+    // const oldTotalTime = ticket.totalTime;
     await ticket.update(
       _.pick(req.body, [
         'AppointmentId',
@@ -83,6 +88,10 @@ router.patch('/:id', interceptors.requireCTA, async (req, res) => {
         { model: models.Location, attributes: ['name'] },
       ],
     });
+    // const user = await models.User.findByPk(ticket.UserId);
+    // const newTotalTime = parseFloat(user.totalTime) - oldTotalTime + updatedTicket.totalTime;
+    // user.update({ totalTime: newTotalTime });
+    // user.save();
     res.json(updatedTicket);
   } catch (err) {
     console.log(err);
@@ -98,6 +107,10 @@ router.delete('/:id', interceptors.requireCTA, async (req, res) => {
   try {
     const ticket = await models.Ticket.findByPk(req.params.id);
     if (req.user.isAdmin || ticket.UserId === req.user.id) {
+      const user = await models.User.findByPk(ticket.UserId);
+      const newTime = parseFloat(user.totalTime) - ticket.totalTime;
+      user.update({ totalTime: newTime });
+      user.save();
       await ticket.destroy();
       res.status(StatusCodes.OK).send({ message: 'Ticket deleted' }).end();
     } else {
@@ -128,6 +141,7 @@ router.post('/', interceptors.requireCTA, async (req, res) => {
       'totalTime',
       'hasCharger',
       'notes',
+      'timeZone',
     ]);
     ticketInfo.UserId = req.user.id;
     const record = await models.Ticket.create(ticketInfo);
@@ -138,6 +152,10 @@ router.post('/', interceptors.requireCTA, async (req, res) => {
         { model: models.Location, attributes: ['name'] },
       ],
     });
+    const user = await models.User.findByPk(req.user.id);
+    const newTime = parseFloat(user.totalTime) + ticket.totalTime;
+    user.update({ totalTime: newTime });
+    user.save();
     res.status(StatusCodes.CREATED).json(ticket);
   } catch (err) {
     console.log(err);

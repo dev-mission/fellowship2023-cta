@@ -38,6 +38,7 @@ export default function (sequelize, DataTypes) {
         'role',
         'fullName',
         'LocationId',
+        'totalTime',
       ]);
       if (this.Location) {
         data.Location = this.Location.toJSON();
@@ -163,6 +164,10 @@ export default function (sequelize, DataTypes) {
             }
           },
         },
+      },
+      totalTime: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0.0,
       },
       hashedPassword: {
         type: DataTypes.STRING,

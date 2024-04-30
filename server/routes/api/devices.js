@@ -2,33 +2,31 @@ import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 import helpers from '../helpers.js';
-
+import interceptors from '../interceptors.js';
 import models from '../../models/index.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  //Need to handle interceptor for inventory role
   const page = req.query.page || '1';
-  const { records, pages, total } = await models.Device.paginate({
-    page,
-    include: [
-      {
-        model: models.Location,
-        attributes: ['name'],
-      },
-      {
-        model: models.Donor,
-        attributes: ['name'],
-      },
-    ],
-  });
+  let records, pages, total;
+  if (req.user.isInventory || req.user.isAdmin) {
+    ({ records, pages, total } = await models.Device.paginate({
+      page,
+      order: [['id', 'DESC']],
+      include: [
+        { model: models.Location, attributes: ['name'] },
+        { model: models.Donor, attributes: ['name'] },
+        { model: models.User, attributes: ['fullName'] },
+      ],
+    }));
+  }
+
   helpers.setPaginationHeaders(req, res, page, pages, total);
   res.json(records.map((r) => r.toJSON()));
 });
 
-router.get('/:id', async (req, res) => {
-  //Need to handle interceptor for inventory role
+router.get('/:id', interceptors.requireInventory, async (req, res) => {
   try {
     const record = await models.Device.findByPk(req.params.id);
     res.json(record);
@@ -38,16 +36,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
-  //Need to handle interceptor for inventory role
+router.patch('/:id', interceptors.requireInventory, async (req, res) => {
   try {
-    const deviceId = req.params.id;
-    const record = await models.Device.findByPk(deviceId);
-    if (!record) {
-      return res.status(StatusCodes.NOT_FOUND).json({ error: 'Device not found' });
-    }
-    await record.update(
+    const device = await models.Device.findByPk(req.params.id);
+    await device.update(
       _.pick(req.body, [
+        'LocationId',
+        'DonorId',
+        'UserId',
         'deviceType',
         'model',
         'brand',
@@ -65,31 +61,35 @@ router.patch('/:id', async (req, res) => {
         'notes',
       ]),
     );
-    res.json(record);
+    const updatedDevice = await models.Device.findByPk(device.id, {
+      include: [
+        { model: models.Location, attributes: ['name'] },
+        { model: models.Donor, attributes: ['name'] },
+      ],
+    });
+    res.json(updatedDevice);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
 
-router.delete('/:id', async (req, res) => {
-  //Need to handle interceptor for inventory role
+router.delete('/:id', interceptors.requireInventory, async (req, res) => {
   try {
     const record = await models.Device.findByPk(req.params.id);
     await record.destroy();
-    res.status(StatusCodes.OK).end();
+    res.status(StatusCodes.OK).send({ message: 'Device deleted.' }).end();
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
 
-router.post('/', async (req, res) => {
-  //Need to handle interceptor for inventory role
+router.post('/', interceptors.requireInventory, async (req, res) => {
   try {
-    let device = {};
-    let deviceInfo;
-    (deviceInfo = _.pick(req.body, [
+    const device = _.pick(req.body, [
+      'LocationId',
+      'DonorId',
       'deviceType',
       'model',
       'brand',
@@ -105,16 +105,24 @@ router.post('/', async (req, res) => {
       'condition',
       'value',
       'notes',
-    ])),
-      (device = {
-        ...deviceInfo,
-        DonorId: req.body.DonorId,
-        LocationId: req.body.LocationId,
-        UserId: req.body.UserId,
-        ClientId: req.body.ClientId,
-      });
-    const record = await models.Device.create(device);
-    res.status(StatusCodes.CREATED).json(record);
+    ]);
+    device.UserId = req.user.id;
+    const newDevice = await models.Device.create(device);
+
+    const currentDevice = await models.Device.findByPk(newDevice.id, {
+      include: [
+        {
+          model: models.Donor,
+          attributes: ['name'],
+        },
+        {
+          model: models.User,
+          attributes: ['fullName'],
+        },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
+    res.status(StatusCodes.CREATED).json(currentDevice);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
