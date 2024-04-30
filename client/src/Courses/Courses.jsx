@@ -21,8 +21,8 @@ const Courses = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  useEffect(() => {
-    Api.courses.index(page).then((response) => {
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -34,10 +34,18 @@ const Courses = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   const onCreate = (course) => {
     setData([...data, course]);
+    fetchData();
   };
 
   const onUpdate = (course) => {
@@ -46,6 +54,7 @@ const Courses = () => {
 
   const onDelete = (courseId) => {
     setData(data.filter((l) => l.id != courseId));
+    fetchData();
   };
 
   const table = useReactTable({

@@ -60,10 +60,8 @@ const Devices = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  console.log(data);
-
-  useEffect(() => {
-    Api.devices.index(page).then((response) => {
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -75,10 +73,18 @@ const Devices = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   const onCreate = (device) => {
     setData([...data, device]);
+    fetchData();
   };
 
   const onUpdate = (device) => {
@@ -87,6 +93,7 @@ const Devices = () => {
 
   const onDelete = (deviceId) => {
     setData(data.filter((d) => d.id != deviceId));
+    fetchData();
   };
 
   const table = useReactTable({

@@ -65,8 +65,8 @@ const Clients = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  useEffect(() => {
-    Api.clients.index(page).then((response) => {
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -78,20 +78,27 @@ const Clients = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   function onCreate(client) {
     setData([...data, client]);
-    console.log(data);
+    fetchData();
   }
 
   function onUpdate(client) {
     setData(data.map((c) => (c.id == client.id ? { ...client } : c)));
-    console.log(client);
   }
 
   const onDelete = (clientId) => {
     setData(data.filter((c) => c.id != clientId));
+    fetchData();
   };
 
   const table = useReactTable({

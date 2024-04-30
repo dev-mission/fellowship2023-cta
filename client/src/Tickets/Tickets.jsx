@@ -44,8 +44,8 @@ const Tickets = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  useEffect(() => {
-    Api.tickets.index(page).then((response) => {
+  const fetchData = () => {
+    Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
       let newLastPage = page;
@@ -57,10 +57,18 @@ const Tickets = () => {
       }
       setLastPage(newLastPage);
     });
-  }, [page]);
+  };
+
+  useEffect(
+    (fetchData) => {
+      fetchData();
+    },
+    [page],
+  );
 
   function onCreate(ticket) {
     setData([...data, ticket]);
+    fetchData();
   }
 
   function onUpdate(ticket) {
@@ -69,6 +77,7 @@ const Tickets = () => {
 
   const onDelete = (ticketId) => {
     setData(data.filter((t) => t.id != ticketId));
+    fetchData();
   };
   const table = useReactTable({
     data: data || [],
