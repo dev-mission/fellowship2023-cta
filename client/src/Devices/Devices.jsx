@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
 import Pagination from '../Components/Pagination';
@@ -60,7 +60,7 @@ const Devices = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
@@ -73,14 +73,11 @@ const Devices = () => {
       }
       setLastPage(newLastPage);
     });
-  };
+  }, [page]);
 
-  useEffect(
-    (fetchData) => {
-      fetchData();
-    },
-    [page],
-  );
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, page]);
 
   const onCreate = (device) => {
     setData([...data, device]);

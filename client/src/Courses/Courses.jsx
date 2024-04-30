@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useLocation, Link, Routes, Route } from 'react-router-dom';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Api from '../Api';
@@ -21,7 +21,7 @@ const Courses = () => {
   const page = parseInt(params.get('page') ?? '1', 10);
   const [lastPage, setLastPage] = useState(1);
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     Api.locations.index(page).then((response) => {
       setData(response.data);
       const linkHeader = Api.parseLinkHeader(response);
@@ -34,14 +34,11 @@ const Courses = () => {
       }
       setLastPage(newLastPage);
     });
-  };
+  }, [page]);
 
-  useEffect(
-    (fetchData) => {
-      fetchData();
-    },
-    [page],
-  );
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, page]);
 
   const onCreate = (course) => {
     setData([...data, course]);
