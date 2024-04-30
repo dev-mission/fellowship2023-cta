@@ -48,7 +48,12 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', interceptors.requireCTA, async (req, res) => {
   try {
-    const tickets = await models.Ticket.findByPk(req.params.id);
+    const tickets = await models.Ticket.findByPk(req.params.id, {
+      include: [
+        { model: models.Client, attributes: ['fullName'] },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
     res.json(tickets);
   } catch (err) {
     console.log(err);

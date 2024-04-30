@@ -8,9 +8,10 @@ import Dropdown from '../Components/DropDown';
 
 ClientDropMenu.propTypes = {
   lookUp: PropTypes.func.isRequired,
+  client: PropTypes.string.isRequired,
 };
 
-function ClientDropMenu({ lookUp }) {
+function ClientDropMenu({ lookUp, client }) {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState();
 
@@ -24,8 +25,6 @@ function ClientDropMenu({ lookUp }) {
         setIsLoading(false);
       });
   };
-  // Bypass client-side filtering by returning `true`. Results are already
-  // filtered by the search endpoint, so no need to do it again.
   const filterBy = () => true;
 
   return (
@@ -39,7 +38,7 @@ function ClientDropMenu({ lookUp }) {
       onChange={(value) => {
         lookUp({ target: { name: 'ClientId', value: value[0]?.id } });
       }}
-      placeholder="Search for a clients..."
+      defaultInputValue={client}
     />
   );
 }
@@ -80,33 +79,36 @@ const TicketModal = ({ onCreate, onUpdate }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('New Ticket');
   const { ticketId } = useParams();
-  const [data, setData] = useState({
-    ClientId: null,
-    LocationId: null,
-    serialNumber: ' ',
-    device: ' ',
-    problem: '',
-    troubleshooting: '',
-    resolution: '',
-    dateOn: DateTime.now().toISODate(),
-    timeInAt: '',
-    timeOutAt: '',
-    hasCharger: false,
-    notes: '',
-    timeZone: DateTime.local().zoneName,
-  });
+  const [data, setData] = useState();
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(`/api/tickets/${ticketId}`);
       if (response.ok) {
         const data = await response.json();
+        console.log(data.Client.fullName);
         setData(data);
       }
     }
     if (ticketId) {
       fetchData();
       setTitle(`Edit Ticket ${ticketId}`);
+    } else {
+      setData({
+        ClientId: null,
+        LocationId: null,
+        serialNumber: ' ',
+        device: ' ',
+        problem: '',
+        troubleshooting: '',
+        resolution: '',
+        dateOn: DateTime.now().toISODate(),
+        timeInAt: '',
+        timeOutAt: '',
+        hasCharger: false,
+        notes: '',
+        timeZone: DateTime.local().zoneName,
+      });
     }
   }, [ticketId]);
 
@@ -155,116 +157,133 @@ const TicketModal = ({ onCreate, onUpdate }) => {
       </Modal.Header>
       <Modal.Body>
         <Container>
-          <Form>
-            <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="clientName">
-                  <Form.Label>Client Look Up</Form.Label>
-                  <ClientDropMenu lookUp={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Dropdown
-                  lookUp={onChange}
-                  settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
-                  path="/api/locations"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="device">
-                  <Form.Label>Device</Form.Label>
-                  <Form.Control name="device" value={data.device || ''} type="text" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="serialNumber">
-                  <Form.Label>Serial Number</Form.Label>
-                  <Form.Control name="serialNumber" value={data.serialNumber || ''} type="text" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={18} md={12}>
-                <Form.Group controlId="problem">
-                  <Form.Label>Problem</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="problem"
-                    autoFocus
-                    value={data.problem || ''}
-                    type="text"
-                    onChange={onChange}
-                    rows={3}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={18} md={12}>
-                <Form.Group controlId="troubleshooting">
-                  <Form.Label>Troubleshooting</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    name="troubleshooting"
-                    value={data.troubleshooting || ''}
-                    type="text"
-                    autoFocus
-                    onChange={onChange}
-                    rows={3}
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Col xs={18} md={12}>
-              <Form.Group controlId="resolution">
-                <Form.Label>Resolution</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  name="resolution"
-                  value={data.resolution || ''}
-                  type="text"
-                  autoFocus
-                  onChange={onChange}
-                  rows={3}
-                />
-              </Form.Group>
-            </Col>
-            <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="Date">
-                  <Form.Label>Date</Form.Label>
-                  <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={onChange} />
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Charger onChange={onChange}></Charger>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="timeInAt">
-                  <Form.Label>Time Started: </Form.Label>
-                  <FormControl name="timeInAt" value={data.timeInAt} type="time" onChange={onChange}></FormControl>
-                </Form.Group>
-              </Col>
-              <Col xs={9} md={6}>
-                <Form.Group controlId="timeOutAt">
-                  <Form.Label>Time Finished: </Form.Label>
-                  <FormControl name="timeOutAt" value={data.timeOutAt} type="time" onChange={onChange}></FormControl>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={18} md={12}>
-                <Form.Group controlId="notes">
-                  <Form.Label>Notes</Form.Label>
-                  <Form.Control as="textarea" name="notes" value={data.notes || ''} type="text" autoFocus onChange={onChange} rows={3} />
-                </Form.Group>
-              </Col>
-            </Row>
-          </Form>
+          {!data && (
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          )}
+          {data && (
+            <>
+              <Form>
+                <Row>
+                  <Col xs={9} md={6}>
+                    <Form.Group controlId="clientName">
+                      <Form.Label>Client Look Up</Form.Label>
+                      <ClientDropMenu client={data.Client?.fullName} lookUp={onChange} />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={9} md={6}>
+                    <Dropdown
+                      lookUp={onChange}
+                      settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
+                      path="/api/locations"
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={9} md={6}>
+                    <Form.Group controlId="device">
+                      <Form.Label>Device</Form.Label>
+                      <Form.Control name="device" value={data.device || ''} type="text" autoFocus onChange={onChange} />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={9} md={6}>
+                    <Form.Group controlId="serialNumber">
+                      <Form.Label>Serial Number</Form.Label>
+                      <Form.Control name="serialNumber" value={data.serialNumber || ''} type="text" autoFocus onChange={onChange} />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={18} md={12}>
+                    <Form.Group controlId="problem">
+                      <Form.Label>Problem</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        name="problem"
+                        autoFocus
+                        value={data.problem || ''}
+                        type="text"
+                        onChange={onChange}
+                        rows={3}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={18} md={12}>
+                    <Form.Group controlId="troubleshooting">
+                      <Form.Label>Troubleshooting</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        name="troubleshooting"
+                        value={data.troubleshooting || ''}
+                        type="text"
+                        autoFocus
+                        onChange={onChange}
+                        rows={3}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Col xs={18} md={12}>
+                  <Form.Group controlId="resolution">
+                    <Form.Label>Resolution</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      name="resolution"
+                      value={data.resolution || ''}
+                      type="text"
+                      autoFocus
+                      onChange={onChange}
+                      rows={3}
+                    />
+                  </Form.Group>
+                </Col>
+                <Row>
+                  <Col xs={9} md={6}>
+                    <Form.Group controlId="Date">
+                      <Form.Label>Date</Form.Label>
+                      <Form.Control name="dateOn" value={data.dateOn} type="date" autoFocus onChange={onChange} />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={9} md={6}>
+                    <Charger onChange={onChange}></Charger>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={9} md={6}>
+                    <Form.Group controlId="timeInAt">
+                      <Form.Label>Time Started: </Form.Label>
+                      <FormControl name="timeInAt" value={data.timeInAt} type="time" onChange={onChange}></FormControl>
+                    </Form.Group>
+                  </Col>
+                  <Col xs={9} md={6}>
+                    <Form.Group controlId="timeOutAt">
+                      <Form.Label>Time Finished: </Form.Label>
+                      <FormControl name="timeOutAt" value={data.timeOutAt} type="time" onChange={onChange}></FormControl>
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={18} md={12}>
+                    <Form.Group controlId="notes">
+                      <Form.Label>Notes</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        name="notes"
+                        value={data.notes || ''}
+                        type="text"
+                        autoFocus
+                        onChange={onChange}
+                        rows={3}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </Form>
+            </>
+          )}
         </Container>
       </Modal.Body>
       <Modal.Footer>
