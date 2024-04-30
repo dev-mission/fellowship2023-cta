@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 
 const DropMenu = ({ lookUp, settings }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState();
-
-  useEffect(() => {});
 
   const handleSearch = (query) => {
     setIsLoading(true);
@@ -32,6 +30,7 @@ const DropMenu = ({ lookUp, settings }) => {
         lookUp({ target: { name: settings.id, value: value[0]?.id } });
       }}
       placeholder={settings.placeholder}
+      defaultInputValue={settings.name}
     />
   );
 };

@@ -1,47 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Container, Form, FormControl, Modal, Row } from 'react-bootstrap';
-import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 import Dropdown from '../Components/DropDown';
-
-ClientDropMenu.propTypes = {
-  lookUp: PropTypes.func.isRequired,
-  client: PropTypes.string.isRequired,
-};
-
-function ClientDropMenu({ lookUp, client }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState();
-
-  const handleSearch = (query) => {
-    setIsLoading(true);
-
-    fetch(`/api/clients/search/${query}`)
-      .then((resp) => resp.json())
-      .then((items) => {
-        setOptions(items);
-        setIsLoading(false);
-      });
-  };
-  const filterBy = () => true;
-
-  return (
-    <AsyncTypeahead
-      filterBy={filterBy}
-      id="search-clients"
-      isLoading={isLoading}
-      labelKey="fullName"
-      onSearch={handleSearch}
-      options={options}
-      onChange={(value) => {
-        lookUp({ target: { name: 'ClientId', value: value[0]?.id } });
-      }}
-      defaultInputValue={client}
-    />
-  );
-}
+import DropMenu from '../Components/DropMenu';
 
 Charger.propTypes = {
   onChange: PropTypes.func.isRequired,
@@ -86,7 +49,6 @@ const TicketModal = ({ onCreate, onUpdate }) => {
       const response = await fetch(`/api/tickets/${ticketId}`);
       if (response.ok) {
         const data = await response.json();
-        console.log(data.Client.fullName);
         setData(data);
       }
     }
@@ -169,13 +131,28 @@ const TicketModal = ({ onCreate, onUpdate }) => {
                   <Col xs={9} md={6}>
                     <Form.Group controlId="clientName">
                       <Form.Label>Client Look Up</Form.Label>
-                      <ClientDropMenu client={data.Client?.fullName} lookUp={onChange} />
+                      <DropMenu
+                        lookUp={onChange}
+                        settings={{
+                          route: 'clients',
+                          id: 'ClientId',
+                          labelKey: 'fullName',
+                          placeholder: 'Choose a client...',
+                          name: data.Client?.fullName,
+                        }}
+                      />
                     </Form.Group>
                   </Col>
                   <Col xs={9} md={6}>
                     <Dropdown
                       lookUp={onChange}
-                      settings={{ title: 'Location', id: 'LocationId', labelKey: 'name', placeholder: 'Choose an location...' }}
+                      settings={{
+                        title: 'Location',
+                        id: 'LocationId',
+                        labelKey: 'name',
+                        placeholder: 'Choose an location...',
+                        name: data.Location?.name,
+                      }}
                       path="/api/locations"
                     />
                   </Col>

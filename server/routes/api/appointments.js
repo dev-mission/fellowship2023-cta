@@ -33,7 +33,19 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const record = await models.Appointment.findByPk(req.params.id);
+    const record = await models.Appointment.findByPk(req.params.id, {
+      include: [
+        {
+          model: models.Client,
+          attributes: ['fullName'],
+        },
+        {
+          model: models.User,
+          attributes: ['fullName'],
+        },
+        { model: models.Location, attributes: ['name'] },
+      ],
+    });
     res.json(record);
   } catch (err) {
     console.log(err);
@@ -100,7 +112,7 @@ router.post('/', async (req, res) => {
       _.pick(req.body, ['UserId', 'LocationId', 'ClientId', 'dateOn', 'problem', 'timeInAt', 'timeOutAt']),
     );
     //Ticket creation will need us to updateTime.
-    const user = await models.User.findByPk(req.user.id);
+    const user = await models.User.findByPk(req.body.UserId);
     const newTime = parseFloat(user.totalTime) + ticket.totalTime;
     ticket.set({
       AppointmentId: appointment.id,
