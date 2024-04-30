@@ -9,7 +9,7 @@ describe('models.Device', () => {
   });
 
   it('creates a new Device record', async () => {
-    assert.deepStrictEqual(await models.Device.count(), 1);
+    assert.deepStrictEqual(await models.Device.count(), 20);
     const record = await models.Device.create({
       id: 2,
       DonorId: 2,
@@ -50,10 +50,10 @@ describe('models.Device', () => {
   });
 
   it('finds an Device record by ID', async () => {
-    const record = await models.Device.findByPk(1);
-    assert.deepStrictEqual(record.model, 'MacBook Pro');
+    const record = await models.Device.findByPk(5020);
+    assert.deepStrictEqual(record.model, 'Apple iPad Air');
     assert.deepStrictEqual(record.brand, 'Apple');
-    assert.deepStrictEqual(record.value, '1000.00');
+    assert.deepStrictEqual(record.value, '400.00');
   });
 
   it('finds multiple Device records', async () => {
@@ -61,7 +61,7 @@ describe('models.Device', () => {
       order: [['serialNum', 'DESC']],
     });
 
-    assert.deepStrictEqual(record.length, 1);
+    assert.deepStrictEqual(record.length, 20);
     assert.deepStrictEqual(record[0].serialNum, '1234567890');
   });
 

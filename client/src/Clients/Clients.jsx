@@ -48,14 +48,6 @@ const columns = [
     accessorKey: 'language',
     header: 'Language',
   },
-  {
-    accessorKey: 'createdAt',
-    header: 'Created At',
-  },
-  {
-    accessorKey: 'updatedAt',
-    header: 'Updated At',
-  },
 ];
 
 const Clients = () => {
