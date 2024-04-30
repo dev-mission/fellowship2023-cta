@@ -16,9 +16,9 @@ router.get('/', async (req, res) => {
     ({ records, pages, total } = await models.Ticket.paginate({
       page,
       order: [
-        ['id', 'DESC'],
-        ['dateOn', 'DESC'],
-        ['timeInAt', 'DESC'],
+        ['id', 'ASC'],
+        ['dateOn', 'ASC'],
+        ['timeInAt', 'ASC'],
       ],
       include: [
         { model: models.Client, attributes: ['fullName'] },
