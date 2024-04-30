@@ -10,14 +10,14 @@ const router = express.Router();
 router.get('/', interceptors.requireInventory, async (req, res) => {
   const page = req.query.page || '1';
   const { records, pages, total } = await models.Device.paginate({
-      page,
-      order: [['id', 'DESC']],
-      include: [
-        { model: models.Location, attributes: ['name'] },
-        { model: models.Donor, attributes: ['name'] },
-        { model: models.User, attributes: ['fullName'] },
-      ],
-    });
+    page,
+    order: [['id', 'DESC']],
+    include: [
+      { model: models.Location, attributes: ['name'] },
+      { model: models.Donor, attributes: ['name'] },
+      { model: models.User, attributes: ['fullName'] },
+    ],
+  });
 
   helpers.setPaginationHeaders(req, res, page, pages, total);
   res.json(records.map((r) => r.toJSON()));
