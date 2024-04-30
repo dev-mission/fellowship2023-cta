@@ -2,7 +2,7 @@
   {
     "model": "Location",
     "data": {
-      "id": 1,
+      "id": 3001,
       "name": "Dev/Mission",
       "address1": "356 Bryant St",
       "address2": "N/A",
@@ -14,62 +14,229 @@
   {
     "model": "Location",
     "data": {
-      "id": 111,
-      "name": "fixture name test 1",
-      "address1": "fixture address1 test 1",
-      "address2": "fixture address2 test 1",
-      "city": "fixture city test 1",
-      "state": "fixture state test 1",
-      "zipCode": "fixture zip test 1"
-    }
-  },
-
-  {
-    "model": "Location",
-    "data": {
-      "id": 2,
-      "name": "Hayes Valley",
-      "address1": "450 Laguna St",
+      "id": 3002,
+      "name": "Tech/Hub",
+      "address1": "123 Main St",
       "address2": "N/A",
-      "city": "San Francisco",
+      "city": "Los Angeles",
       "state": "California",
-      "zipCode": "94107"
+      "zipCode": "90001"
     }
   },
   {
     "model": "Location",
     "data": {
-      "id": 222,
-      "name": "fixture name test 2",
-      "address1": "fixture address1 test 2",
-      "address2": "fixture address2 test 2",
-      "city": "fixture city test 2",
-      "state": "fixture state test 2",
-      "zipCode": "fixture zip test 2"
+      "id": 3003,
+      "name": "Code/Camp",
+      "address1": "456 Market St",
+      "address2": "N/A",
+      "city": "San Diego",
+      "state": "California",
+      "zipCode": "92101"
     }
   },
   {
     "model": "Location",
     "data": {
-      "id": 333,
-      "name": "fixture name test 3",
-      "address1": "fixture address1 test 3",
-      "address2": "fixture address2 test 3",
-      "city": "fixture city test 3",
-      "state": "fixture state test 3",
-      "zipCode": "fixture zip test 3"
+      "id": 3004,
+      "name": "Dev/Station",
+      "address1": "789 Broadway St",
+      "address2": "N/A",
+      "city": "San Jose",
+      "state": "California",
+      "zipCode": "95112"
     }
   },
   {
     "model": "Location",
     "data": {
-      "id": 444,
-      "name": "fixture name test 4",
-      "address1": "fixture address1 test 4",
-      "address2": "fixture address2 test 4",
-      "city": "fixture city test 4",
-      "state": "fixture state test 4",
-      "zipCode": "fixture zip test 4"
+      "id": 3005,
+      "name": "Tech/Station",
+      "address1": "321 Oak St",
+      "address2": "N/A",
+      "city": "Sacramento",
+      "state": "California",
+      "zipCode": "95814"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3006,
+      "name": "Code/Station",
+      "address1": "654 Pine St",
+      "address2": "N/A",
+      "city": "Fresno",
+      "state": "California",
+      "zipCode": "93721"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3007,
+      "name": "Dev/Hub",
+      "address1": "987 Elm St",
+      "address2": "N/A",
+      "city": "Long Beach",
+      "state": "California",
+      "zipCode": "90802"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3008,
+      "name": "Tech/Camp",
+      "address1": "147 Cedar St",
+      "address2": "N/A",
+      "city": "Oakland",
+      "state": "California",
+      "zipCode": "94612"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3009,
+      "name": "Code/Hub",
+      "address1": "258 Maple St",
+      "address2": "N/A",
+      "city": "Bakersfield",
+      "state": "California",
+      "zipCode": "93301"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3010,
+      "name": "Dev/Camp",
+      "address1": "369 Walnut St",
+      "address2": "N/A",
+      "city": "Anaheim",
+      "state": "California",
+      "zipCode": "92805"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3011,
+      "name": "Tech/Dev",
+      "address1": "741 Spruce St",
+      "address2": "N/A",
+      "city": "Santa Ana",
+      "state": "California",
+      "zipCode": "92701"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3012,
+      "name": "Code/Dev",
+      "address1": "852 Willow St",
+      "address2": "N/A",
+      "city": "Riverside",
+      "state": "California",
+      "zipCode": "92501"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3013,
+      "name": "Dev/Tech",
+      "address1": "963 Cherry St",
+      "address2": "N/A",
+      "city": "Stockton",
+      "state": "California",
+      "zipCode": "95202"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3014,
+      "name": "Tech/Code",
+      "address1": "174 Birch St",
+      "address2": "N/A",
+      "city": "Chula Vista",
+      "state": "California",
+      "zipCode": "91910"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3015,
+      "name": "Code/Tech",
+      "address1": "285 Ash St",
+      "address2": "N/A",
+      "city": "Irvine",
+      "state": "California",
+      "zipCode": "92612"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3016,
+      "name": "Dev/Code",
+      "address1": "396 Pineapple St",
+      "address2": "N/A",
+      "city": "Fremont",
+      "state": "California",
+      "zipCode": "94536"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3017,
+      "name": "Tech/DevCamp",
+      "address1": "741 Mango St",
+      "address2": "N/A",
+      "city": "San Bernardino",
+      "state": "California",
+      "zipCode": "92401"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3018,
+      "name": "Code/DevHub",
+      "address1": "852 Banana St",
+      "address2": "N/A",
+      "city": "Modesto",
+      "state": "California",
+      "zipCode": "95350"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3019,
+      "name": "Dev/TechHub",
+      "address1": "963 Apple St",
+      "address2": "N/A",
+      "city": "Oxnard",
+      "state": "California",
+      "zipCode": "93030"
+    }
+  },
+  {
+    "model": "Location",
+    "data": {
+      "id": 3020,
+      "name": "Tech/CodeCamp",
+      "address1": "174 Orange St",
+      "address2": "N/A",
+      "city": "Fontana",
+      "state": "California",
+      "zipCode": "92335"
     }
   }
 ]

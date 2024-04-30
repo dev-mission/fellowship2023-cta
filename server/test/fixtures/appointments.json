@@ -2,43 +2,299 @@
   {
     "model": "Appointment",
     "data": {
-      "id": 1,
-      "ClientId": 1,
-      "UserId": 1,
-      "LocationId": 1,
+      "id": 7001,
+      "ClientId": 1001,
+      "UserId": 4001,
+      "LocationId": 3001,
       "dateOn": "2024-03-04",
       "timeInAt": "17:23",
-      "timeOutAt": "17:23",
-      "problem": "TESTING THE APPOINTMENTS",
+      "timeOutAt": "18:23",
+      "problem": "My laptop is not working",
       "status": "Confirmed"
     }
   },
   {
     "model": "Appointment",
     "data": {
-      "id": 2,
-      "ClientId": 1,
-      "UserId": 2,
-      "LocationId": 1,
-      "dateOn": "2024-03-04",
-      "timeInAt": "17:23",
-      "timeOutAt": "17:23",
-      "problem": "TESTING THE APPOINTMENTS",
+      "id": 7002,
+      "ClientId": 1002,
+      "UserId": 4002,
+      "LocationId": 3002,
+      "dateOn": "2024-03-05",
+      "timeInAt": "09:00",
+      "timeOutAt": "10:00",
+      "problem": "Printer not connecting",
       "status": "Cancelled"
     }
   },
+
   {
     "model": "Appointment",
     "data": {
-      "id": 3,
-      "ClientId": 2,
-      "UserId": 222220,
-      "LocationId": 2,
-      "dateOn": "2024-03-04",
-      "timeInAt": "17:23",
-      "timeOutAt": "17:23",
-      "problem": "TESTING THE APPOINTMENTS",
-      "status": "Confirmed"
+      "id": 7003,
+      "ClientId": 1003,
+      "UserId": 4003,
+      "LocationId": 3003,
+      "dateOn": "2024-03-06",
+      "timeInAt": "14:30",
+      "timeOutAt": "15:30",
+      "problem": "Slow internet connection",
+      "status": "Rescheduled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7004,
+      "ClientId": 1004,
+      "UserId": 4004,
+      "LocationId": 3004,
+      "dateOn": "2024-03-07",
+      "timeInAt": "11:00",
+      "timeOutAt": "12:00",
+      "problem": "Email not syncing",
+      "status": "No Show"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7005,
+      "ClientId": 1005,
+      "UserId": 4005,
+      "LocationId": 3005,
+      "dateOn": "2024-03-08",
+      "timeInAt": "13:00",
+      "timeOutAt": "14:00",
+      "problem": "Software installation issue",
+      "status": "Scheduled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7006,
+      "ClientId": 1006,
+      "UserId": 4006,
+      "LocationId": 3006,
+      "dateOn": "2024-03-09",
+      "timeInAt": "10:30",
+      "timeOutAt": "11:30",
+      "problem": "Virus scan needed",
+      "status": "Attended"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7007,
+      "ClientId": 1007,
+      "UserId": 4007,
+      "LocationId": 3007,
+      "dateOn": "2024-03-10",
+      "timeInAt": "16:00",
+      "timeOutAt": "17:00",
+      "problem": "Hardware malfunction",
+      "status": "Cancelled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7008,
+      "ClientId": 1008,
+      "UserId": 4008,
+      "LocationId": 3008,
+      "dateOn": "2024-03-11",
+      "timeInAt": "09:30",
+      "timeOutAt": "10:30",
+      "problem": "Screen flickering issue",
+      "status": "Rescheduled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7009,
+      "ClientId": 1009,
+      "UserId": 4009,
+      "LocationId": 3009,
+      "dateOn": "2024-03-12",
+      "timeInAt": "12:30",
+      "timeOutAt": "13:30",
+      "problem": "Battery not holding charge",
+      "status": "No Show"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7010,
+      "ClientId": 1010,
+      "UserId": 4010,
+      "LocationId": 3010,
+      "dateOn": "2024-03-13",
+      "timeInAt": "15:00",
+      "timeOutAt": "16:00",
+      "problem": "Keyboard keys not working",
+      "status": "Scheduled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7011,
+      "ClientId": 1011,
+      "UserId": 4011,
+      "LocationId": 3011,
+      "dateOn": "2024-03-14",
+      "timeInAt": "11:30",
+      "timeOutAt": "12:30",
+      "problem": "Data recovery needed",
+      "status": "Attended"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7012,
+      "ClientId": 1012,
+      "UserId": 4012,
+      "LocationId": 3012,
+      "dateOn": "2024-03-15",
+      "timeInAt": "14:00",
+      "timeOutAt": "15:00",
+      "problem": "Printer paper jam",
+      "status": "Cancelled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7013,
+      "ClientId": 1013,
+      "UserId": 4013,
+      "LocationId": 3013,
+      "dateOn": "2024-03-16",
+      "timeInAt": "09:00",
+      "timeOutAt": "10:00",
+      "problem": "Network connection issue",
+      "status": "Rescheduled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7014,
+      "ClientId": 1014,
+      "UserId": 4014,
+      "LocationId": 3014,
+      "dateOn": "2024-03-17",
+      "timeInAt": "16:30",
+      "timeOutAt": "17:30",
+      "problem": "Mouse not responding",
+      "status": "No Show"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7015,
+      "ClientId": 1015,
+      "UserId": 4015,
+      "LocationId": 3015,
+      "dateOn": "2024-03-18",
+      "timeInAt": "13:30",
+      "timeOutAt": "14:30",
+      "problem": "Software update failure",
+      "status": "Scheduled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7016,
+      "ClientId": 1016,
+      "UserId": 4016,
+      "LocationId": 3016,
+      "dateOn": "2024-03-19",
+      "timeInAt": "10:30",
+      "timeOutAt": "11:30",
+      "problem": "Speaker not working",
+      "status": "Attended"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7017,
+      "ClientId": 1017,
+      "UserId": 4017,
+      "LocationId": 3017,
+      "dateOn": "2024-03-20",
+      "timeInAt": "15:00",
+      "timeOutAt": "16:00",
+      "problem": "Webcam malfunction",
+      "status": "Cancelled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7018,
+      "ClientId": 1018,
+      "UserId": 4018,
+      "LocationId": 3018,
+      "dateOn": "2024-03-21",
+      "timeInAt": "12:00",
+      "timeOutAt": "13:00",
+      "problem": "Bluetooth connectivity issue",
+      "status": "Rescheduled"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7019,
+      "ClientId": 1019,
+      "UserId": 4019,
+      "LocationId": 3019,
+      "dateOn": "2024-03-22",
+      "timeInAt": "09:30",
+      "timeOutAt": "10:30",
+      "problem": "Disk space full",
+      "status": "No Show"
+    }
+  },
+
+  {
+    "model": "Appointment",
+    "data": {
+      "id": 7020,
+      "ClientId": 1020,
+      "UserId": 4020,
+      "LocationId": 3020,
+      "dateOn": "2024-03-23",
+      "timeInAt": "14:30",
+      "timeOutAt": "15:30",
+      "problem": "Display resolution issue",
+      "status": "Scheduled"
     }
   }
 ]

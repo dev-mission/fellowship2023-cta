@@ -2,7 +2,7 @@
   {
     "model": "Client",
     "data": {
-      "id": 1,
+      "id": 1001,
       "firstName": "John",
       "lastName": "Doe",
       "age": "24",
@@ -17,29 +17,59 @@
   {
     "model": "Client",
     "data": {
-      "id": 1001,
-      "firstName": "Fixture Client First Name 1",
-      "lastName": "Fixture Client Last Name 1",
-      "age": 111,
-      "phone": "111-111-1111",
-      "email": "fixturetest1@email.com",
-      "ethnicity": "Fixture Ethnicity 1",
-      "address": "Fixture Address 1",
-      "gender": "Fixture Gender 1",
-      "language": "Fixture Language 1"
+      "id": 1002,
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "age": "30",
+      "phone": "234-567-8901",
+      "email": "jane.smith@gmail.com",
+      "ethnicity": "African American",
+      "address": "456 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "English"
     }
   },
   {
     "model": "Client",
     "data": {
-      "id": 2,
-      "firstName": "Apple",
-      "lastName": "Bees",
-      "age": "24",
-      "phone": "123-456-7890",
-      "email": "john.doe@gmail.com",
+      "id": 1003,
+      "firstName": "Bob",
+      "lastName": "Johnson",
+      "age": "35",
+      "phone": "345-678-9012",
+      "email": "bob.johnson@gmail.com",
+      "ethnicity": "Hispanic",
+      "address": "789 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "Spanish"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1004,
+      "firstName": "Alice",
+      "lastName": "Williams",
+      "age": "40",
+      "phone": "456-789-0123",
+      "email": "alice.williams@gmail.com",
+      "ethnicity": "Asian",
+      "address": "1011 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "Chinese"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1005,
+      "firstName": "Charlie",
+      "lastName": "Brown",
+      "age": "45",
+      "phone": "567-890-1234",
+      "email": "charlie.brown@gmail.com",
       "ethnicity": "Caucasian",
-      "address": "123 Main St, Anytown, USA",
+      "address": "1213 Main St, Anytown, USA",
       "gender": "Male",
       "language": "English"
     }
@@ -47,31 +77,241 @@
   {
     "model": "Client",
     "data": {
-      "id": 1002,
-      "firstName": "Fixture Client First Name 2",
-      "lastName": "Fixture Client Last Name 2",
-      "age": 222,
-      "phone": "222-222-2222",
-      "email": "fixturetest2@email.com",
-      "ethnicity": "Fixture Ethnicity 2",
-      "address": "Fixture Address 2",
-      "gender": "Fixture Gender 2",
-      "language": "Fixture Language 2"
+      "id": 1006,
+      "firstName": "Diana",
+      "lastName": "Davis",
+      "age": "50",
+      "phone": "678-901-2345",
+      "email": "diana.davis@gmail.com",
+      "ethnicity": "African American",
+      "address": "1415 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "English"
     }
   },
   {
     "model": "Client",
     "data": {
-      "id": 1003,
-      "firstName": "Fixture Client First Name 3",
-      "lastName": "Fixture Client Last Name 3",
-      "age": 333,
-      "phone": "333-333-3333",
-      "email": "fixturetest3@email.com",
-      "ethnicity": "Fixture Ethnicity 3",
-      "address": "Fixture Address 3",
-      "gender": "Fixture Gender 3",
-      "language": "Fixture Language 3"
+      "id": 1007,
+      "firstName": "Edward",
+      "lastName": "Miller",
+      "age": "55",
+      "phone": "789-012-3456",
+      "email": "edward.miller@gmail.com",
+      "ethnicity": "Hispanic",
+      "address": "1617 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "Spanish"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1008,
+      "firstName": "Fiona",
+      "lastName": "Wilson",
+      "age": "60",
+      "phone": "890-123-4567",
+      "email": "fiona.wilson@gmail.com",
+      "ethnicity": "Asian",
+      "address": "1819 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "Chinese"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1009,
+      "firstName": "George",
+      "lastName": "Moore",
+      "age": "65",
+      "phone": "901-234-5678",
+      "email": "george.moore@gmail.com",
+      "ethnicity": "Caucasian",
+      "address": "2021 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "English"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1010,
+      "firstName": "Helen",
+      "lastName": "Taylor",
+      "age": "70",
+      "phone": "012-345-6789",
+      "email": "helen.taylor@gmail.com",
+      "ethnicity": "African American",
+      "address": "2223 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "English"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1011,
+      "firstName": "Ivan",
+      "lastName": "Anderson",
+      "age": "75",
+      "phone": "123-456-7890",
+      "email": "ivan.anderson@gmail.com",
+      "ethnicity": "Hispanic",
+      "address": "2425 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "Spanish"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1012,
+      "firstName": "Julia",
+      "lastName": "Thomas",
+      "age": "80",
+      "phone": "234-567-8901",
+      "email": "julia.thomas@gmail.com",
+      "ethnicity": "Asian",
+      "address": "2627 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "Chinese"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1013,
+      "firstName": "Kevin",
+      "lastName": "Jackson",
+      "age": "85",
+      "phone": "345-678-9012",
+      "email": "kevin.jackson@gmail.com",
+      "ethnicity": "Caucasian",
+      "address": "2829 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "English"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1014,
+      "firstName": "Laura",
+      "lastName": "White",
+      "age": "90",
+      "phone": "456-789-0123",
+      "email": "laura.white@gmail.com",
+      "ethnicity": "African American",
+      "address": "3031 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "English"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1015,
+      "firstName": "Mike",
+      "lastName": "Harris",
+      "age": "95",
+      "phone": "567-890-1234",
+      "email": "mike.harris@gmail.com",
+      "ethnicity": "Hispanic",
+      "address": "3233 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "Spanish"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1016,
+      "firstName": "Nancy",
+      "lastName": "Martin",
+      "age": "100",
+      "phone": "678-901-2345",
+      "email": "nancy.martin@gmail.com",
+      "ethnicity": "Asian",
+      "address": "3435 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "Chinese"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1017,
+      "firstName": "Oscar",
+      "lastName": "Thompson",
+      "age": "105",
+      "phone": "789-012-3456",
+      "email": "oscar.thompson@gmail.com",
+      "ethnicity": "Caucasian",
+      "address": "3637 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "English"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1018,
+      "firstName": "Patricia",
+      "lastName": "Garcia",
+      "age": "110",
+      "phone": "890-123-4567",
+      "email": "patricia.garcia@gmail.com",
+      "ethnicity": "African American",
+      "address": "3839 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "English"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1019,
+      "firstName": "Quincy",
+      "lastName": "Martinez",
+      "age": "115",
+      "phone": "901-234-5678",
+      "email": "quincy.martinez@gmail.com",
+      "ethnicity": "Hispanic",
+      "address": "4041 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "Spanish"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1020,
+      "firstName": "Rachel",
+      "lastName": "Robinson",
+      "age": "120",
+      "phone": "012-345-6789",
+      "email": "rachel.robinson@gmail.com",
+      "ethnicity": "Asian",
+      "address": "4243 Main St, Anytown, USA",
+      "gender": "Female",
+      "language": "Chinese"
+    }
+  },
+  {
+    "model": "Client",
+    "data": {
+      "id": 1021,
+      "firstName": "Steve",
+      "lastName": "Clark",
+      "age": "125",
+      "phone": "123-456-7890",
+      "email": "steve.clark@gmail.com",
+      "ethnicity": "Caucasian",
+      "address": "4445 Main St, Anytown, USA",
+      "gender": "Male",
+      "language": "English"
     }
   }
 ]
