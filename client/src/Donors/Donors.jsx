@@ -116,12 +116,12 @@ const Donors = () => {
           </form>
         </div>
       </div>
-      <DonorsTable table={table} />
+      <DonorsTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<DonorsModal onCreate={onCreate} />} />
         <Route path="edit/:donorId" element={<DonorsModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="donors" onDelete={onDelete} />} />
+        <Route path="delete/:id" element={<DeleteModal model="donors" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );

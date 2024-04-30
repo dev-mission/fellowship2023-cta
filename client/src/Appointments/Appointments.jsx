@@ -164,12 +164,12 @@ const Appointments = () => {
           Archive
         </ToggleButton>
       </ButtonGroup> */}
-      <AppointmentsTable table={table} />
+      <AppointmentsTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<AppointmentsModal onCreate={onCreate} />} />
         <Route path="edit/:appointmentId" element={<AppointmentsModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="appointments" onDelete={onDelete} />} />
+        <Route path="delete/:id" element={<DeleteModal model="appointments" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );

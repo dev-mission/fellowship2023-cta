@@ -127,12 +127,12 @@ const Devices = () => {
           </form>
         </div>
       </div>
-      <DevicesTable table={table} />
+      <DevicesTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<DevicesModal onCreate={onCreate} />} />
         <Route path="edit/:deviceId" element={<DevicesModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} />} />
+        <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );

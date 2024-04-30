@@ -132,12 +132,12 @@ const Clients = () => {
           </form>
         </div>
       </div>
-      <ClientTable table={table} />
+      <ClientTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<ClientModal onCreate={onCreate} />} />
         <Route path="edit/:clientId" element={<ClientModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="clients" onDelete={onDelete}></DeleteModal>} />
+        <Route path="delete/:id" element={<DeleteModal model="clients" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );

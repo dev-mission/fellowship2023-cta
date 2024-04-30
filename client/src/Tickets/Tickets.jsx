@@ -110,12 +110,12 @@ const Tickets = () => {
           </form>
         </div>
       </div>
-      <TicketTable table={table} />
+      <TicketTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<TicketModal onCreate={onCreate} />} />
         <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="tickets" onDelete={onDelete}></DeleteModal>} />
+        <Route path="delete/:id" element={<DeleteModal model="tickets" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );

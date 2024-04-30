@@ -88,12 +88,12 @@ const Courses = () => {
           </form>
         </div>
       </div>
-      <CourseTable table={table} />
+      <CourseTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
         <Route path="new" element={<CourseModal onCreate={onCreate} />} />
         <Route path="edit/:courseId" element={<CourseModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="courses" onDelete={onDelete} />} />
+        <Route path="delete/:id" element={<DeleteModal model="courses" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );
