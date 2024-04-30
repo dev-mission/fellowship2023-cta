@@ -84,8 +84,7 @@ const Clients = () => {
     fetchData();
   }, [fetchData, page]);
 
-  function onCreate(client) {
-    setData([...data, client]);
+  function onCreate() {
     fetchData();
   }
 
@@ -93,8 +92,7 @@ const Clients = () => {
     setData(data.map((c) => (c.id == client.id ? { ...client } : c)));
   }
 
-  const onDelete = (clientId) => {
-    setData(data.filter((c) => c.id != clientId));
+  const onDelete = () => {
     fetchData();
   };
 
@@ -111,7 +109,7 @@ const Clients = () => {
     <main className="container">
       <div className="row align-items-start mt-5">
         <div className="col-3">
-          <Link className="btn btn-primary" to="new">
+          <Link className="btn btn-primary" to={`new?page=${page}`}>
             <div className="d-flex align-items-center justify-content-center">
               New Clients
               <i className="bi bi-plus-lg" />
@@ -135,8 +133,8 @@ const Clients = () => {
       <ClientTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path="new" element={<ClientModal onCreate={onCreate} />} />
-        <Route path="edit/:clientId" element={<ClientModal onUpdate={onUpdate} />} />
+        <Route path="new" element={<ClientModal onCreate={onCreate} page={page} />} />
+        <Route path="edit/:clientId" element={<ClientModal onUpdate={onUpdate} page={page} />} />
         <Route path="delete/:id" element={<DeleteModal model="clients" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>

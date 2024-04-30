@@ -68,8 +68,7 @@ const Donors = () => {
     fetchData();
   }, [fetchData, page]);
 
-  const onCreate = (donor) => {
-    setData([...data, donor]);
+  const onCreate = () => {
     fetchData();
   };
 
@@ -77,8 +76,7 @@ const Donors = () => {
     setData(data.map((d) => (d.id === donor.id ? { ...donor } : d)));
   };
 
-  const onDelete = (donorId) => {
-    setData(data.filter((d) => d.id != donorId));
+  const onDelete = () => {
     fetchData();
   };
 
@@ -95,7 +93,7 @@ const Donors = () => {
     <main className="container">
       <div className="row align-items-start mt-5">
         <div className="col-3">
-          <Link className="btn btn-primary" to="new">
+          <Link className="btn btn-primary" to={`new?page=${page}`}>
             <div className="d-flex align-items-center justify-content-center">
               New Donors
               <i className="bi bi-plus-lg" />
@@ -119,8 +117,8 @@ const Donors = () => {
       <DonorsTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path="new" element={<DonorsModal onCreate={onCreate} />} />
-        <Route path="edit/:donorId" element={<DonorsModal onUpdate={onUpdate} />} />
+        <Route path="new" element={<DonorsModal onCreate={onCreate} page={page} />} />
+        <Route path="edit/:donorId" element={<DonorsModal onUpdate={onUpdate} page={page} />} />
         <Route path="delete/:id" element={<DeleteModal model="donors" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>

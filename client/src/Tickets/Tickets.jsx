@@ -63,8 +63,7 @@ const Tickets = () => {
     fetchData();
   }, [fetchData, page]);
 
-  function onCreate(ticket) {
-    setData([...data, ticket]);
+  function onCreate() {
     fetchData();
   }
 
@@ -72,8 +71,7 @@ const Tickets = () => {
     setData(data.map((t) => (t.id == ticket.id ? { ...ticket } : t)));
   }
 
-  const onDelete = (ticketId) => {
-    setData(data.filter((t) => t.id != ticketId));
+  const onDelete = () => {
     fetchData();
   };
   const table = useReactTable({
@@ -89,7 +87,7 @@ const Tickets = () => {
     <main className="container">
       <div className="row align-items-start mt-5">
         <div className="col-3">
-          <Link className="btn btn-primary" to="new">
+          <Link className="btn btn-primary" to={`new?page=${page}`}>
             <div className="d-flex align-items-center justify-content-center">
               New Tickets
               <i className="bi bi-plus-lg" />
@@ -113,8 +111,8 @@ const Tickets = () => {
       <TicketTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path="new" element={<TicketModal onCreate={onCreate} />} />
-        <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} />} />
+        <Route path="new" element={<TicketModal onCreate={onCreate} page={page} />} />
+        <Route path="edit/:ticketId" element={<TicketModal onUpdate={onUpdate} page={page} />} />
         <Route path="delete/:id" element={<DeleteModal model="tickets" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>

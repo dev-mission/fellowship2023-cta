@@ -61,10 +61,10 @@ router.delete('/:id', async (req, res) => {
   try {
     const record = await models.Donor.findByPk(req.params.id);
     await record.destroy();
-    res.status(StatusCodes.OK).send({});
+    res.status(StatusCodes.OK).send({ message: 'Donor deleted.' }).end();
   } catch (err) {
     console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: err.original.detail, error: err.original.name }).end();
   }
 });
 

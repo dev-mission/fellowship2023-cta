@@ -9,6 +9,9 @@ const DeleteModal = ({ model, onDelete, page }) => {
   const [toggleErrorModal, setToggleErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  console.log(toggleErrorModal);
+  console.log(errorMessage);
+
   const deleteTicket = async () => {
     const response = await fetch(`/api/${model}/${id}`, {
       method: 'DELETE',
@@ -24,6 +27,11 @@ const DeleteModal = ({ model, onDelete, page }) => {
       onDelete(id);
       navigate(`/${model}?page=${page}`);
     }
+  };
+
+  const onClose = () => {
+    setToggleErrorModal(false);
+    navigate(`/${model}?page=${page}`);
   };
 
   return (
@@ -48,7 +56,7 @@ const DeleteModal = ({ model, onDelete, page }) => {
         </Modal.Header>
         <Modal.Body>{'Must remove from table in ' + errorMessage + ' page first.'}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setToggleErrorModal(false)}>
+          <Button variant="secondary" onClick={onClose}>
             Close
           </Button>
         </Modal.Footer>

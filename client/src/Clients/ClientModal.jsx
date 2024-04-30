@@ -4,7 +4,7 @@ import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
-const ClientModal = ({ onCreate, onUpdate }) => {
+const ClientModal = ({ onCreate, onUpdate, page }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('New Client');
   const { clientId } = useParams();
@@ -68,14 +68,14 @@ const ClientModal = ({ onCreate, onUpdate }) => {
       if (data.id) {
         onUpdate(newData);
       } else {
-        onCreate(newData);
+        onCreate();
       }
-      navigate('/clients');
+      navigate(`/clients?page=${page}`);
     }
   };
 
   return (
-    <Modal show={true} onHide={() => navigate('/clients')}>
+    <Modal show={true} onHide={() => navigate(`/clients?page=${page}`)}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -154,7 +154,7 @@ const ClientModal = ({ onCreate, onUpdate }) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => navigate('/clients')}>
+        <Button variant="secondary" onClick={() => navigate(`/clients?page=${page}`)}>
           Cancel
         </Button>
         <Button variant="primary" onClick={submitClient}>
@@ -168,6 +168,7 @@ const ClientModal = ({ onCreate, onUpdate }) => {
 ClientModal.propTypes = {
   onCreate: PropTypes.func,
   onUpdate: PropTypes.func,
+  page: PropTypes.number,
 };
 
 export default ClientModal;

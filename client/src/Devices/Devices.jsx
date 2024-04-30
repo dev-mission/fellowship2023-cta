@@ -79,8 +79,7 @@ const Devices = () => {
     fetchData();
   }, [fetchData, page]);
 
-  const onCreate = (device) => {
-    setData([...data, device]);
+  const onCreate = () => {
     fetchData();
   };
 
@@ -88,8 +87,7 @@ const Devices = () => {
     setData(data.map((d) => (d.id === device.id ? { ...device } : d)));
   };
 
-  const onDelete = (deviceId) => {
-    setData(data.filter((d) => d.id != deviceId));
+  const onDelete = () => {
     fetchData();
   };
 
@@ -106,7 +104,7 @@ const Devices = () => {
     <main className="container">
       <div className="row align-items-start mt-5">
         <div className="col-3">
-          <Link className="btn btn-primary" to="new">
+          <Link className="btn btn-primary" to={`new?page=${page}`}>
             <div className="d-flex align-items-center justify-content-center">
               New Devices
               <i className="bi bi-plus-lg" />
@@ -130,8 +128,8 @@ const Devices = () => {
       <DevicesTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path="new" element={<DevicesModal onCreate={onCreate} />} />
-        <Route path="edit/:deviceId" element={<DevicesModal onUpdate={onUpdate} />} />
+        <Route path="new" element={<DevicesModal onCreate={onCreate} page={page} />} />
+        <Route path="edit/:deviceId" element={<DevicesModal onUpdate={onUpdate} page={page} />} />
         <Route path="delete/:id" element={<DeleteModal model="devices" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>

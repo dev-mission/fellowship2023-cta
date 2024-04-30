@@ -87,7 +87,7 @@ router.delete('/:id', async (req, res) => {
     res.status(StatusCodes.OK).send({ message: 'Appointment deleted' });
   } catch (err) {
     console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: err.original.detail, error: err.original.name }).end();
   }
 });
 

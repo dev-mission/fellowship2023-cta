@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-const LocationsModal = ({ onCreate, onUpdate }) => {
+const LocationsModal = ({ onCreate, onUpdate, page }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('New Location');
   const { locationId } = useParams();
@@ -65,14 +65,14 @@ const LocationsModal = ({ onCreate, onUpdate }) => {
       if (data.id) {
         onUpdate(newData);
       } else {
-        onCreate(newData);
+        onCreate();
       }
     }
-    navigate('/locations');
+    navigate(`/locations?page=${page}`);
   };
 
   return (
-    <Modal show={true} onHide={() => navigate('/locations')}>
+    <Modal show={true} onHide={() => navigate(`/locations?page=${page}`)}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -127,7 +127,7 @@ const LocationsModal = ({ onCreate, onUpdate }) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => navigate('/locations')}>
+        <Button variant="secondary" onClick={() => navigate(`/locations?page=${page}`)}>
           Cancel
         </Button>
         <Button variant="primary" onClick={submitLocation}>
@@ -141,6 +141,7 @@ const LocationsModal = ({ onCreate, onUpdate }) => {
 LocationsModal.propTypes = {
   onCreate: PropTypes.func,
   onUpdate: PropTypes.func,
+  page: PropTypes.number,
 };
 
 export default LocationsModal;
