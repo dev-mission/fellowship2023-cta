@@ -90,8 +90,7 @@ const Appointments = () => {
     fetchData();
   }, [fetchData, page]);
 
-  const onCreate = (appointment) => {
-    setData([...data, appointment]);
+  const onCreate = () => {
     fetchData();
   };
 
@@ -99,8 +98,7 @@ const Appointments = () => {
     setData(data.map((a) => (a.id === appointment.id ? { ...appointment } : a)));
   };
 
-  const onDelete = (appointmentId) => {
-    setData(data.filter((a) => a.id != appointmentId));
+  const onDelete = () => {
     fetchData();
   };
 
@@ -117,7 +115,7 @@ const Appointments = () => {
     <main className="container">
       <div className="row align-items-start mt-5">
         <div className="col-3">
-          <Link className="btn btn-primary" to="new">
+          <Link className="btn btn-primary" to={`new?page=${page}`}>
             <div className="d-flex align-items-center justify-content-center">
               New Appointments
               <i className="bi bi-plus-lg" />
@@ -164,12 +162,12 @@ const Appointments = () => {
           Archive
         </ToggleButton>
       </ButtonGroup> */}
-      <AppointmentsTable table={table} />
+      <AppointmentsTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path="new" element={<AppointmentsModal onCreate={onCreate} />} />
-        <Route path="edit/:appointmentId" element={<AppointmentsModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="appointments" onDelete={onDelete} />} />
+        <Route path="new" element={<AppointmentsModal onCreate={onCreate} page={page} />} />
+        <Route path="edit/:appointmentId" element={<AppointmentsModal onUpdate={onUpdate} page={page} />} />
+        <Route path="delete/:id" element={<DeleteModal model="appointments" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );

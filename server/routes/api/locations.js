@@ -13,14 +13,6 @@ router.get('/', async (req, res) => {
   const page = req.query.page || '1';
   const { records, pages, total } = await models.Location.paginate({
     page,
-    order: [
-      ['name', 'ASC'],
-      ['address1', 'ASC'],
-      ['address2', 'ASC'],
-      ['city', 'ASC'],
-      ['state', 'ASC'],
-      ['zipCode', 'ASC'],
-    ],
   });
   helpers.setPaginationHeaders(req, res, page, pages, total);
   res.json(records.map((r) => r.toJSON()));

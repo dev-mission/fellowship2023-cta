@@ -2,6 +2,7 @@ import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
 
+import helpers from '../helpers.js';
 import models from '../../models/index.js';
 import interceptors from '../interceptors.js';
 import { Op } from 'sequelize';
@@ -9,8 +10,12 @@ import { Op } from 'sequelize';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const records = await models.Client.findAll();
-  res.json(records.map((record) => record.toJSON()));
+  const page = req.query.page || '1';
+  const { records, pages, total } = await models.Client.paginate({
+    page,
+  });
+  helpers.setPaginationHeaders(req, res, page, pages, total);
+  res.json(records.map((r) => r.toJSON()));
 });
 
 router.get('/:id', async (req, res) => {
@@ -63,10 +68,10 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Client.findByPk(req.params.id);
     await record.destroy();
-    res.status(StatusCodes.OK).send({});
+    res.status(StatusCodes.OK).send({ message: 'Client deleted.' }).end();
   } catch (err) {
     console.log(err);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({ message: err.original.detail, error: err.original.name }).end();
   }
 });
 

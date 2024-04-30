@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const DeleteModal = ({ model, onDelete }) => {
+const DeleteModal = ({ model, onDelete, page }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [toggleErrorModal, setToggleErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  console.log(toggleErrorModal);
+  console.log(errorMessage);
 
   const deleteTicket = async () => {
     const response = await fetch(`/api/${model}/${id}`, {
@@ -22,19 +25,24 @@ const DeleteModal = ({ model, onDelete }) => {
       setToggleErrorModal(true);
     } else {
       onDelete(id);
-      navigate(`/${model}`);
+      navigate(`/${model}?page=${page}`);
     }
+  };
+
+  const onClose = () => {
+    setToggleErrorModal(false);
+    navigate(`/${model}?page=${page}`);
   };
 
   return (
     <>
-      <Modal show={true} onHide={() => navigate(`/${model}`)}>
+      <Modal show={true} onHide={() => navigate(`/${model}?page=${page}`)}>
         <Modal.Header closeButton>
           <Modal.Title>Delete {model.slice(0, -1)}</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this {model.slice(0, -1)}?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => navigate(`/${model}`)}>
+          <Button variant="secondary" onClick={() => navigate(`/${model}?page=${page}`)}>
             No
           </Button>
           <Button variant="danger" onClick={deleteTicket}>
@@ -48,7 +56,7 @@ const DeleteModal = ({ model, onDelete }) => {
         </Modal.Header>
         <Modal.Body>{'Must remove from table in ' + errorMessage + ' page first.'}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setToggleErrorModal(false)}>
+          <Button variant="secondary" onClick={onClose}>
             Close
           </Button>
         </Modal.Footer>
@@ -60,6 +68,7 @@ const DeleteModal = ({ model, onDelete }) => {
 DeleteModal.propTypes = {
   model: PropTypes.string,
   onDelete: PropTypes.func,
+  page: PropTypes.number,
 };
 
 export default DeleteModal;

@@ -40,8 +40,7 @@ const Courses = () => {
     fetchData();
   }, [fetchData, page]);
 
-  const onCreate = (course) => {
-    setData([...data, course]);
+  const onCreate = () => {
     fetchData();
   };
 
@@ -49,8 +48,7 @@ const Courses = () => {
     setData(data.map((c) => (c.id === course.id ? { ...course } : c)));
   };
 
-  const onDelete = (courseId) => {
-    setData(data.filter((l) => l.id != courseId));
+  const onDelete = () => {
     fetchData();
   };
 
@@ -67,7 +65,7 @@ const Courses = () => {
     <main className="container">
       <div className="row align-items-start mt-5">
         <div className="col-3">
-          <Link className="btn btn-primary" to="new">
+          <Link className="btn btn-primary" to={`new?page=${page}`}>
             <div className="d-flex align-items-center justify-content-center">
               New Courses
               <i className="bi bi-plus-lg" />
@@ -88,12 +86,12 @@ const Courses = () => {
           </form>
         </div>
       </div>
-      <CourseTable table={table} />
+      <CourseTable table={table} page={page} />
       <Pagination page={page} lastPage={lastPage} />
       <Routes>
-        <Route path="new" element={<CourseModal onCreate={onCreate} />} />
-        <Route path="edit/:courseId" element={<CourseModal onUpdate={onUpdate} />} />
-        <Route path="delete/:id" element={<DeleteModal model="courses" onDelete={onDelete} />} />
+        <Route path="new" element={<CourseModal onCreate={onCreate} page={page} />} />
+        <Route path="edit/:courseId" element={<CourseModal onUpdate={onUpdate} page={page} />} />
+        <Route path="delete/:id" element={<DeleteModal model="courses" onDelete={onDelete} page={page} />} />
       </Routes>
     </main>
   );

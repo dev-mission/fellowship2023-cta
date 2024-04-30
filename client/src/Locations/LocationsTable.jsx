@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { flexRender } from '@tanstack/react-table';
 import { useNavigate } from 'react-router-dom';
 
-const LocationsTable = ({ table }) => {
+const LocationsTable = ({ table, page }) => {
   const navigate = useNavigate();
 
   return (
@@ -29,10 +29,10 @@ const LocationsTable = ({ table }) => {
               <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
             ))}
             <td>
-              <i className="bi bi-pencil pointer" onClick={() => navigate(`edit/${row.original.id}`)} />
+              <i className="bi bi-pencil pointer" onClick={() => navigate(`edit/${row.original.id}?page=${page}`)} />
             </td>
             <td>
-              <i className="bi bi-x-lg pointer" onClick={() => navigate(`delete/${row.original.id}`)} />
+              <i className="bi bi-x-lg pointer" onClick={() => navigate(`delete/${row.original.id}?page=${page}`)} />
             </td>
           </tr>
         ))}
@@ -43,6 +43,7 @@ const LocationsTable = ({ table }) => {
 
 LocationsTable.propTypes = {
   table: PropTypes.object,
+  page: PropTypes.number,
 };
 
 export default LocationsTable;
