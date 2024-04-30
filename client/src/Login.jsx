@@ -5,6 +5,7 @@ import { useNavigate, Link, useLocation, useSearchParams } from 'react-router-do
 import Api from './Api';
 import { useAuthContext } from './AuthContext';
 import { useStaticContext } from './StaticContext';
+import './Login.scss';
 
 function Login() {
   const staticContext = useStaticContext();
@@ -47,68 +48,70 @@ function Login() {
       <Helmet>
         <title>Log in - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
       </Helmet>
-      <main className="container">
-        <div className="row justify-content-center">
-          <div className="col col-sm-10 col-md-8 col-lg-6 col-xl-4">
-            <div className="card">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col">
-                    <h2 className="card-title">Log in</h2>
+      <div id="Background-Login">
+        <main className="container d-flex justify-content-center align-items-center vh-100">
+          <div className="row justify-content-center">
+            <div className="col col-sm-10 col-md-8 col-lg-6 col-xl-4">
+              <div className="card">
+                <div className="card-body">
+                  <div className="row">
+                    <div className="col">
+                      <h2 className="card-title">Log in</h2>
+                    </div>
+                    <div className="col">
+                      <img src="../public/logo.png" alt="Dev/Mission logo" className="img-thumbnail" />
+                    </div>
                   </div>
-                  <div className="col">
-                    <img src="../public/logo.png" alt="Dev/Mission logo" className="img-thumbnail" />
-                  </div>
-                </div>
-                {location.state?.flash && <div className="alert alert-success">{location.state?.flash}</div>}
-                {showInvalidError && <div className="alert alert-danger">Invalid email and/or password.</div>}
-                <form onSubmit={onSubmit}>
-                  <div className="mb-3">
-                    <label className="form-label" htmlFor="email">
-                      Email
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="email"
-                      name="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label" htmlFor="password">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="password"
-                      name="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3 d-grid">
-                    <button className="btn btn-primary" type="submit">
-                      Submit
-                    </button>
-                  </div>
-                  <div className="mb-3 text-center">
-                    <Link to="/passwords/forgot">Forgot your password?</Link>
-                    {/* {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && (
+                  {location.state?.flash && <div className="alert alert-success">{location.state?.flash}</div>}
+                  {showInvalidError && <div className="alert alert-danger">Invalid email and/or password.</div>}
+                  <form onSubmit={onSubmit}>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="email">
+                        Email
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="password">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
+                    <div className="mb-3 d-grid">
+                      <button className="btn btn-primary" type="submit">
+                        Submit
+                      </button>
+                    </div>
+                    <div className="mb-3 text-center">
+                      <Link to="/passwords/forgot">Forgot your password?</Link>
+                      {/* {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && (
                       <>
                         <br />
                         <Link to="/register">Need an account?</Link>
                       </>
                     )} */}
-                  </div>
-                </form>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </>
   );
 }
