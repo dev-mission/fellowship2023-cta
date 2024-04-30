@@ -32,6 +32,7 @@ const DropMenu = ({ lookUp, settings }) => {
         lookUp({ target: { name: settings.id, value: value[0]?.id } });
       }}
       placeholder={settings.placeholder}
+      defaultInputValue={settings.name}
     />
   );
 };
