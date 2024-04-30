@@ -15,9 +15,9 @@ bcrypt.hash(process.argv[5], 10).then(async (hashedPassword) => {
 
   if (response === null) {
     models.Location.create({
-      id: 3021,
-      name: 'Code Fellows',
-      address1: '2901 3rd Ave',
+      id: 1,
+      name: 'Dev/Mission',
+      address1: '356 Bryant St',
       address2: 'N/A',
       city: 'San Francisco',
       state: 'California',
@@ -29,7 +29,7 @@ bcrypt.hash(process.argv[5], 10).then(async (hashedPassword) => {
     firstName: process.argv[2],
     lastName: process.argv[3],
     email: process.argv[4],
-    LocationId: 3021,
+    LocationId: 1,
     hashedPassword: hashedPassword,
     isAdmin: true,
     role: null,

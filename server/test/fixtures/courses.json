@@ -2,166 +2,22 @@
   {
     "model": "Course",
     "data": {
-      "id": 6001,
-      "name": "IT Support"
+      "id": 1000,
+      "name": "Fixture Course 1000"
     }
   },
   {
     "model": "Course",
     "data": {
-      "id": 6002,
-      "name": "Computer Science"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6003,
-      "name": "Data Analytics"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6004,
-      "name": "Machine Learning"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6005,
-      "name": "Artificial Intelligence"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6006,
-      "name": "Database Management"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6007,
-      "name": "Software Engineering"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6008,
-      "name": "Web Development"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6009,
-      "name": "Cybersecurity"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6010,
-      "name": "Network Administration"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6011,
-      "name": "Data Science"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6012,
-      "name": "Cloud Computing"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6013,
-      "name": "Mobile App Development"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6014,
-      "name": "Digital Marketing"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6015,
-      "name": "Project Management"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6016,
-      "name": "Computer Graphics"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6017,
-      "name": "IoT Development"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6018,
-      "name": "Natural Language Processing"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6019,
-      "name": "Robotics"
-    }
-  },
-
-  {
-    "model": "Course",
-    "data": {
-      "id": 6020,
-      "name": "Big Data"
+      "id": 1001,
+      "name": "Fixture Course 1001"
     }
   },
   {
     "model": "Course",
     "data": {
-      "id": 6021,
-      "name": "Computer Vision"
+      "id": 1002,
+      "name": "Fixture Course 1002"
     }
   }
 ]

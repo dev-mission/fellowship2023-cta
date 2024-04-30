@@ -2,281 +2,45 @@
   {
     "model": "Donor",
     "data": {
-      "id": 2001,
-      "name": "Google",
-      "phone": "212-565-0000",
-      "email": "google@gmail.com",
-      "address1": "76 Ninth Avenue",
-      "address2": "4th Floor",
-      "city": "New York City",
+      "id": 1,
+      "name": "john doe",
+      "phone": "123456789",
+      "email": "johndoe@email.com",
+      "address1": "1234 main st",
+      "address2": "apt 123",
+      "city": "anytown",
       "state": "NY",
-      "zip": "10011"
+      "zip": "12345"
     }
   },
+
   {
     "model": "Donor",
     "data": {
-      "id": 2002,
-      "name": "Microsoft",
-      "phone": "213-566-0001",
-      "email": "microsoft@gmail.com",
-      "address1": "One Microsoft Way",
-      "address2": "Building 1",
-      "city": "Redmond",
-      "state": "WA",
-      "zip": "98052"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2003,
-      "name": "Apple",
-      "phone": "214-567-0002",
-      "email": "apple@gmail.com",
-      "address1": "One Apple Park Way",
-      "address2": "Building 2",
-      "city": "Cupertino",
-      "state": "CA",
-      "zip": "95014"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2004,
-      "name": "Amazon",
-      "phone": "215-568-0003",
-      "email": "amazon@gmail.com",
-      "address1": "410 Terry Ave N",
-      "address2": "Building 3",
-      "city": "Seattle",
-      "state": "WA",
-      "zip": "98109"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2005,
-      "name": "Facebook",
-      "phone": "216-569-0004",
-      "email": "facebook@gmail.com",
-      "address1": "1 Hacker Way",
-      "address2": "Building 4",
-      "city": "Menlo Park",
-      "state": "CA",
-      "zip": "94025"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2006,
-      "name": "Twitter",
-      "phone": "217-570-0005",
-      "email": "twitter@gmail.com",
-      "address1": "1355 Market St",
-      "address2": "Building 5",
-      "city": "San Francisco",
-      "state": "CA",
-      "zip": "94103"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2007,
-      "name": "Netflix",
-      "phone": "218-571-0006",
-      "email": "netflix@gmail.com",
-      "address1": "100 Winchester Circle",
-      "address2": "Building 6",
-      "city": "Los Gatos",
-      "state": "CA",
-      "zip": "95032"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2008,
-      "name": "Adobe",
-      "phone": "219-572-0007",
-      "email": "adobe@gmail.com",
-      "address1": "345 Park Avenue",
-      "address2": "Building 7",
-      "city": "San Jose",
-      "state": "CA",
-      "zip": "95110"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2009,
-      "name": "Oracle",
-      "phone": "220-573-0008",
-      "email": "oracle@gmail.com",
-      "address1": "500 Oracle Parkway",
-      "address2": "Building 8",
-      "city": "Redwood City",
-      "state": "CA",
-      "zip": "94065"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2010,
-      "name": "IBM",
-      "phone": "221-574-0009",
-      "email": "ibm@gmail.com",
-      "address1": "1 New Orchard Road",
-      "address2": "Building 9",
-      "city": "Armonk",
+      "id": 2,
+      "name": "jane doe",
+      "phone": "987654321",
+      "email": "janedoe@email.com",
+      "address1": "1234 main st",
+      "address2": "apt 123",
+      "city": "anytown",
       "state": "NY",
-      "zip": "10504"
+      "zip": "12345"
     }
   },
+
   {
     "model": "Donor",
     "data": {
-      "id": 2011,
-      "name": "Intel",
-      "phone": "222-575-0010",
-      "email": "intel@gmail.com",
-      "address1": "2200 Mission College Blvd",
-      "address2": "Building 10",
-      "city": "Santa Clara",
-      "state": "CA",
-      "zip": "95054"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2012,
-      "name": "Cisco",
-      "phone": "223-576-0011",
-      "email": "cisco@gmail.com",
-      "address1": "170 West Tasman Dr",
-      "address2": "Building 11",
-      "city": "San Jose",
-      "state": "CA",
-      "zip": "95134"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2013,
-      "name": "HP",
-      "phone": "224-577-0012",
-      "email": "hp@gmail.com",
-      "address1": "1501 Page Mill Road",
-      "address2": "Building 12",
-      "city": "Palo Alto",
-      "state": "CA",
-      "zip": "94304"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2014,
-      "name": "Dell",
-      "phone": "225-578-0013",
-      "email": "dell@gmail.com",
-      "address1": "1 Dell Way",
-      "address2": "Building 13",
-      "city": "Round Rock",
-      "state": "TX",
-      "zip": "78682"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2015,
-      "name": "Lenovo",
-      "phone": "226-579-0014",
-      "email": "lenovo@gmail.com",
-      "address1": "1009 Think Place",
-      "address2": "Building 14",
-      "city": "Morrisville",
-      "state": "NC",
-      "zip": "27560"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2016,
-      "name": "Asus",
-      "phone": "227-580-0015",
-      "email": "asus@gmail.com",
-      "address1": "15 Li-Te Road",
-      "address2": "Building 15",
-      "city": "Taipei",
-      "state": "Taiwan",
-      "zip": "112"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2017,
-      "name": "Acer",
-      "phone": "228-581-0016",
-      "email": "acer@gmail.com",
-      "address1": "8F, 88, Sec. 1, Xintai 5th Rd.",
-      "address2": "Building 16",
-      "city": "New Taipei City",
-      "state": "Taiwan",
-      "zip": "221"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2018,
-      "name": "Sony",
-      "phone": "229-582-0017",
-      "email": "sony@gmail.com",
-      "address1": "1-7-1 Konan",
-      "address2": "Building 17",
-      "city": "Minato-ku",
-      "state": "Tokyo",
-      "zip": "108-0075"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2019,
-      "name": "LG",
-      "phone": "230-583-0018",
-      "email": "lg@gmail.com",
-      "address1": "20 Yeouido-dong",
-      "address2": "Building 18",
-      "city": "Seoul",
-      "state": "South Korea",
-      "zip": "150-721"
-    }
-  },
-  {
-    "model": "Donor",
-    "data": {
-      "id": 2020,
-      "name": "Samsung",
-      "phone": "231-584-0019",
-      "email": "samsung@gmail.com",
-      "address1": "129 Samsung-ro",
-      "address2": "Building 19",
-      "city": "Seoul",
-      "state": "South Korea",
-      "zip": "153-742"
+      "id": 3,
+      "name": "jimmy doe",
+      "phone": "135792468",
+      "email": "jimmydoe@email.com",
+      "address1": "1234 main st",
+      "address2": "apt 123",
+      "city": "anytown",
+      "state": "NY",
+      "zip": "12345"
     }
   }
 ]
