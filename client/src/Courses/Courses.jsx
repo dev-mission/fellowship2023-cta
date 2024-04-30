@@ -48,8 +48,6 @@ const Courses = () => {
     setData(data.filter((l) => l.id != courseId));
   };
 
-  const onChange = () => {};
-
   const table = useReactTable({
     data: data || [],
     columns,
@@ -61,19 +59,28 @@ const Courses = () => {
 
   return (
     <main className="container">
-      <div className="d-flex justify-content-between align-items-center mt-5">
-        <Link className="btn btn-primary d-flex align-items-center" to="new">
-          New <i className="bi bi-plus-lg" />
-        </Link>
-        <i className="bi bi-person-fill title-icon">Courses</i>
-        <form className="d-flex" role="search">
-          <div className="input-group">
-            <span className="input-group-text" id="basic-addon1">
-              <i className="bi bi-search" />
-            </span>
-            <input type="search" className="form-control me-2" placeholder="Search Users" onChange={onChange} />
-          </div>
-        </form>
+      <div className="row align-items-start mt-5">
+        <div className="col-3">
+          <Link className="btn btn-primary" to="new">
+            <div className="d-flex align-items-center justify-content-center">
+              New Courses
+              <i className="bi bi-plus-lg" />
+            </div>
+          </Link>
+        </div>
+        <div className="col-6 text-center">
+          <h1>Courses</h1>
+        </div>
+        <div className="col-3">
+          <form className="d-flex" role="search">
+            <div className="input-group">
+              <span className="input-group-text" id="basic-addon1">
+                <i className="bi bi-search" />
+              </span>
+              <input type="search" className="form-control me-2" placeholder="Search Courses" />
+            </div>
+          </form>
+        </div>
       </div>
       <CourseTable table={table} />
       <Pagination page={page} lastPage={lastPage} />
