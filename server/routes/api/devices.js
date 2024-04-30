@@ -7,11 +7,9 @@ import models from '../../models/index.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', interceptors.requireInventory, async (req, res) => {
   const page = req.query.page || '1';
-  let records, pages, total;
-  if (req.user.isInventory || req.user.isAdmin) {
-    ({ records, pages, total } = await models.Device.paginate({
+  const { records, pages, total } = await models.Device.paginate({
       page,
       order: [['id', 'DESC']],
       include: [
@@ -19,8 +17,7 @@ router.get('/', async (req, res) => {
         { model: models.Donor, attributes: ['name'] },
         { model: models.User, attributes: ['fullName'] },
       ],
-    }));
-  }
+    });
 
   helpers.setPaginationHeaders(req, res, page, pages, total);
   res.json(records.map((r) => r.toJSON()));
