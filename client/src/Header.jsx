@@ -87,11 +87,6 @@ function Header() {
                         </Link>
                       </li>
                     )}
-                    <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
-                        Courses
-                      </Link>
-                    </li>
                   </>
                 )}
                 {user.role === 'Inventory' && (
@@ -109,11 +104,18 @@ function Header() {
                   </>
                 )}
                 {user.isAdmin && (
-                  <li className="nav-item active flex">
-                    <Link className="nav-link" aria-current="page" to="/admin/users" onClick={hideNavbar}>
-                      Users
-                    </Link>
-                  </li>
+                  <>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/admin/users" onClick={hideNavbar}>
+                        Users
+                      </Link>
+                    </li>
+                    <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
+                        Courses
+                      </Link>
+                    </li>
+                  </>
                 )}
               </>
             )}
