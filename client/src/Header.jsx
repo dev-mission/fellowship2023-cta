@@ -80,6 +80,14 @@ function Header() {
                         Clients
                       </Link>
                     </li>
+                    {
+                      user.role === 'CTA' && user.isAdmin && (                    
+                      <li className="nav-item active flex">
+                      <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
+                        Courses
+                      </Link>
+                    </li>)
+                    }
                     {user.isAdmin && (
                       <li className="nav-item active flex">
                         <Link className="nav-link" aria-current="page" to="/locations" onClick={hideNavbar}>
@@ -108,11 +116,6 @@ function Header() {
                     <li className="nav-item active flex">
                       <Link className="nav-link" aria-current="page" to="/admin/users" onClick={hideNavbar}>
                         Users
-                      </Link>
-                    </li>
-                    <li className="nav-item active flex">
-                      <Link className="nav-link" aria-current="page" to="/courses" onClick={hideNavbar}>
-                        Courses
                       </Link>
                     </li>
                   </>
